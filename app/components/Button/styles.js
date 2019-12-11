@@ -23,8 +23,10 @@ const styles = EStyleSheet.create({
         shadowOffset : { width: 1, height: 13},
     },
     text: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
+        letterSpacing: 2,
+        textTransform: 'uppercase',
     },
 });
 

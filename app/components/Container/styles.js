@@ -10,6 +10,17 @@ const styles = EStyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    containerGray: {
+        flex: 1,
+        backgroundColor: '$grayBg',
+    },
+    cardWhite: {
+        marginHorizontal: 10,
+        marginVertical: 5,
+        borderRadius: 4,
+        padding: 10,
+        backgroundColor: '$white',
+    },
 });
 
 export default styles;

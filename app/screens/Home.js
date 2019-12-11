@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { StatusBar, View, Button } from 'react-native';
 
 import { Container } from "../components/Container";
@@ -8,6 +9,7 @@ import { FullButton } from '../components/Button';
 class Home extends Component {
     newPatient() {
         console.log("New Patient Pressed");
+        // this.props.navigation.navigate('PersonalInfo');
     }
     followUp() {
         console.log("Follow Up Pressed");
@@ -18,13 +20,14 @@ class Home extends Component {
                 <StatusBar translucent={true} barStyle="light-content" />
                 <Logo />
                 <View style={{ bottom: 0, position: 'absolute' }}>
-                    <FullButton text="Button 1" onPress={this.newPatient}/>
-                    <FullButton text="Button 2" onPress={this.followUp}/>
+                    <FullButton text="New Patient" onPress={this.newPatient}/>
+                    <FullButton text="Follow Up" onPress={this.followUp}/>
                 </View>
             </Container>
         );
     }
-} 
+}
 
+/* s */
 
 export default Home;
