@@ -1,31 +1,61 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { StatusBar, View } from 'react-native';
 
-import { ContainerGray, CardWhite } from "../components/Container";
+import { ContainerGray, CardWhite, RowView } from "../components/Container";
 import { Title, CardHeaderText } from "../components/Text";
-import { FullButton } from '../components/Button';
+import { FullButton, VariButton } from '../components/Button';
+
+const butt1 = "Personal\nInformation";
+const butt2 = "Background\nInformation";
+const butt3 = "Symptoms";
+const butt4 = "Investigations";
 
 class Dashboard extends Component {
+    static propTypes = {
+        navigation: PropTypes.object,
+    }
+    handlePersonal = () => {
+        console.log("Personal pressed");
+    };
+    handleBackground = () => {
+        console.log("Background pressed");
+    };
+    handleSymptoms = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Symptoms");
+    };
+    handleComorbidities = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Comorbidities");
+    };
+    handleInvestigations = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Investigations");
+    };
+    handleComplete = () => {
+        console.log("Complete Diagnosis");
+    }
     render() {
         return(
             <ContainerGray>
-                <CardHeaderText text="Padding Text 1" />
                 <Title text="Patient Name Age Gender" />
                 <CardHeaderText text="Personal Information" />
                 <CardWhite>
-                    <View style={{ flexDirection: 'row' }} >
-                        <FullButton text="Personal Information" width="50%" onPress={this.handleInfoPress} ></FullButton>
-                        <FullButton text="Background Information" width="50%" onPress={this.handleInfoPress} ></FullButton>
-                    </View>
+                    <RowView>
+                        <VariButton text={butt1} onPress={this.handlePersonal} ></VariButton>
+                        <VariButton text={butt2} onPress={this.handleBackground} ></VariButton>
+                    </RowView>
                 </CardWhite>
                 <CardHeaderText text="Diagnosis" />
                 <CardWhite>
-                    <View style={{ flexDirection: 'row' }} >
-                        <FullButton text="Clinical Analysis" width="50%" onPress={this.handleInfoPress} ></FullButton>
-                        <FullButton text="Supportive Diagnosis" width="50%" onPress={this.handleInfoPress} ></FullButton>
-                    </View>
+                    <RowView>
+                        <VariButton text={butt3} onPress={this.handleSymptoms} ></VariButton>
+                        <VariButton text="Comorbidities" onPress={this.handleComorbidities} ></VariButton>
+                    </RowView>
+                    <VariButton text={butt4} onPress={this.handleInvestigations} ></VariButton>
                 </CardWhite>
-                <FullButton text="COMPLETE DIAGNOSIS"></FullButton>
+                <FullButton text="COMPLETE DIAGNOSIS" onPress={this.handleComplete}></FullButton>
             </ContainerGray>
         );
     };

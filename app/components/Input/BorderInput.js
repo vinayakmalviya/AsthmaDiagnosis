@@ -4,13 +4,15 @@ import { View, TextInput } from "react-native";
 
 import styles from './styles';
 
-const BorderInput = ({ width, text, multiline = false, numberOfLines = 1 }) => {
+const BorderInput = props => {
+    console.log(props);
+    const { width, text, multiline = false, numberOfLines} = props;
     const inputStyle = [styles.input];
     if(width) {
         inputStyle.push({ width: width });
     }
     return (
-        <TextInput style={inputStyle} placeholder={text} multiline={multiline} numberOfLines={numberOfLines}></TextInput>
+        <TextInput {...props} style={inputStyle} placeholder={text} multiline={multiline} numberOfLines={numberOfLines}></TextInput>
     );
 };
 

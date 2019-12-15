@@ -7,12 +7,18 @@ import { Logo } from '../components/Logo';
 import { FullButton } from '../components/Button';
 
 class Home extends Component {
-    newPatient() {
-        console.log("New Patient Pressed");
-        // this.props.navigation.navigate('PersonalInfo');
+    static propTypes = {
+        navigation: PropTypes.object,
+    };
+
+    newPatient = () => {
+        const { navigation } = this.props;
+        navigation.push('PersonalInfo');
     }
-    followUp() {
-        console.log("Follow Up Pressed");
+
+    followUp = () => {
+        const { navigation } = this.props;
+        navigation.navigate('Test');
     }
     render() {
         return(
@@ -25,9 +31,7 @@ class Home extends Component {
                 </View>
             </Container>
         );
-    }
+    };
 }
-
-/* s */
 
 export default Home;

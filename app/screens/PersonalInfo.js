@@ -1,45 +1,58 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { StatusBar, View, Text, Picker, KeyboardAvoidingView } from 'react-native';
 
-import { ContainerGray, CardWhite } from '../components/Container';
+import { ContainerGray, CardWhite, RowView } from '../components/Container';
 import { BorderInput } from "../components/Input";
 import { FullButton } from "../components/Button";
 import { CardHeaderText } from "../components/Text";
 
+const renderInput = props => {
+    const { text, width } = props;
+    return(
+      <BorderInput {...props.input} text={text} width={width} />
+    );
+}
+
 class PersonalInfo extends Component {
-    handleNext() {
+    static propTypes = {
+        navigation: PropTypes.object,
+    }
+    handleNext = () => {
         console.log("Next Step Pressed");
+        const { navigation } = this.props;
+        navigation.navigate("BackgroundInfo");
     };
     render() {
         return(
             <ContainerGray>
                 <KeyboardAvoidingView behavior="position" enabled>
                     <StatusBar translucent={true} barStyle="light-content" />
-                    <CardHeaderText text="Temp Padding 1"/>
-                    <CardHeaderText text="Temp Padding 2"/>
                     <CardHeaderText text="Personal Information"/>
                     <CardWhite>
                         <BorderInput text="Name"></BorderInput>
-                        <View style={ { flexDirection: 'row' } }>
+                        <RowView>
                             <BorderInput text="Age" width="40%"></BorderInput>
-                            <Picker style={{height: 50, width: 180, marginTop: 10}} mode="dropdown">
-                                <Picker.Item label="Select Gender" value="" />
+                            <Picker style={{height: 50, width: 180, marginTop: 10}}>
                                 <Picker.Item label="Male" value="male" />
                                 <Picker.Item label="Female" value="female" />
-                        </Picker>
-                        </View>
+                            </Picker>
+                        </RowView>
                     </CardWhite>
                     <CardHeaderText text="Occupation and Habits"/>
                     <CardWhite>
-                        <BorderInput text="Occupational Risk"></BorderInput>
-                        <View style={ { flexDirection: 'row' } }>
+                        <Picker style={{height: 50, width: 'auto', marginTop: 10}}>
+                            <Picker.Item label="Male" value="male" />
+                            <Picker.Item label="Female" value="female" />
+                        </Picker>
+                        <RowView>
                             <BorderInput text="Smoker" width="44%"></BorderInput>
                             <BorderInput text="Diabetic" width="44%"></BorderInput>
-                        </View>
-                        <View style={ { flexDirection: 'row' } }>
+                        </RowView>
+                        <RowView>
                             <BorderInput text="Hypertension" width="44%"></BorderInput>
                             <BorderInput text="Obesity" width="44%"></BorderInput>
-                        </View>
+                        </RowView>
                     </CardWhite>
                     <CardHeaderText text="More Notes"/>
                     <CardWhite>

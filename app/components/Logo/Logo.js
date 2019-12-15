@@ -5,7 +5,7 @@ import { View, Image, Text } from 'react-native';
 import styles from './styles';
 
 const Logo = () => (
-    <View>
+    <View style={styles.container}>
         <View style={styles.circleBack}>
             <Image resizeMode="contain" style={styles.image} source={require('./images/asthma.png')} />
         </View>

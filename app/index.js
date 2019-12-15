@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { Provider } from "react-redux";
 
-import Home from './screens/Home';
-import PersonalInfo from './screens/PersonalInfo';
-import Test from './screens/Test';
-import BackgroundInfo from './screens/BackgroundInfo';
+import AppContainer from "./config/routes";
 import Dashboard from './screens/Dashboard';
-// import { Navigator } from "./config/routes";
+import Symptoms from './screens/Symptoms';
+import Investigations from './screens/Investigations';
+import Comorbidities from './screens/Comorbidities';
+import PersonalInfo from './screens/PersonalInfo';
+import BackgroundInfo from './screens/BackgroundInfo';
+import Test from './screens/Test';
+import store from './config/store';
 
 EStyleSheet.build({
     $primaryBckg1: "#48FF7F",
@@ -17,4 +21,12 @@ EStyleSheet.build({
     $gray: "rgba(0, 0, 0, 0.26)",
 });
 
-export default () => <Dashboard />
+export default class App extends Component {
+    render() {
+        return(
+            <Provider store={store}>
+                <AppContainer />
+            </Provider>
+        )
+    }
+};  

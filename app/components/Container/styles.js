@@ -14,6 +14,9 @@ const styles = EStyleSheet.create({
         flex: 1,
         backgroundColor: '$grayBg',
     },
+    containerRow: {
+        flexDirection: 'row',
+    },
     cardWhite: {
         marginHorizontal: 10,
         marginVertical: 5,

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { StatusBar, KeyboardAvoidingView } from 'react-native';
 
 import { ContainerGray, CardWhite } from "../components/Container";
@@ -7,16 +8,18 @@ import { CardHeaderText } from "../components/Text";
 import { FullButton } from "../components/Button";
 
 class BackgroundInfo extends Component {
-    handleNext() {
-        console.log("Patient Added");
+    static propTypes = {
+        navigation: PropTypes.object,
+    }
+    handleNext = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Dashboard");
     };
     render() {
         return(
             <ContainerGray>
                 <KeyboardAvoidingView behavior="position">
                     <StatusBar translucent={true} barStyle="light-content" />
-                    <CardHeaderText text="Padding Text 1" />
-                    <CardHeaderText text="Padding Text 2" />
                     <CardHeaderText text="Background Information" />
                     <CardWhite>
                         <BorderInput text="Family History" />

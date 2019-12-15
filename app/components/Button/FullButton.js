@@ -4,14 +4,10 @@ import { View, TouchableOpacity, Text } from 'react-native';
 
 import styles from './styles';
 
-const FullButton = ({ text, onPress, width }) => {
-    const opacityStyle = [styles.wrapper];
-    if(width) {
-        opacityStyle.push({ width: width });
-    }
+const FullButton = ({ text, onPress }) => {
     return(
         <View style={styles.container}>
-            <TouchableOpacity style={opacityStyle} onPress={onPress}>
+            <TouchableOpacity style={styles.wrapper} onPress={onPress}>
                 <Text style={styles.text}>{text}</Text>
             </TouchableOpacity>
         </View>
