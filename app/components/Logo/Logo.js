@@ -14,4 +14,4 @@ const Logo = () => (
     </View>
 );
 
-export default Logo;
+export default Logo;    

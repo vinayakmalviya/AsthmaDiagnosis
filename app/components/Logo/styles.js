@@ -27,7 +27,7 @@ const styles = EStyleSheet.create({
         width: '$circleSize',
         height: '$circleSize',
         borderRadius: '$circleSizeBorder',
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backgroundColor: '$white',
         alignItems: 'center',
         justifyContent: 'center',
     },

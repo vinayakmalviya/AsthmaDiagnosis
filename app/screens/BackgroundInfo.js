@@ -1,38 +1,60 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StatusBar, KeyboardAvoidingView } from 'react-native';
+import { reduxForm, Field } from "redux-form";
 
 import { ContainerGray, CardWhite } from "../components/Container";
 import { BorderInput } from "../components/Input";
 import { CardHeaderText } from "../components/Text";
 import { FullButton } from "../components/Button";
 
+import { backgroundlInfoSubmit } from '../actions/infoActions';
+
+const renderInput = props => {
+    const { text, width, multiline, numberOfLines } = props;
+    return(
+      <BorderInput {...props.input} text={text} width={width} multiline={multiline} numberOfLines={numberOfLines}/>
+    );
+};
+
 class BackgroundInfo extends Component {
     static propTypes = {
-        navigation: PropTypes.object,
+        handleSubmit: PropTypes.func,
+        dispatch: PropTypes.func,
     }
-    handleNext = () => {
-        const { navigation } = this.props;
-        navigation.navigate("Dashboard");
+    handleNext = (values, dispatch) => {
+        alert(JSON.stringify(values));
+        dispatch(backgroundlInfoSubmit(values));
     };
     render() {
+        const { handleSubmit } = this.props;
         return(
             <ContainerGray>
                 <KeyboardAvoidingView behavior="position">
                     <StatusBar translucent={true} barStyle="light-content" />
                     <CardHeaderText text="Background Information" />
                     <CardWhite>
-                        <BorderInput text="Family History" />
+                        <Field name="family" text="Family History" component={renderInput}/>
                     </CardWhite>
                     <CardWhite>
-                        <BorderInput text="Childhood History" />
-                        <BorderInput text="Additional Observations" multiline={true} numberOfLines={4}></BorderInput>
+                        <Field name="childhood" text="Childhood History" component={renderInput}/>
+                        <Field text="Additional Observations" name="observations" multiline={true} numberOfLines={4} component={renderInput}/>
                     </CardWhite>
-                    <FullButton text="ADD PATIENT" onPress={this.handleNext} />
+                    <FullButton text="ADD PATIENT" onPress={handleSubmit(this.handleNext)} />
                 </KeyboardAvoidingView>
             </ContainerGray>
         );
     };
 }
 
-export default BackgroundInfo;
+export default reduxForm({
+    form: 'backgroundInfo',
+    initialValues: {
+        family: "",
+        childhood: "",
+        observations: "",
+    },
+    onSubmitSuccess: (result, dispatch, props) => {
+        props.navigation.navigate("Dashboard");
+    }
+})(BackgroundInfo);

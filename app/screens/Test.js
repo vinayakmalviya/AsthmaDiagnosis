@@ -8,6 +8,7 @@ import { CardHeaderText, Title } from '../components/Text';
 import { ContainerGray, RowView, CardWhite } from '../components/Container';
 import { FullButton } from '../components/Button';
 import { testSubmit } from "../actions/infoActions";
+import { connect } from 'react-redux';
 
 const renderInput = props => {
     const { text, width } = props;
@@ -18,15 +19,16 @@ const renderInput = props => {
 
 class Form extends Component {
     static propTypes = {
-        handleSubmit: PropTypes.func,
+        navigation: PropTypes.object,
         dispatch: PropTypes.func,
+        test: PropTypes.object,
     }
-    onSubmit = (values, dispatch) => {
-        alert(JSON.stringify(values));
-        dispatch(testSubmit(values));
+    onSubmit = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Dashboard");
     }
     render() {
-        const { handleSubmit } = this.props;
+        const { test } = this.props;
         return(
             <ContainerGray>
                 <StatusBar translucent={true} barStyle="light-content" />
@@ -35,20 +37,21 @@ class Form extends Component {
                 <CardHeaderText text="Padding Sub Text 1"></CardHeaderText>
                 <CardHeaderText text="Padding Sub Text 2"></CardHeaderText>
                 <CardWhite>
-                    <RowView>
-                        <Field width="47%" text="Name" name="name" component={renderInput} />
-                        <Field width="47%" text="Email" name="email" component={renderInput} />
-                    </RowView>
+                    <Text>
+                        {JSON.stringify(test)}
+                    </Text>
                 </CardWhite>
-                <FullButton text="Submit" onPress={handleSubmit(this.onSubmit)} />
+                <FullButton text="Submit" onPress={this.onSubmit} />
             </ContainerGray>
         )
     }
 };
 
-export default reduxForm({
-    form: 'test',
-    onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Dashboard");
+const mapStateToProps = (state) => {
+    const test = state.infoReducer.tests;
+    return {
+        test,
     }
-})(Form);
+}
+
+export default connect(mapStateToProps)(Form);
