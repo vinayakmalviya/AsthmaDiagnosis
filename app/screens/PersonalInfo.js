@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-import { StatusBar, Text, Picker, KeyboardAvoidingView, ScrollView, CheckBox } from 'react-native';
-=======
 import { StatusBar, ScrollView, Picker, KeyboardAvoidingView, Text, CheckBox } from 'react-native';
->>>>>>> d6fd5de0fb02cce159ccf43a9c156873891acfaf
 import { reduxForm, Field } from "redux-form";
 
 import { ContainerGray, CardWhite, RowView } from '../components/Container';
