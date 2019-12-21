@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StatusBar, View, Button } from 'react-native';
 
-import { Container } from "../components/Container";
+import { Container, CustomContainer } from "../components/Container";
 import { Logo } from '../components/Logo';
-import { FullButton } from '../components/Button';
+import { FullButton, CustomButton } from '../components/Button';
 
 class Home extends Component {
     static propTypes = {
@@ -22,14 +22,14 @@ class Home extends Component {
     }
     render() {
         return(
-            <Container>
+            <CustomContainer gradient={true}>
                 <StatusBar translucent={true} barStyle="light-content" />
                 <Logo />
-                <View style={{ bottom: 0, position: 'absolute' }}>
-                    <FullButton text="New Patient" onPress={this.newPatient}/>
-                    <FullButton text="Follow Up" onPress={this.followUp}/>
+                <View style={{ alignSelf: 'stretch', margin: 6 }}>
+                    <CustomButton text="New Patient" white large onPress={this.newPatient}/>
+                    <CustomButton text="Follow Up" white large onPress={this.followUp}/>
                 </View>
-            </Container>
+            </CustomContainer>
         );
     };
 }

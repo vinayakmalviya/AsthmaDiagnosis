@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, View } from 'react-native';
+import { connect } from "react-redux";
 
 import { ContainerGray, CardWhite, RowView } from "../components/Container";
 import { Title, CardHeaderText } from "../components/Text";
@@ -37,9 +37,11 @@ class Dashboard extends Component {
         console.log("Complete Diagnosis");
     }
     render() {
+        const { patientName, patientAge, patientGender, ini_symptoms } = this.props;
         return(
             <ContainerGray>
-                <Title text="Patient Name Age Gender" />
+                <Title text={patientName + " " + patientAge + " " + patientGender} />
+                {/* <Title text={JSON.stringify(ini_symptoms)} /> */}
                 <CardHeaderText text="Personal Information" />
                 <CardWhite>
                     <RowView>
@@ -61,4 +63,17 @@ class Dashboard extends Component {
     };
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    const patientName = state.infoReducer.name;
+    const patientAge = state.infoReducer.age;
+    const patientGender = state.infoReducer.gender;
+    const ini_symptoms = state.infoReducer.ini_symptoms;
+    return {
+        patientName,
+        patientGender,
+        patientAge,
+        ini_symptoms,
+    };
+};
+
+export default connect(mapStateToProps)(Dashboard);
