@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StatusBar, View, Text } from 'react-native';
-import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 
 import { BorderInput } from "../components/Input";

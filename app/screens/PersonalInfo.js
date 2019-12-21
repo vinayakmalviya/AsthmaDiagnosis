@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import { StatusBar, Text, Picker, KeyboardAvoidingView, ScrollView, CheckBox } from 'react-native';
+=======
+import { StatusBar, ScrollView, Picker, KeyboardAvoidingView, Text, CheckBox } from 'react-native';
+>>>>>>> d6fd5de0fb02cce159ccf43a9c156873891acfaf
 import { reduxForm, Field } from "redux-form";
 
 import { ContainerGray, CardWhite, RowView } from '../components/Container';
@@ -13,7 +17,13 @@ const renderInput = props => {
     return(
       <BorderInput {...props.input} text={text} width={width} />
     );
-}
+};
+
+const renderPicker = ({ input: { onChange, value, ...inputProps}, children, ...pickerProps}) => {
+    return(
+        <Picker selectedValue={value} onValueChange={ value => onChange(value)} { ...inputProps} { ...pickerProps}>{children}</Picker>
+    );
+};
 
 const renderPicker = ({ input: { onChange, value, ...inputProps}, children, ...pickerProps}) => {
     return(
@@ -24,6 +34,8 @@ const renderPicker = ({ input: { onChange, value, ...inputProps}, children, ...p
 class PersonalInfo extends Component {
     static propTypes = {
         navigation: PropTypes.object,
+        handleSubmit: PropTypes.func,
+        dispatch: PropTypes.func,
     }
     handleNext = () => {
         console.log("Next Step Pressed");
