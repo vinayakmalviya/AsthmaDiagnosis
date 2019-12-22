@@ -8,6 +8,7 @@ import { Title, CardHeaderText } from "../components/Text";
 import { FullButton, VariButton } from '../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { BorderInput } from '../components/Input';
+import { comorbiditiesSubmit } from '../actions/infoActions';
 
 const renderInput = props => {
     const { text, width, multiline, numberOfLines } = props;
@@ -32,7 +33,7 @@ class Comorbidities extends Component {
 
     submitComorbidities = (values, dispatch, props) => {
         alert(JSON.stringify(values));
-        props.navigation.navigate("Dashboard");
+        dispatch(comorbiditiesSubmit(values));
     }
 
     render() {
