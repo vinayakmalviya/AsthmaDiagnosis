@@ -23,13 +23,6 @@ const renderPicker = ({ input: { onChange, value, ...inputProps}, children, ...p
     );
 };
 
-<<<<<<< HEAD
-const renderPicker = ({ input: { onChange, value, ...inputProps}, children, ...pickerProps}) => {
-    return(
-        <Picker selectedValue={value} onValueChange={ value => onChange(value)} { ...inputProps} { ...pickerProps}>{children}</Picker>
-    );
-}
-=======
 const renderCheckBox = ({ input: { onChange, value } }) => {
     if(value == undefined) {
         value = false;
@@ -38,7 +31,6 @@ const renderCheckBox = ({ input: { onChange, value } }) => {
         <CheckBox onValueChange={ value => onChange(value)} value={Boolean(value)}/> //Very bad code do not use after demonstration
     );
 };
->>>>>>> upstream/master
 
 class PersonalInfo extends Component {
     static propTypes = {

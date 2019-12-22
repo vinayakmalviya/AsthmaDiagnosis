@@ -1,4 +1,4 @@
-import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS } from "../actions/infoActions";
+import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES } from "../actions/infoActions";
 
 const initialState = {
     name: '',
@@ -121,6 +121,21 @@ const reducer = (state = initialState, action) => {
                     observations: action.values.observations,
                 }
             }
+            case HANDLE_COMORBIDITIES:
+                return {
+                    ...state,
+                    pulse: action.values.pulse,
+                    saturation: action.values.saturation,
+                    blood_pressure: action.values.blood_pressure,       
+                    dns: action.values.dns,
+                    dns1: action.values.dns1,
+                    fag: action.values.dns,
+                    fag1: action.values.dns1,
+                    bs: action.values.dns,
+                    bs1: action.values.dns1,
+                    rhonchi: action.values.dns,
+                    rhonchi1: action.values.dns1,
+                }
         default:
             return state;
     }
