@@ -47,6 +47,12 @@ class Form extends Component {
     }
 };
 
+const renderPicker = ({ input: { onChange, value, ...inputProps}, children, ...pickerProps}) => {
+    return(
+        <Picker selectedValue={value} onValueChange={ value => onChange(value)} { ...inputProps} { ...pickerProps}>{children}</Picker>
+    );
+};
+
 const mapStateToProps = (state) => {
     const test = state.infoReducer.tests;
     return {

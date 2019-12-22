@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, View, Button } from 'react-native';
+import { StatusBar, View, Button, TextInput } from 'react-native';
 
 import { Container, CustomContainer } from "../components/Container";
 import { Logo } from '../components/Logo';
@@ -22,7 +22,7 @@ class Home extends Component {
     }
     render() {
         return(
-            <CustomContainer gradient={true}>
+            <CustomContainer gradient>
                 <StatusBar translucent={true} barStyle="light-content" />
                 <Logo />
                 <View style={{ alignSelf: 'stretch', margin: 6 }}>

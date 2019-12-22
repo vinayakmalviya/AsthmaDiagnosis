@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, TextInput } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Dimensions } from 'react-native';
 
 const styles = EStyleSheet.create({
     Input: {
@@ -17,10 +16,15 @@ const styles = EStyleSheet.create({
 });
 
 class CustomInput extends React.Component {
-    state = {
-        focused: false
-    };
-    
+    constructor(props) {
+        super(props);
+        this.state = {
+            focused: false,
+        };
+        this.onBlur = this.onBlur.bind(this);
+        this.onFocus = this.onFocus.bind(this);
+    }
+
     onBlur() {
         this.setState({ focused: false });
     }
@@ -31,31 +35,20 @@ class CustomInput extends React.Component {
 
     render() {
         const { text, multiline = false, numberOfLines } = this.props;
-        if (this.state.focused) {
         return (
-            <TextInput
-                {...this.props}
-                style={[styles.Input, {borderColor:"#00CCAA"}]}
-                placeholder={text}
-                multiline={multiline}
-                numberOfLines={numberOfLines}
-                onFocus={()=>this.onFocus()}
-                onBlur={()=>this.onBlur()}
-            />
+        <TextInput
+            {...this.props.input}
+            style={[
+                styles.Input,
+                this.state.focused ? { borderColor: '#00CCAA' } : null,
+            ]}
+            placeholder={text}
+            multiline={multiline}
+            numberOfLines={numberOfLines}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+        />
         );
-        } else {
-        return (
-            <TextInput
-                {...this.props}
-                style={[styles.Input]}
-                placeholder={text}
-                multiline={multiline}
-                numberOfLines={numberOfLines}
-                onFocus={()=>this.onFocus()}
-                onBlur={()=>this.onBlur()}
-            />
-        );
-        }
     }
 }
 
@@ -65,4 +58,11 @@ CustomInput.propTypes = {
     numberOfLines: PropTypes.number,
 };
 
-export default CustomInput;
+const CustomInputAdapter = props => {
+    const input = props.input;
+    delete props.input;
+
+    return <CustomInput {...input} {...props} />;
+};
+
+export { CustomInput, CustomInputAdapter };

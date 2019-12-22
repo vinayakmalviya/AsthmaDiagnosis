@@ -1,3 +1,3 @@
-import CScreenTemplate from './ScreenTemplate';
+import ScreenTemplate from './ScreenTemplate';
 
-export { CScreenTemplate };
+export { ScreenTemplate };

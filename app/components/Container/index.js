@@ -4,6 +4,7 @@ import ContainerGray from './ContainerGray';
 import CustomContainer from './CustomContainer';
 import CardWhite from './CardWhite';
 import CustomCard from './CustomCard';
+import CustomGrid from './CustomGrid';
 import styles from './styles';
 
-export { Container, ContainerGray, CardWhite, CustomCard, RowView, styles, CustomContainer };
+export { Container, ContainerGray, CardWhite, CustomCard, RowView, styles, CustomContainer, CustomGrid };

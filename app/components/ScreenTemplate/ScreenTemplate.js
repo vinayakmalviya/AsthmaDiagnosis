@@ -12,32 +12,32 @@ import {
     TouchableWithoutFeedback,
 } from 'react-native';
 import { Header } from 'react-navigation-stack';
-import { CustomContainer, CardWhite, RowView } from '../Container';
+import { CustomContainer } from '../Container';
 
-const CScreenTemplate = ({ children, toolbar }) => {
-    const styles = EStyleSheet.create({});
+const ScreenTemplate = ({ children, toolbar }) => {
 
     return (
         <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior="height"
-        keyboardVerticalOffset={Header.HEIGHT+StatusBar.currentHeight}>
-        <StatusBar backgroundColor="#ffffff" animated={true} translucent={false} barStyle="dark-content" />
-        <SafeAreaView style={{ flex: 1 }}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <CustomContainer style={{ flex: 1 }}>
-                <ScrollView styles={{ flex: 1 }}>
-                <View style={{margin: 6}}>{children}</View>
-                </ScrollView>
-            </CustomContainer>
-            </TouchableWithoutFeedback>
-        </SafeAreaView>
+            style={{ flex: 1 }}
+            behavior="height"
+            keyboardVerticalOffset={Header.HEIGHT+StatusBar.currentHeight}
+        >
+            <StatusBar backgroundColor="#ffffff" animated={true} translucent={false} barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 1 }}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <CustomContainer style={{ flex: 1 }}>
+                    <ScrollView styles={{ flex: 1 }}>
+                    <View style={{margin: 6}}>{children}</View>
+                    </ScrollView>
+                </CustomContainer>
+                </TouchableWithoutFeedback>
+            </SafeAreaView>
         </KeyboardAvoidingView>
     );
 };
 
-CScreenTemplate.propTypes = {
+ScreenTemplate.propTypes = {
     children: PropTypes.any,
 };
 
-export default CScreenTemplate;
+export default ScreenTemplate;

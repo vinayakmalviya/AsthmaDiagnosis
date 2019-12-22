@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import { View } from "react-native";
 import { connect } from "react-redux";
 
-import { ContainerGray, CardWhite, RowView } from "../components/Container";
-import { Title, CardHeaderText } from "../components/Text";
-import { FullButton, VariButton } from '../components/Button';
+import { CustomContainer, CustomCard, CustomGrid } from "../components/Container";
+import { Title, CustomSubTitle } from "../components/Text";
+import { CustomButton } from '../components/Button';
+import { ScreenTemplate } from "../components/ScreenTemplate";
 
 const butt1 = "Personal\nInformation";
 const butt2 = "Background\nInformation";
 const butt3 = "Symptoms";
 const butt4 = "Investigations";
+
+const styles = EStyleSheet.create({
+    GridContainer: {
+        flexDirection:'row', 
+        flexWrap:'wrap'
+    },
+    GridChildren: {
+        flex:1,
+        flexBasis: '40%',
+    }
+});
 
 class Dashboard extends Component {
     static propTypes = {
@@ -39,26 +53,53 @@ class Dashboard extends Component {
     render() {
         const { patientName, patientAge, patientGender, ini_symptoms } = this.props;
         return(
-            <ContainerGray>
+            <ScreenTemplate>
                 <Title text={patientName + " " + patientAge + " " + patientGender} />
                 {/* <Title text={JSON.stringify(ini_symptoms)} /> */}
-                <CardHeaderText text="Personal Information" />
-                <CardWhite>
-                    <RowView>
-                        <VariButton text={butt1} onPress={this.handlePersonal} ></VariButton>
-                        <VariButton text={butt2} onPress={this.handleBackground} ></VariButton>
-                    </RowView>
-                </CardWhite>
-                <CardHeaderText text="Diagnosis" />
-                <CardWhite>
-                    <RowView>
-                        <VariButton text={butt3} onPress={this.handleSymptoms} ></VariButton>
-                        <VariButton text="Comorbidities" onPress={this.handleComorbidities} ></VariButton>
-                    </RowView>
-                    <VariButton text={butt4} onPress={this.handleInvestigations} ></VariButton>
-                </CardWhite>
-                <FullButton text="COMPLETE DIAGNOSIS" onPress={this.handleComplete}></FullButton>
-            </ContainerGray>
+                <CustomSubTitle text="Personal Information" />
+                <View style={styles.GridContainer}>
+                    <CustomButton
+                        white
+                        largePadding
+                        overrideStyles={styles.GridChildren}
+                        text={butt1}
+                        onPress={this.handlePersonal}
+                    />
+                    <CustomButton
+                        white
+                        largePadding
+                        overrideStyles={styles.GridChildren}
+                        text={butt2}
+                        onPress={this.handleBackground}
+                    />
+                </View>
+                <CustomSubTitle text="Diagnosis" />
+                    <View style={styles.GridContainer}>
+                        <CustomButton
+                            white
+                            largePadding
+                            overrideStyles={styles.GridChildren}
+                            text={butt3}
+                            onPress={this.handleSymptoms}
+                        />
+                        <CustomButton
+                            largePadding
+                            white
+                            overrideStyles={styles.GridChildren}
+                            text="Comorbidities"
+                            onPress={this.handleComorbidities}
+                        />
+                        <CustomButton
+                            largePadding
+                            white
+                            overrideStyles={styles.GridChildren}
+                            text={butt4}
+                            onPress={this.handleInvestigations}
+                        />
+                    </View>
+                    <CustomSubTitle text="Results" />
+                <CustomButton large text="COMPLETE DIAGNOSIS" onPress={this.handleComplete} />
+            </ScreenTemplate>
         );
     };
 }
