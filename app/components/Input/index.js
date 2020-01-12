@@ -1,5 +1,3 @@
-import BorderInput from './BorderInput';
-import { CustomInput, CustomInputAdapter } from './CustomInput';
-import styles from './styles';
+import CustomInput from './CustomInput';
 
-export { CustomInput, CustomInputAdapter, BorderInput, styles };
+export { CustomInput };

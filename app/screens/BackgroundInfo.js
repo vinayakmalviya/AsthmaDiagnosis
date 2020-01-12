@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, KeyboardAvoidingView } from 'react-native';
 import { reduxForm, Field } from "redux-form";
 
-import { ContainerGray, CustomCard } from "../components/Container";
+import { CustomCard } from "../components/Container";
 import { CustomInput } from "../components/Input";
 import { CustomSubTitle } from "../components/Text";
 import { CustomButton } from "../components/Button";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
 import { backgroundlInfoSubmit } from '../actions/infoActions';
-
-const renderInput = props => {
-    const { text, width, multiline, numberOfLines } = props;
-    return(
-      <CustomInput {...props.input} text={text} width={width} multiline={multiline} numberOfLines={numberOfLines}/>
-    );
-};
 
 class BackgroundInfo extends Component {
     static propTypes = {
@@ -33,11 +25,31 @@ class BackgroundInfo extends Component {
             <ScreenTemplate>
                 <CustomSubTitle text="Background Information" />
                 <CustomCard>
-                    <Field name="family" text="Family History" component={renderInput}/>
+                    <Field 
+                        name="family"
+                        label="Family History"
+                        autoCompleteType="name"
+                        textContentType="name"
+                        keyboardType="default"
+                        component={CustomInput}
+                    />
                 </CustomCard>
                 <CustomCard>
-                    <Field name="childhood" text="Childhood History" component={renderInput}/>
-                    <Field text="Additional Observations" name="observations" multiline={true} numberOfLines={4} component={renderInput}/>
+                    <Field 
+                        name="childhood"
+                        label="Childhood History"
+                        autoCompleteType="name"
+                        textContentType="name"
+                        keyboardType="default"
+                        component={CustomInput}
+                    />
+                    <Field
+                        name="observations"
+                        label="Additional Observations"
+                        multiline={true}
+                        numberOfLines={4}
+                        component={CustomInput}
+                    />
                 </CustomCard>
                 <CustomButton text="ADD PATIENT" onPress={handleSubmit(this.handleNext)} />
             </ScreenTemplate>

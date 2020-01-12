@@ -30,10 +30,11 @@ const initialState = {
     comorbidities: {
         pulse: '',
         saturation: '',
+        resp_rate: '',
         BP: '',
         RR: '',
         DNS: '',
-        faring: '',
+        pharyn: '',
         PND: '',
         rhonchi: '',
     },
@@ -127,14 +128,12 @@ const reducer = (state = initialState, action) => {
                     pulse: action.values.pulse,
                     saturation: action.values.saturation,
                     blood_pressure: action.values.blood_pressure,       
+                    resp_rate: action.values.resp_rate,       
                     dns: action.values.dns,
-                    dns1: action.values.dns1,
-                    fag: action.values.dns,
-                    fag1: action.values.dns1,
+                    pharyn: action.values.pharyn,
                     bs: action.values.dns,
                     bs1: action.values.dns1,
-                    rhonchi: action.values.dns,
-                    rhonchi1: action.values.dns1,
+                    rhonchi: action.values.rhonchi,
                 }
         default:
             return state;

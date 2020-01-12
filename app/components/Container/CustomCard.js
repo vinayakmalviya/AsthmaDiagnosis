@@ -19,15 +19,15 @@ const styles = EStyleSheet.create({
     }
 });
 
-const CardWhite = ({ children, border=false }) => (
+const CustomCard = ({ children, border=false }) => (
     <View style={[styles.CardBG, border?styles.BorderCard:{}]}>
         {children}
     </View>
 );
 
-CardWhite.propTypes = {
+CustomCard.propTypes = {
     children: PropTypes.any,
 };
 
-export default CardWhite;
+export default CustomCard;
 

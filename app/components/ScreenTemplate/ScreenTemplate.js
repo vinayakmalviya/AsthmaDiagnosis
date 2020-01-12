@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import {
     StatusBar,
     View,
@@ -12,6 +11,7 @@ import {
     TouchableWithoutFeedback,
 } from 'react-native';
 import { Header } from 'react-navigation-stack';
+
 import { CustomContainer } from '../Container';
 
 const ScreenTemplate = ({ children, toolbar }) => {

@@ -1,37 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, ScrollView, Picker, KeyboardAvoidingView, Text, CheckBox } from 'react-native';
+import EStyleSheet from "react-native-extended-stylesheet";
+import { View } from 'react-native';
 import { reduxForm, Field } from "redux-form";
 
 import { CustomCard, RowView } from '../components/Container';
 import { CustomInput } from "../components/Input";
+import { CustomPicker } from "../components/Picker";
+import { CustomChip } from "../components/Chip";
 import { CustomButton } from "../components/Button";
-import { CustomSubTitle } from "../components/Text";
+import { CustomSubTitle, CustomOverline } from "../components/Text";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
 import { personalInfoSubmit } from "../actions/infoActions";
 
-const renderInput = props => {
-    const { text, width, multiline, numberOfLines } = props;
-    return(
-      <CustomInput {...props.input} text={text} width={width} multiline={multiline} numberOfLines={numberOfLines}/>
-    );
-};
-
-const renderPicker = ({ input: { onChange, value, ...inputProps}, children, ...pickerProps}) => {
-    return(
-        <Picker selectedValue={value} onValueChange={ value => onChange(value)} { ...inputProps} { ...pickerProps}>{children}</Picker>
-    );
-};
-
-const renderCheckBox = ({ input: { onChange, value } }) => {
-    if(value == undefined) {
-        value = false;
-    }
-    return(
-        <CheckBox onValueChange={ value => onChange(value)} value={Boolean(value)}/> //Very bad code do not use after demonstration
-    );
-};
+const styles = EStyleSheet.create({
+    GridContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    GridChildren: {
+        flex: 1,
+        flexBasis: '40%',
+    },
+});
 
 class PersonalInfo extends Component {
     static propTypes = {
@@ -48,41 +40,69 @@ class PersonalInfo extends Component {
             <ScreenTemplate toolbar={{ title: 'New Patient' }}>
                 <CustomSubTitle text="Personal Information"/>
                 <CustomCard>
-                    <Field name="name" text="Name" component={renderInput} />
-                    <RowView>
-                        <Field name="age" text="Age" width="40%" component={renderInput} />
-                        <Field style={{height: 50, width: 150, marginTop: 4}} mode="dropdown" name="gender" component={renderPicker} >
-                            <Picker.Item label="Gender" value={""} />
-                            <Picker.Item label="1 - Male" value={"Male"} />
-                            <Picker.Item label="2 - Female" value={"Female"} />
-                        </Field>
-                    </RowView>
+                    <Field 
+                        name="name"
+                        label="Name"
+                        autoCompleteType="name"
+                        textContentType="name"
+                        keyboardType="default"
+                        component={CustomInput}
+                    />
+                    <View style={styles.GridContainer}>
+                        <Field
+                            name="age"
+                            label="Age"
+                            suffix="years"
+                            keyboardType="numeric"
+                            overrideStyles={[styles.GridChildren]}
+                            component={CustomInput}
+                        />
+                        <Field
+                            mode="dropdown"
+                            name="gender"
+                            component={CustomPicker}
+                            overrideStyles={[styles.GridChildren]}
+                            label="Gender"
+                            items={[
+                            { label: 'Male', value: 'Male' },
+                            { label: 'Female', value: 'Female' },
+                            ]}
+                        />
+                    </View>
                 </CustomCard>
                 <CustomSubTitle text="Occupation and Habits"/>
-                <CustomCard>
-                    <Field style={{height: 50, width: 'auto', marginTop: 4}} mode="dropdown" name="occupation" component={renderPicker} >
-                        <Picker.Item label="Occupational Risk" value={null} />
-                        <Picker.Item label="3 - High Risk" value={3} />
-                        <Picker.Item label="2 - Medium Risk" value={2} />
-                        <Picker.Item label="1 - Low Risk" value={1} />
-                        <Picker.Item label="0 - No Risk" value={0} />
-                    </Field>
-                    <RowView>
-                        <Text>Smoker</Text>
-                        <Field name="smoker" component={renderCheckBox} />
-                        <Text>Diabetic</Text>
-                        <Field name="diabetic" component={renderCheckBox} />
+                <CustomCard style={styles.GridContainer}>
+                    <Field
+                        mode="dropdown"
+                        name="occupation"
+                        component={CustomPicker}
+                        label="Occupational Risk"
+                        items={[
+                            { label: '3 - High Risk', value: 3 },
+                            { label: '2 - Medium Risk', value: 2 },
+                            { label: '1 - Low Risk', value: 1 },
+                            { label: '0 - No Risk', value: 0 },
+                        ]}
+                    />
+                    <CustomOverline text="Habits" />
+                    <RowView style={styles.GridChildren}>
+                        <Field name="smoker" component={CustomChip} label="Smoker" />
+                        <Field name="diabetic" component={CustomChip} label="Diabetic" />
+                        <Field name="obesity" component={CustomChip} label="Obesity" />
                     </RowView>
-                    <RowView>
-                        <Text>Hypertension</Text>
-                        <Field name="hypertension" component={renderCheckBox} />
-                        <Text>Obesity</Text>
-                        <Field name="obesity" component={renderCheckBox} />
-                    </RowView>
+                    <View style={styles.GridChildren}>
+                        <Field name="hypertension" component={CustomChip} label="Hypertension" />
+                    </View>
                 </CustomCard>
                 <CustomSubTitle text="More Notes"/>
                 <CustomCard>
-                    <Field text="Additional Observations" name="observations" multiline={true} numberOfLines={4} component={renderInput}/>
+                    <Field
+                        name="observations"
+                        label="Additional Observations"
+                        multiline={true}
+                        numberOfLines={4}
+                        component={CustomInput}
+                    />
                 </CustomCard>
                 <CustomButton text="NEXT STEP" onPress={handleSubmit(this.handleNext)} />
             </ScreenTemplate>

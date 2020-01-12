@@ -4,7 +4,6 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { View } from "react-native";
 import { connect } from "react-redux";
 
-import { CustomContainer, CustomCard, CustomGrid } from "../components/Container";
 import { Title, CustomSubTitle } from "../components/Text";
 import { CustomButton } from '../components/Button';
 import { ScreenTemplate } from "../components/ScreenTemplate";
@@ -55,7 +54,6 @@ class Dashboard extends Component {
         return(
             <ScreenTemplate>
                 <Title text={patientName + " " + patientAge + " " + patientGender} />
-                {/* <Title text={JSON.stringify(ini_symptoms)} /> */}
                 <CustomSubTitle text="Personal Information" />
                 <View style={styles.GridContainer}>
                     <CustomButton

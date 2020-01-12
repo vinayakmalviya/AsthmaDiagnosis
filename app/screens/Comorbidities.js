@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, View, Text, CheckBox, Picker } from 'react-native';
+import { Text } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import { reduxForm, Field } from "redux-form";
 
-import { ContainerGray, CardWhite, RowView } from "../components/Container";
-import { Title, CardHeaderText } from "../components/Text";
-import { FullButton, VariButton } from '../components/Button';
-import { ScrollView } from 'react-native-gesture-handler';
-import { BorderInput } from '../components/Input';
+import { CustomCard, RowView } from "../components/Container";
+import { CustomSubTitle, CustomOverline } from "../components/Text";
+import { CustomButton } from '../components/Button';
+import { CustomInput } from '../components/Input';
+import { CustomChipGroup } from "../components/Chip";
+import { ScreenTemplate } from '../components/ScreenTemplate';
+
 import { comorbiditiesSubmit } from '../actions/infoActions';
 
-const renderInput = props => {
-    const { text, width, multiline, numberOfLines } = props;
-    return(
-      <BorderInput {...props.input} text={text} width={width} multiline={multiline} numberOfLines={numberOfLines}/>
-    );
-};
-
-const renderCheckBox = ({ input: { onChange, value } }) => {
-    if(value == undefined) {
-        value = false;
-    }
-    return(
-        <CheckBox onValueChange={ value => onChange(value)} value={Boolean(value)}/> //Very bad code do not use after demonstration
-    );
-};
+const styles = EStyleSheet.create({
+    GridContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    GridChildren: {
+        flex: 1,
+        flexBasis: '40%',
+    },
+});
 
 class Comorbidities extends Component {
     static propTypes = {
@@ -39,67 +37,73 @@ class Comorbidities extends Component {
     render() {
         const { handleSubmit } = this.props;
         return(
-            <ContainerGray>
-                <CardHeaderText text="Findings"></CardHeaderText>
-                <CardWhite>
+            <ScreenTemplate>
+                <CustomSubTitle text="Examinations" />
+                <CustomCard>
                     <RowView>
-                        <Text>Pulse:</Text>
-                        {/* <BorderInput text="Value" width="40%"></BorderInput> */}
-                        <Field name="pulse" text="Value" width="40%" component={renderInput} />
-                        <Text>per min</Text>
+                        <Text style={{ marginHorizontal: 12, marginTop: 22, fontWeight: 'bold', fontSize: 16, width: '28%'}}>Pulse:</Text>
+                        <Field 
+                            name="pulse"
+                            label="Value"
+                            suffix="per min"
+                            keyboardType="numeric"
+                            overrideStyles={[styles.GridChildren]}
+                            component={CustomInput}
+                        />
                     </RowView>
                     <RowView>
-                        <Text>Saturation:</Text>
-                        {/* <BorderInput text="Value" width="40%"></BorderInput> */}
-                        <Field name="saturation" text="Value" width="40%" component={renderInput} />
-                        <Text>%</Text>
+                        <Text style={{ marginHorizontal: 12, marginTop: 22, fontWeight: 'bold', fontSize: 16, width: '28%'}}>Saturation:</Text>
+                        <Field 
+                            name="saturation"
+                            label="Value"
+                            suffix="%"
+                            keyboardType="numeric"
+                            overrideStyles={[styles.GridChildren]}
+                            component={CustomInput}
+                        />
                     </RowView>
                     <RowView>
-                        <Text>Blood Pressure:</Text>
-                        {/* <BorderInput text="Value" width="40%"></BorderInput> */}
-                        <Field name="blood_pressure" text="Value" width="40%" component={renderInput} />
-                        <Text>mm of Hg</Text>
+                        <Text style={{ marginHorizontal: 12, marginTop: 22, fontWeight: 'bold', fontSize: 16, width: '28%'}}>Blood Pressure:</Text>
+                        <Field 
+                            name="blood_pressure"
+                            label="Value"
+                            suffix="mm of Hg"
+                            keyboardType="numeric"
+                            overrideStyles={[styles.GridChildren]}
+                            component={CustomInput}
+                        />
                     </RowView>
                     <RowView>
-                        <Text>Deviated Nasal Septum:</Text>
-                        <Text>Yes:</Text>
-                        <Field name="dns" component={renderCheckBox} />
-                        {/* <CheckBox></CheckBox> */}
-                        <Text>No:</Text>
-                        {/* <CheckBox></CheckBox> */}
-                        <Field name="dns1" component={renderCheckBox} />
+                        <Text style={{ marginHorizontal: 12, marginTop: 22, fontWeight: 'bold', fontSize: 16, width: '28%'}}>Respiratory Rate:</Text>
+                        <Field 
+                            name="resp_rate"
+                            label="Value"
+                            suffix="breaths per min"
+                            keyboardType="numeric"
+                            overrideStyles={[styles.GridChildren]}
+                            component={CustomInput}
+                        />
                     </RowView>
-                    <RowView>
-                        <Text>Faringitis:</Text>
-                        <Text>Yes:</Text>
-                        {/* <CheckBox></CheckBox> */}
-                        <Field name="fag" component={renderCheckBox} />
-                        <Text>No:</Text>
-                        {/* <CheckBox></CheckBox> */}
-                        <Field name="fag1" component={renderCheckBox} />
-                    </RowView>
-                    <Text>Post Nasal Drip</Text>
-                    <RowView>
-                        <Text>Breath Sounds:</Text>
-                        <Text>Yes:</Text>
-                        {/* <CheckBox></CheckBox> */}
-                        <Field name="bs" component={renderCheckBox} />
-                        <Text>No:</Text>
-                        {/* <CheckBox></CheckBox> */}
-                        <Field name="bs1" component={renderCheckBox} />
-                    </RowView>
-                    <RowView>
-                        <Text>Rhonchi:</Text>
-                        <Text>Yes:</Text>
-                        {/* <CheckBox></CheckBox> */}
-                        <Field name="rhonchi" component={renderCheckBox} />
-                        <Text>No:</Text>
-                        {/* <CheckBox></CheckBox> */}
-                        <Field name="rhonchi1" component={renderCheckBox} />
-                    </RowView>
-                </CardWhite>
-                <FullButton text="Submit Results" onPress={handleSubmit(this.submitComorbidities)}></FullButton>
-            </ContainerGray>
+                </CustomCard>
+                <CustomSubTitle text="URT Findings" />
+                <CustomCard>
+                    <Field
+                        name="urt_findings"
+                        label="Select Findings Shown"
+                        data={[
+                            { name: 'dns', label: 'Deviated Nasal Septum'},
+                            { name: 'pharyn', label: 'Pharyngitis'},
+                            { name: 'rhonchi', label: 'Rhonchi'},
+                            { name: 'pnd', label: 'Post Nasal Drip'},
+                            { name: 'hpt', label: 'Hypertrophic Turbinates'},
+                            { name: 'nps', label: 'Nasal Polyps'},
+                            { name: 'ear_dis', label: 'Ear Discharge'},
+                        ]}
+                        component={CustomChipGroup}
+                    />
+                </CustomCard>
+                <CustomButton text="Submit Results" onPress={handleSubmit(this.submitComorbidities)} />
+            </ScreenTemplate>
         );
     }
 }

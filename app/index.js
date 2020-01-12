@@ -3,13 +3,6 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { Provider } from "react-redux";
 
 import AppContainer from "./config/routes";
-import Dashboard from './screens/Dashboard';
-import Symptoms from './screens/Symptoms';
-import Investigations from './screens/Investigations';
-import Comorbidities from './screens/Comorbidities';
-import PersonalInfo from './screens/PersonalInfo';
-import BackgroundInfo from './screens/BackgroundInfo';
-import Test from './screens/Test';
 import store from './config/store';
 
 EStyleSheet.build({

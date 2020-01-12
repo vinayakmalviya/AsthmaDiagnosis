@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, View, Button, TextInput } from 'react-native';
+import { StatusBar, View } from 'react-native';
 
-import { Container, CustomContainer } from "../components/Container";
+import { CustomContainer } from "../components/Container";
 import { Logo } from '../components/Logo';
-import { FullButton, CustomButton } from '../components/Button';
+import { CustomButton } from '../components/Button';
 
 class Home extends Component {
     static propTypes = {
