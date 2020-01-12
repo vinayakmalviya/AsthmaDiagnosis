@@ -9,6 +9,7 @@ import Symptoms from "../screens/Symptoms";
 import Investigations from "../screens/Investigations";
 import Comorbidities from "../screens/Comorbidities";
 import Test from "../screens/Test";
+import Diagnosis from "../screens/Diagnosis";
 
 const HomeStack = createStackNavigator({
     Home: {
@@ -55,6 +56,12 @@ const HomeStack = createStackNavigator({
                 alignSelf: 'center',
             }
         }
+    },
+    Diagnosis: {
+        screen: Diagnosis,
+        navigationOptions: {
+            headerTitle: 'Diagnosis',
+        },
     },
     Test: {
         screen: Test,

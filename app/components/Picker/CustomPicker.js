@@ -259,7 +259,7 @@ CustomPicker.propTypes = {
   items: PropTypes.array,
   label: PropTypes.string,
   suffix: PropTypes.string,
-  overrideStyles: PropTypes.object,
+  overrideStyles: PropTypes.any,
 }
 
 export default CustomPicker;

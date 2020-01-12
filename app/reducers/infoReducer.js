@@ -39,7 +39,7 @@ const initialState = {
         rhonchi: '',
     },
     tests: {
-        cbc: '',
+        cbc: {},
         xray: '',
         pefr: [],
         spirometry: {},
@@ -102,39 +102,46 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 tests: {
-                    cbc: action.values.cbc,
+                    cbc: {
+                        hb: action.values.hb,
+                        wbc: action.values.wbc,
+                        eosin: action.values.eosin,
+                        aec: action.values.aec,
+                    },
                     xray: action.values.xray,
-                    pefr: [action.values.push],
+                    pefr: [action.values.pefr],
                     spirometry: {
-                        fev1: action.values.fev1,
-                        fev1_range: action.values.fev1_range,
-                        ratio: action.values.ratio,
-                        ratio_range: action.values.ratio_range,
+                        pre: {
+                            fev1: action.values.fev1,
+                            fev1_range: action.values.fev1_range,
+                            ratio: action.values.ratio,
+                            ratio_range: action.values.ratio_range,
+                        },
+                        post: {
+                            fev1: action.values.fev1P,
+                            fev1_range: action.values.fev1_rangeP,
+                            ratio: action.values.ratioP,
+                            ratio_range: action.values.ratio_rangeP,
+                        }
                     },
                     ige: action.values.ige,
-                    skin_prick: {
-                        fungal: action.values.fungal,
-                        insect: action.values.insect,
-                        dust: action.values.dust,
-                        pollen: action.values.pollen,
-                        food: action.values.food,
-                    },
+                    skin_prick: action.values.skin_prick,
                     observations: action.values.observations,
                 }
             }
-            case HANDLE_COMORBIDITIES:
-                return {
-                    ...state,
-                    pulse: action.values.pulse,
-                    saturation: action.values.saturation,
-                    blood_pressure: action.values.blood_pressure,       
-                    resp_rate: action.values.resp_rate,       
-                    dns: action.values.dns,
-                    pharyn: action.values.pharyn,
-                    bs: action.values.dns,
-                    bs1: action.values.dns1,
-                    rhonchi: action.values.rhonchi,
-                }
+        case HANDLE_COMORBIDITIES:
+            return {
+                ...state,
+                pulse: action.values.pulse,
+                saturation: action.values.saturation,
+                blood_pressure: action.values.blood_pressure,       
+                resp_rate: action.values.resp_rate,       
+                dns: action.values.dns,
+                pharyn: action.values.pharyn,
+                bs: action.values.dns,
+                bs1: action.values.dns1,
+                rhonchi: action.values.rhonchi,
+            }
         default:
             return state;
     }

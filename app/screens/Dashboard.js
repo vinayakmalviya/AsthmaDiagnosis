@@ -47,10 +47,11 @@ class Dashboard extends Component {
         navigation.navigate("Investigations");
     };
     handleComplete = () => {
-        console.log("Complete Diagnosis");
+        const { navigation } = this.props;
+        navigation.navigate("Diagnosis");
     }
     render() {
-        const { patientName, patientAge, patientGender, ini_symptoms } = this.props;
+        const { patientName, patientAge, patientGender } = this.props;
         return(
             <ScreenTemplate>
                 <Title text={patientName + " " + patientAge + " " + patientGender} />
@@ -111,7 +112,6 @@ const mapStateToProps = (state) => {
         patientName,
         patientGender,
         patientAge,
-        ini_symptoms,
     };
 };
 

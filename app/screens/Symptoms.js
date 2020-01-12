@@ -29,9 +29,9 @@ class Symptoms extends Component {
         handleSubmit: PropTypes.func,
     };
 
-    submitSymptoms = (values, dispatch, props) => {
+    submitSymptoms = (values, dispatch) => {
         alert(JSON.stringify(values));
-        props.navigation.navigate("Dashboard");
+        dispatch(symptomsSubmit(values));
     }
 
     render() {

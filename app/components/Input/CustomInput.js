@@ -163,7 +163,7 @@ CustomInput.propTypes = {
   meta: PropTypes.object,
   label: PropTypes.string,
   suffix: PropTypes.string,
-  overrideStyles: PropTypes.object,
+  overrideStyles: PropTypes.any,
 }
 
 export default CustomInput;

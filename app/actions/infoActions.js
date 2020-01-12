@@ -34,4 +34,4 @@ export const investigationsSubmit = values => ({
 export const comorbiditiesSubmit = values => ({
     type: HANDLE_COMORBIDITIES,
     values,
-})
+});

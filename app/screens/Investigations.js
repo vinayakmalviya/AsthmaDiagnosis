@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, CheckBox, Picker } from 'react-native';
+import { View, Text } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { reduxForm, Field } from 'redux-form';
 
@@ -186,9 +186,8 @@ class Investigations extends Component {
                 </CustomCard>
                 <CustomSubTitle text="IgE" />
                 <CustomCard>
-                    <CustomOverline text="Findings:" />
+                    <CustomOverline text="Select if High" />
                     <RowView>
-                        <Field name="ige" label="Low" component={CustomChip} />
                         <Field name="ige" label="High" component={CustomChip} />
                     </RowView>
                 </CustomCard>
