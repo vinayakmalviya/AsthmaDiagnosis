@@ -28,30 +28,38 @@ class Dashboard extends Component {
     static propTypes = {
         navigation: PropTypes.object,
     }
+
     handlePersonal = () => {
         console.log("Personal pressed");
     };
+
     handleBackground = () => {
         console.log("Background pressed");
     };
+
     handleSymptoms = () => {
         const { navigation } = this.props;
-        navigation.navigate("Symptoms");
+        navigation.navigate("Symptoms", this.props.navigation.state.params);
     };
+
     handleComorbidities = () => {
         const { navigation } = this.props;
-        navigation.navigate("Comorbidities");
+        navigation.navigate("Comorbidities", this.props.navigation.state.params);
     };
+
     handleInvestigations = () => {
         const { navigation } = this.props;
-        navigation.navigate("Investigations");
+        navigation.navigate("Investigations", this.props.navigation.state.params);
     };
+
     handleComplete = () => {
         const { navigation } = this.props;
-        navigation.navigate("Diagnosis");
+        navigation.navigate("Diagnosis", this.props.navigation.state.params);
     }
+    
     render() {
         const { patientName, patientAge, patientGender } = this.props;
+        const { followup } = this.props.navigation.state.params;
         return(
             <ScreenTemplate>
                 <Title text={patientName + " " + patientAge + " " + patientGender} />
@@ -81,13 +89,14 @@ class Dashboard extends Component {
                             text={butt3}
                             onPress={this.handleSymptoms}
                         />
-                        <CustomButton
-                            largePadding
-                            white
-                            overrideStyles={styles.GridChildren}
-                            text="Comorbidities"
-                            onPress={this.handleComorbidities}
-                        />
+                        {!followup && 
+                            <CustomButton
+                                largePadding
+                                white
+                                overrideStyles={styles.GridChildren}
+                                text="Comorbidities"
+                                onPress={this.handleComorbidities}
+                            />}
                         <CustomButton
                             largePadding
                             white
@@ -104,10 +113,10 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const patientName = state.infoReducer.name;
-    const patientAge = state.infoReducer.age;
-    const patientGender = state.infoReducer.gender;
-    const ini_symptoms = state.infoReducer.ini_symptoms;
+    const patientName = state.infoReducer.name || "";
+    const patientAge = state.infoReducer.age || "";
+    const patientGender = state.infoReducer.gender || "";
+    const ini_symptoms = state.infoReducer.ini_symptoms || "";
     return {
         patientName,
         patientGender,

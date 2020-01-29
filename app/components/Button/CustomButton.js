@@ -13,7 +13,7 @@ const CustomButton = ({ text, onPress, white = false, large = false, largePaddin
             margin: 6,
             overflow: 'hidden',
             borderRadius: 8,
-            elevation: largePadding ? 4 : 1,
+            elevation: largePadding ? 4 : 2,
         },
         ButtonBox: {
             padding: largePadding ? 20 : 12,
@@ -31,34 +31,34 @@ const CustomButton = ({ text, onPress, white = false, large = false, largePaddin
 
     if (white) {
         return (
-        <View style={[styles.ButtonContainer, overrideStyles]}>
-            <TouchableNativeFeedback onPress={onPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.08)', true)}>
-            <View style={[styles.ButtonBox, { backgroundColor: '#FFFFFF' }]}>
-                <Text style={[styles.ButtonText, { color: '#11372E' }]}>
-                    {text}
-                </Text>
+            <View style={[styles.ButtonContainer, overrideStyles]}>
+                <TouchableNativeFeedback onPress={onPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.08)', true)}>
+                <View style={[styles.ButtonBox, { backgroundColor: '#FFFFFF' }]}>
+                    <Text style={[styles.ButtonText, { color: '#11372E' }]}>
+                        {text}
+                    </Text>
+                </View>
+                </TouchableNativeFeedback>
             </View>
-            </TouchableNativeFeedback>
-        </View>
         );
     } else {
         return (
-        <View style={[styles.ButtonContainer, overrideStyles]}>
-            <TouchableNativeFeedback
-            onPress={onPress}
-            useForeground={true}
-            background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.25)', true)}>
-            <LinearGradient
-                colors={['#48FF7F', '#00CCAA']}
-                start={[0, 0]}
-                end={[1, 1]}
-                style={{ flex: 1 }}>
-                <View style={styles.ButtonBox}>
-                <Text style={styles.ButtonText}>{text}</Text>
-                </View>
-            </LinearGradient>
-            </TouchableNativeFeedback>
-        </View>
+            <View style={[styles.ButtonContainer, overrideStyles]}>
+                <TouchableNativeFeedback
+                onPress={onPress}
+                useForeground={true}
+                background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.25)', true)}>
+                <LinearGradient
+                    colors={['#48FF7F', '#00CCAA']}
+                    start={[0, 0]}
+                    end={[1, 1]}
+                    style={{ flex: 1 }}>
+                    <View style={styles.ButtonBox}>
+                        <Text style={styles.ButtonText}>{text}</Text>
+                    </View>
+                </LinearGradient>
+                </TouchableNativeFeedback>
+            </View>
         );
     }
 };

@@ -19,7 +19,7 @@ const CustomContainer = ({ children, gradient=false }) => {
         return (
         <View style={styles.Flex}>
             <LinearGradient colors={['#48FF7F', '#00CCAA']} style={styles.Flex}>
-            <View style={styles.Flex}>{children}</View>
+                <View style={styles.Flex}>{children}</View>
             </LinearGradient>
         </View>
         );

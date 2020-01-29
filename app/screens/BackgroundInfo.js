@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from "redux-form";
 
 import { CustomCard } from "../components/Container";
+import { CustomChipGroup } from "../components/Chip";
 import { CustomInput } from "../components/Input";
 import { CustomSubTitle } from "../components/Text";
 import { CustomButton } from "../components/Button";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
-import { backgroundlInfoSubmit } from '../actions/infoActions';
+import { backgroundInfoSubmit } from '../actions/infoActions';
 
 class BackgroundInfo extends Component {
     static propTypes = {
@@ -17,7 +18,7 @@ class BackgroundInfo extends Component {
     }
     handleNext = (values, dispatch) => {
         alert(JSON.stringify(values));
-        dispatch(backgroundlInfoSubmit(values));
+        dispatch(backgroundInfoSubmit(values));
     };
     render() {
         const { handleSubmit } = this.props;
@@ -33,8 +34,6 @@ class BackgroundInfo extends Component {
                         keyboardType="default"
                         component={CustomInput}
                     />
-                </CustomCard>
-                <CustomCard>
                     <Field 
                         name="childhood"
                         label="Childhood History"
@@ -43,6 +42,31 @@ class BackgroundInfo extends Component {
                         keyboardType="default"
                         component={CustomInput}
                     />
+                </CustomCard>
+                <CustomSubTitle text="Allergy History" />
+                <CustomCard>
+                    <Field
+                        name="allergy_hist"
+                        label="Select which are present:"
+                        component={CustomChipGroup}
+                        data={[
+                            { name: 'alr', label: 'Allergic Rhinitis'},
+                            { name: 'adt', label: 'Atopic Dermatitis'},
+                            { name: 'dust_a', label: 'Dust Allergy'},
+                            { name: 'drug', label: 'Drug Allergy'},
+                            { name: 'food_a', label: 'Food Allergy'},
+                            { name: 'eia', label: 'Exercise Induced Asthma'},
+                            { name: 'gerd', label: 'GERD'},
+                        ]}
+                    />
+                    <Field
+                        name="other_allergs"
+                        label="Other Allergies"
+                        component={CustomInput}
+                    />
+                </CustomCard>
+                <CustomSubTitle text="More Notes"/>
+                <CustomCard>
                     <Field
                         name="observations"
                         label="Additional Observations"
@@ -65,6 +89,6 @@ export default reduxForm({
         observations: "",
     },
     onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Dashboard");
+        props.navigation.navigate("Dashboard", { followup: false });
     }
 })(BackgroundInfo);

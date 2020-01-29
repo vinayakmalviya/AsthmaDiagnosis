@@ -64,8 +64,8 @@ class PersonalInfo extends Component {
                             overrideStyles={[styles.GridChildren]}
                             label="Gender"
                             items={[
-                            { label: 'Male', value: 'Male' },
-                            { label: 'Female', value: 'Female' },
+                                { label: 'Male', value: 'Male' },
+                                { label: 'Female', value: 'Female' },
                             ]}
                         />
                     </View>
@@ -78,10 +78,10 @@ class PersonalInfo extends Component {
                         component={CustomPicker}
                         label="Occupational Risk"
                         items={[
-                            { label: '3 - High Risk', value: 3 },
-                            { label: '2 - Medium Risk', value: 2 },
-                            { label: '1 - Low Risk', value: 1 },
-                            { label: '0 - No Risk', value: 0 },
+                            { label: '3 - High Risk', value: "3" },
+                            { label: '2 - Medium Risk', value: "2" },
+                            { label: '1 - Low Risk', value: "1" },
+                            { label: '0 - No Risk', value: "0" },
                         ]}
                     />
                     <CustomOverline text="Habits" />
@@ -120,6 +120,6 @@ export default reduxForm({
         observations: "",
     },
     onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("BackgroundInfo");
+        props.navigation.navigate("BackgroundInfo", { followup: false });
     }
 })(PersonalInfo);

@@ -16,7 +16,7 @@ export const personalInfoSubmit = values => ({
     values,
 });
 
-export const backgroundlInfoSubmit = values => ({
+export const backgroundInfoSubmit = values => ({
     type: HANDLE_FAMILY_INFO,
     values,
 });

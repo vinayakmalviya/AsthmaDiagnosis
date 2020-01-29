@@ -15,6 +15,7 @@ const initialState = {
     background: {
         family: '',
         childhood: '',
+        allergy_hist: {},
         observations: '',
     },
     ini_symptoms: {
@@ -30,13 +31,9 @@ const initialState = {
     comorbidities: {
         pulse: '',
         saturation: '',
+        blood_pressure: '',
         resp_rate: '',
-        BP: '',
-        RR: '',
-        DNS: '',
-        pharyn: '',
-        PND: '',
-        rhonchi: '',
+        urt_findings: {}
     },
     tests: {
         cbc: {},
@@ -81,6 +78,7 @@ const reducer = (state = initialState, action) => {
                 background: {
                     family: action.values.family,
                     childhood: action.values.childhood,
+                    allergy_hist: action.values.allergy_hist,
                     observations: action.values.observations,
                 },
             }
@@ -109,7 +107,7 @@ const reducer = (state = initialState, action) => {
                         aec: action.values.aec,
                     },
                     xray: action.values.xray,
-                    pefr: [action.values.pefr],
+                    pefr: [...state.tests.pefr, action.values.pefr],
                     spirometry: {
                         pre: {
                             fev1: action.values.fev1,
@@ -132,15 +130,13 @@ const reducer = (state = initialState, action) => {
         case HANDLE_COMORBIDITIES:
             return {
                 ...state,
-                pulse: action.values.pulse,
-                saturation: action.values.saturation,
-                blood_pressure: action.values.blood_pressure,       
-                resp_rate: action.values.resp_rate,       
-                dns: action.values.dns,
-                pharyn: action.values.pharyn,
-                bs: action.values.dns,
-                bs1: action.values.dns1,
-                rhonchi: action.values.rhonchi,
+                comorbidities: {
+                    pulse: action.values.pulse,
+                    saturation: action.values.saturation,
+                    blood_pressure: action.values.blood_pressure,       
+                    resp_rate: action.values.resp_rate,       
+                    urt_findings: action.values.urt_findings,
+                }
             }
         default:
             return state;
@@ -148,3 +144,66 @@ const reducer = (state = initialState, action) => {
 };
 
 export default reducer;
+
+/* const initialState = {
+    name: '',
+    age: 0,
+    gender: '',
+    personal: {
+        risk: 0,
+        smoker: false,
+        diabetic: false,
+        hypertension: false,
+        obesity: false,
+        observations: '',
+    },
+    background: {
+        family: '',
+        childhood: '',
+        allergy_hist: {
+            alr: '',
+            adt: '',
+            dust_a: '',
+            drug: '',
+            food_a: '',
+            eia: '',
+            gerd: '',
+        },
+        observations: '',
+    },
+    ini_symptoms: {
+        date: '',
+        wheezing: '',
+        shortness_of_breath: '',
+        cough: '',
+        chest_tightness: '',
+        nighttime: '',
+        restriction: '',
+        observations: '',
+    },
+    comorbidities: {
+        pulse: '',
+        saturation: '',
+        blood_pressure: '',
+        resp_rate: '',
+        urt_findings: {
+            dns: '',
+            pharyn: '',
+            rhonchi: '',
+            pnd: '',
+            hpt: '',
+            nps: '',
+            ear_dis: '',
+        }
+    },
+    tests: {
+        cbc: {},
+        xray: '',
+        pefr: [],
+        spirometry: {},
+        IGE: '',
+        skin_prick: {},
+        observations: '',
+    },
+    follow_up: []
+}; */

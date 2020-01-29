@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { DataTable } from 'react-native-paper';
 import { reduxForm, Field } from 'redux-form';
 
 import { ScreenTemplate } from '../components/ScreenTemplate';
 import { CustomInput } from '../components/Input';
 import { CustomPicker } from '../components/Picker';
 import { CustomDateTimePicker } from '../components/DateTimePicker';
-import { CustomCheckBox } from '../components/CheckBox';
 import { CustomChip, CustomChipGroup } from '../components/Chip';
-import { CustomSubTitle, Title } from '../components/Text';
+import { CustomSubTitle, CustomOverline } from '../components/Text';
 import { CustomCard } from '../components/Container';
 import { CustomButton } from '../components/Button';
 
 import { testSubmit } from '../actions/infoActions';
+import { connect } from 'react-redux';
 
 
 const styles = EStyleSheet.create({
@@ -37,12 +37,12 @@ class Form extends Component {
     alert(JSON.stringify(values));
     dispatch(testSubmit(values));
   };
+
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, abcd } = this.props;
     return (
       <ScreenTemplate>
-        <Title text="Padding Text 1" />
-        <CustomSubTitle text="Padding Sub Text 1" />
+        <CustomSubTitle text="Testing Components" />
         <CustomCard>
           <Field label="Name" name="name" component={CustomInput} />
           <Field
@@ -65,19 +65,8 @@ class Form extends Component {
               { label: 'Female', value: 'F' },
             ]}
           />
-          <View style={styles.GridContainer}>
-            <Field
-              name="check1"
-              component={CustomCheckBox}
-              label="Check This"
-            />
-            <Field
-              name="check2"
-              component={CustomCheckBox}
-              label="And This"
-            />
-            <Field name="chip1" component={CustomChip} label="A Chip" />
-          </View> 
+          <CustomOverline text="Single Chip" />
+          <Field name="chip1" component={CustomChip} label="A Chip" />
           <Field
             name="chipgroup1"
             component={CustomChipGroup}
@@ -88,16 +77,41 @@ class Form extends Component {
               { name: 'listchip3', label: 'Chip Three' },
             ]}
           />
-        <CustomButton text="Submit" onPress={handleSubmit(this.onSubmit)} />
+          <CustomButton text="Submit" onPress={handleSubmit(this.onSubmit)} />
+        </CustomCard>
+        <CustomSubTitle text="Table Test" />
+        <CustomCard>
+          <CustomOverline text="Here is table" />
+          <DataTable>
+            <DataTable.Header>
+              <DataTable.Title>Column 1</DataTable.Title>
+              <DataTable.Title>Column 2</DataTable.Title>
+              <DataTable.Title>Column 3</DataTable.Title>
+            </DataTable.Header>
+            <DataTable.Row>
+              <DataTable.Cell>Hello 1</DataTable.Cell>
+              <DataTable.Cell>Hello 2</DataTable.Cell>
+              <DataTable.Cell>Hello 3</DataTable.Cell>
+            </DataTable.Row>
+            <DataTable.Row>
+              <DataTable.Cell>Hello 4</DataTable.Cell>
+              <DataTable.Cell>Hello 5</DataTable.Cell>
+              <DataTable.Cell>Hello 6</DataTable.Cell>
+            </DataTable.Row>
+          </DataTable>
         </CustomCard>
       </ScreenTemplate>
     );
   }
 }
 
-export default reduxForm({
+const mapStateToProps = (state) => ({
+  abcd: state.infoReducer,
+})
+
+export default connect(mapStateToProps)(reduxForm({
   form: 'test',
   onSubmitSuccess: (result, dispatch, props) => {
     props.navigation.navigate('Dashboard');
   },
-})(Form);
+})(Form));

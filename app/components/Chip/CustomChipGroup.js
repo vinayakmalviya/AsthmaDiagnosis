@@ -50,6 +50,7 @@ const CustomChipGroup = ({
             <View style={styles.Container}>
                 {data.map(item => (
                 <CustomChip
+                    key={item.label}
                     label={item.label}
                     overrideStyles={styles.Chips}
                     input={{
