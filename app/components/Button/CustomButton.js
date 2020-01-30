@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const CustomButton = ({ text, onPress, white = false, large = false, largePadding = null, overrideStyles=null }) => {
+const CustomButton = ({ text, onPress, white = false, large = false, largePadding = null, overrideStyles=null, disabled = false }) => {
     if(largePadding==null)
         largePadding=large;
 
@@ -32,7 +32,7 @@ const CustomButton = ({ text, onPress, white = false, large = false, largePaddin
     if (white) {
         return (
             <View style={[styles.ButtonContainer, overrideStyles]}>
-                <TouchableNativeFeedback onPress={onPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.08)', true)}>
+                <TouchableNativeFeedback disabled={disabled} onPress={onPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.08)', true)}>
                 <View style={[styles.ButtonBox, { backgroundColor: '#FFFFFF' }]}>
                     <Text style={[styles.ButtonText, { color: '#11372E' }]}>
                         {text}
@@ -47,16 +47,24 @@ const CustomButton = ({ text, onPress, white = false, large = false, largePaddin
                 <TouchableNativeFeedback
                 onPress={onPress}
                 useForeground={true}
+                disabled={disabled}
                 background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.25)', true)}>
-                <LinearGradient
-                    colors={['#48FF7F', '#00CCAA']}
-                    start={[0, 0]}
-                    end={[1, 1]}
-                    style={{ flex: 1 }}>
-                    <View style={styles.ButtonBox}>
-                        <Text style={styles.ButtonText}>{text}</Text>
-                    </View>
-                </LinearGradient>
+                    {disabled ? 
+                        <View style={{ backgroundColor: '#eee', flex: 1}}>
+                            <View style={styles.ButtonBox}>
+                                <Text style={styles.ButtonText}>{text}</Text>
+                            </View>
+                        </View> : 
+                        <LinearGradient
+                        colors={['#48FF7F', '#00CCAA']}
+                        start={[0, 0]}
+                        end={[1, 1]}
+                        style={{ flex: 1 }}>
+                            <View style={styles.ButtonBox}>
+                                <Text style={styles.ButtonText}>{text}</Text>
+                            </View>
+                        </LinearGradient>
+                    }
                 </TouchableNativeFeedback>
             </View>
         );

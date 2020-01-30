@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, StatusBar, KeyboardAvoidingView, Keyboard } from 'react-native';
-import { Header } from 'react-navigation-stack';
+import { View, StatusBar, KeyboardAvoidingView } from 'react-native';
 import { reduxForm, Field } from "redux-form";
 
 import { CustomContainer } from "../components/Container";

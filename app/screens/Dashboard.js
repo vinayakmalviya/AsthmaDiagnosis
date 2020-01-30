@@ -113,9 +113,9 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const patientName = state.infoReducer.name || "";
-    const patientAge = state.infoReducer.age || "";
-    const patientGender = state.infoReducer.gender || "";
+    const patientName = state.infoReducer.name || "Name";
+    const patientAge = state.infoReducer.age || "Age";
+    const patientGender = state.infoReducer.gender || "Gender";
     const ini_symptoms = state.infoReducer.ini_symptoms || "";
     return {
         patientName,
