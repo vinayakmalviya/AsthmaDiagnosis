@@ -55,6 +55,16 @@ class Investigations extends Component {
                             />
                         </View>
                     </CustomCard>
+                    <CustomSubTitle text="Observations" />
+                    <CustomCard>
+                        <Field
+                            name="observations"
+                            label="Additional Observations"
+                            multiline={true}
+                            numberOfLines={4}
+                            component={CustomInput}
+                        />
+                    </CustomCard>
                     <CustomButton text="Submit Results" onPress={handleSubmit(this.submitInvestigations)} />
                 </ScreenTemplate>
             );
