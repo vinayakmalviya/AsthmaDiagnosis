@@ -25,11 +25,11 @@ const ScreenTemplate = ({ children, toolbar }) => {
             <StatusBar backgroundColor="#ffffff" animated={true} translucent={false} barStyle="dark-content" />
             <SafeAreaView style={{ flex: 1 }}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <CustomContainer style={{ flex: 1 }}>
-                    <ScrollView styles={{ flex: 1 }}>
-                    <View style={{margin: 6}}>{children}</View>
-                    </ScrollView>
-                </CustomContainer>
+                    <CustomContainer style={{ flex: 1 }}>
+                        <ScrollView styles={{ flex: 1 }}>
+                            <View style={{margin: 6}}>{children}</View>
+                        </ScrollView>
+                    </CustomContainer>
                 </TouchableWithoutFeedback>
             </SafeAreaView>
         </KeyboardAvoidingView>

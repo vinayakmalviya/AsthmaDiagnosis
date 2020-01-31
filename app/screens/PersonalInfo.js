@@ -30,12 +30,21 @@ class PersonalInfo extends Component {
         handleSubmit: PropTypes.func,
         dispatch: PropTypes.func,
     }
+
     handleNext = (values, dispatch) => {
         alert(JSON.stringify(values));
         dispatch(personalInfoSubmit(values));
     };
+
+    required = v => {
+        if(!v || v == '') {
+            return "This field is required";
+        }
+        return undefined;
+    }
+
     render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit, valid } = this.props;
         return(
             <ScreenTemplate toolbar={{ title: 'New Patient' }}>
                 <CustomSubTitle text="Personal Information"/>
@@ -46,6 +55,7 @@ class PersonalInfo extends Component {
                         autoCompleteType="name"
                         textContentType="name"
                         keyboardType="default"
+                        validate={this.required}
                         component={CustomInput}
                     />
                     <View style={styles.GridContainer}>
@@ -55,18 +65,20 @@ class PersonalInfo extends Component {
                             suffix="years"
                             keyboardType="numeric"
                             overrideStyles={[styles.GridChildren]}
+                            validate={this.required}
                             component={CustomInput}
                         />
                         <Field
                             mode="dropdown"
                             name="gender"
-                            component={CustomPicker}
                             overrideStyles={[styles.GridChildren]}
                             label="Gender"
                             items={[
-                            { label: 'Male', value: 'Male' },
-                            { label: 'Female', value: 'Female' },
+                                { label: 'Male', value: 'Male' },
+                                { label: 'Female', value: 'Female' },
                             ]}
+                            validate={this.required}
+                            component={CustomPicker}
                         />
                     </View>
                 </CustomCard>
@@ -75,14 +87,15 @@ class PersonalInfo extends Component {
                     <Field
                         mode="dropdown"
                         name="occupation"
-                        component={CustomPicker}
                         label="Occupational Risk"
                         items={[
-                            { label: '3 - High Risk', value: 3 },
-                            { label: '2 - Medium Risk', value: 2 },
-                            { label: '1 - Low Risk', value: 1 },
-                            { label: '0 - No Risk', value: 0 },
+                            { label: '3 - High Risk', value: "3" },
+                            { label: '2 - Medium Risk', value: "2" },
+                            { label: '1 - Low Risk', value: "1" },
+                            { label: '0 - No Risk', value: "0" },
                         ]}
+                        validate={this.required}
+                        component={CustomPicker}
                     />
                     <CustomOverline text="Habits" />
                     <RowView style={styles.GridChildren}>
@@ -104,7 +117,7 @@ class PersonalInfo extends Component {
                         component={CustomInput}
                     />
                 </CustomCard>
-                <CustomButton text="NEXT STEP" onPress={handleSubmit(this.handleNext)} />
+                <CustomButton disabled={!valid} text="NEXT STEP" onPress={handleSubmit(this.handleNext)} />
             </ScreenTemplate>
         );
     }
@@ -120,6 +133,6 @@ export default reduxForm({
         observations: "",
     },
     onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("BackgroundInfo");
+        props.navigation.navigate("BackgroundInfo", { followup: false });
     }
 })(PersonalInfo);

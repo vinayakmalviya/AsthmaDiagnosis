@@ -36,10 +36,17 @@ class Symptoms extends Component {
 
     render() {
         const { handleSubmit } = this.props;
+<<<<<<< HEAD
         const followup = this.props.navigation.getParam('followup');
         return(
             <ScreenTemplate>
                 {followup ? (<CustomSubTitle text="Select Symptoms For Followup"/>) : (<CustomSubTitle text="Select Symptoms"/>)}
+=======
+        const { followup } = this.props.navigation.state.params;
+        return(
+            <ScreenTemplate>
+                {followup ? <CustomSubTitle text="Select Follow Up Symptoms" /> : <CustomSubTitle text="Select Symptoms" />}
+>>>>>>> upstream/master
                 <CustomCard>
                     <View style={styles.GridContainer}>
                         <Text style={{ marginHorizontal: 12, marginTop: 20, fontWeight: 'bold', fontSize: 16, width: '24%' }}>Wheezing:</Text>
@@ -89,6 +96,23 @@ class Symptoms extends Component {
                             ]}
                         />
                     </View>
+                    {followup && 
+                        <View style={[styles.GridContainer, ]}>
+                            <Text style={{ marginHorizontal: 12, marginTop: 20, fontWeight: 'bold', fontSize: 16, width: '24%' }}>Inhaler Usage:</Text>
+                            <Field
+                                mode="dropdown"
+                                name="inhaler"
+                                component={CustomPicker}
+                                label="Select"
+                                overrideStyles={[styles.GridChildren]}
+                                items={[
+                                    { label: 'No Occurence', value: 0 },
+                                    { label: '2 Days a week', value: 1 },
+                                    { label: 'Daily', value: 2 },
+                                    { label: 'Multiple times in a day', value: 3 },
+                                ]}
+                            />
+                        </View>}
                     <View style={[styles.GridContainer]}>
                         <Text style={{ marginHorizontal: 12, marginTop: 20, fontWeight: 'bold', fontSize: 16, width: '24%' }}>Chest Tightness:</Text>
                         <Field
@@ -157,6 +181,6 @@ class Symptoms extends Component {
 export default reduxForm({
     form: 'symptoms',
     onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Dashboard");
+        props.navigation.navigate("Dashboard", props.navigation.state.params);
     }
 })(Symptoms);

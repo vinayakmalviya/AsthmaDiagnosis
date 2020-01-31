@@ -17,7 +17,7 @@ const CustomIcon = ({ icon, width = 24, height = 24, fill = '#000' }) => {
     return (
         <Svg viewBox="0 0 24 24" width={width} height={height} fill={fill}>
             {icons[icon].map((path, i) => (
-                <Path fill={path.fill ? path.fill : fill} d={path.d} />
+                <Path key={path} fill={path.fill ? path.fill : fill} d={path.d} />
             ))}
         </Svg>
     );

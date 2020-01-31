@@ -13,12 +13,20 @@ class Home extends Component {
 
     newPatient = () => {
         const { navigation } = this.props;
+<<<<<<< HEAD
         navigation.push('PersonalInfo', { followup: false });
+=======
+        navigation.navigate('PersonalInfo', { followup: false });
+>>>>>>> upstream/master
     }
 
     followUp = () => {
         const { navigation } = this.props;
+<<<<<<< HEAD
         navigation.navigate('Dashboard', { followup: true });
+=======
+        navigation.navigate('SelectPatient', { followup: true });
+>>>>>>> upstream/master
     }
     render() {
         return(

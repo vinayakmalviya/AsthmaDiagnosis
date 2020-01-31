@@ -28,39 +28,56 @@ class Dashboard extends Component {
     static propTypes = {
         navigation: PropTypes.object,
     }
+
     handlePersonal = () => {
         console.log("Personal pressed");
     };
+
     handleBackground = () => {
         console.log("Background pressed");
     };
+
     handleSymptoms = () => {
         const { navigation } = this.props;
-        navigation.navigate("Symptoms");
+        navigation.navigate("Symptoms", this.props.navigation.state.params);
     };
+<<<<<<< HEAD
     handleSymptomsFollow = () => {
         const { navigation } = this.props;
         navigation.navigate("Symptoms", this.props.navigation.state.params);
     };
+=======
+
+>>>>>>> upstream/master
     handleComorbidities = () => {
         const { navigation } = this.props;
-        navigation.navigate("Comorbidities");
+        navigation.navigate("Comorbidities", this.props.navigation.state.params);
     };
+<<<<<<< HEAD
     handleInvestigationsFollow = () => {
         const { navigation } = this.props;
         navigation.navigate("Investigations", this.props.navigation.state.params);
     };
+=======
+
+>>>>>>> upstream/master
     handleInvestigations = () => {
         const { navigation } = this.props;
-        navigation.navigate("Investigations");
+        navigation.navigate("Investigations", this.props.navigation.state.params);
     };
+
     handleComplete = () => {
         const { navigation } = this.props;
-        navigation.navigate("Diagnosis");
+        navigation.navigate("Diagnosis", this.props.navigation.state.params);
     }
+    
     render() {
         const { patientName, patientAge, patientGender } = this.props;
+<<<<<<< HEAD
         const followup = this.props.navigation.getParam('followup');
+=======
+        const { followup } = this.props.navigation.state.params;
+>>>>>>> upstream/master
         return(
             <ScreenTemplate>
                 <Title text={patientName + " " + patientAge + " " + patientGender} />
@@ -97,13 +114,17 @@ class Dashboard extends Component {
                             text={butt3}
                             onPress={this.handleSymptoms}
                         />
+<<<<<<< HEAD
                         )}
+=======
+>>>>>>> upstream/master
                         {!followup && 
                             <CustomButton
                                 largePadding
                                 white
                                 overrideStyles={styles.GridChildren}
                                 text="Comorbidities"
+<<<<<<< HEAD
                                 onPress={this.handleComorbidities}/>}
                         {followup? (<CustomButton
                             largePadding
@@ -112,6 +133,11 @@ class Dashboard extends Component {
                             text={butt4}
                             onPress={this.handleInvestigationsFollow}
                         />) : (<CustomButton
+=======
+                                onPress={this.handleComorbidities}
+                            />}
+                        <CustomButton
+>>>>>>> upstream/master
                             largePadding
                             white
                             overrideStyles={styles.GridChildren}
@@ -129,10 +155,10 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const patientName = state.infoReducer.name;
-    const patientAge = state.infoReducer.age;
-    const patientGender = state.infoReducer.gender;
-    const ini_symptoms = state.infoReducer.ini_symptoms;
+    const patientName = state.infoReducer.name || "Name";
+    const patientAge = state.infoReducer.age || "Age";
+    const patientGender = state.infoReducer.gender || "Gender";
+    const ini_symptoms = state.infoReducer.ini_symptoms || "";
     return {
         patientName,
         patientGender,

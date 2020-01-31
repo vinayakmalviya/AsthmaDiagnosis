@@ -10,6 +10,7 @@ import Investigations from "../screens/Investigations";
 import Comorbidities from "../screens/Comorbidities";
 import Test from "../screens/Test";
 import Diagnosis from "../screens/Diagnosis";
+import SelectPatient from "../screens/SelectPatient";
 
 const HomeStack = createStackNavigator({
     Home: {
@@ -28,6 +29,12 @@ const HomeStack = createStackNavigator({
         screen: BackgroundInfo,
         navigationOptions: {
             headerTitle: 'New Patient',
+        }
+    },
+    SelectPatient: {
+        screen: SelectPatient,
+        navigationOptions: {
+            header: () => null,
         }
     },
     Dashboard: {
