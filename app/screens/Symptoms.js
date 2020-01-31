@@ -36,9 +36,10 @@ class Symptoms extends Component {
 
     render() {
         const { handleSubmit } = this.props;
+        const followup = this.props.navigation.getParam('followup');
         return(
             <ScreenTemplate>
-                <CustomSubTitle text="Select Symptoms" />
+                {followup ? (<CustomSubTitle text="Select Symptoms For Followup"/>) : (<CustomSubTitle text="Select Symptoms"/>)}
                 <CustomCard>
                     <View style={styles.GridContainer}>
                         <Text style={{ marginHorizontal: 12, marginTop: 20, fontWeight: 'bold', fontSize: 16, width: '24%' }}>Wheezing:</Text>

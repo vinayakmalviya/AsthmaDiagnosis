@@ -13,12 +13,12 @@ class Home extends Component {
 
     newPatient = () => {
         const { navigation } = this.props;
-        navigation.push('PersonalInfo');
+        navigation.push('PersonalInfo', { followup: false });
     }
 
     followUp = () => {
         const { navigation } = this.props;
-        navigation.navigate('Test');
+        navigation.navigate('Dashboard', { followup: true });
     }
     render() {
         return(

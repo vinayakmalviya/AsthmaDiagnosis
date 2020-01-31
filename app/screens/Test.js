@@ -7,7 +7,7 @@ import { reduxForm, Field } from 'redux-form';
 import { ScreenTemplate } from '../components/ScreenTemplate';
 import { CustomInput } from '../components/Input';
 import { CustomPicker } from '../components/Picker';
-import { CustomDateTimePicker } from '../components/DateTimePicker';
+// import { CustomDateTimePicker } from '../components/DateTimePicker';
 import { CustomCheckBox } from '../components/CheckBox';
 import { CustomChip, CustomChipGroup } from '../components/Chip';
 import { CustomSubTitle, Title } from '../components/Text';
@@ -54,7 +54,7 @@ class Form extends Component {
             keyboardType="email-address"
             component={CustomInput}
           />
-          <Field label="Date of Birth" name="dob" mode="date" component={CustomDateTimePicker} />
+          {/* <Field label="Date of Birth" name="dob" mode="date" component={CustomDateTimePicker} /> */}
           <Field
             mode="dropdown"
             name="gender"

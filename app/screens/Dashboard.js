@@ -38,9 +38,17 @@ class Dashboard extends Component {
         const { navigation } = this.props;
         navigation.navigate("Symptoms");
     };
+    handleSymptomsFollow = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Symptoms", this.props.navigation.state.params);
+    };
     handleComorbidities = () => {
         const { navigation } = this.props;
         navigation.navigate("Comorbidities");
+    };
+    handleInvestigationsFollow = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Investigations", this.props.navigation.state.params);
     };
     handleInvestigations = () => {
         const { navigation } = this.props;
@@ -52,6 +60,7 @@ class Dashboard extends Component {
     }
     render() {
         const { patientName, patientAge, patientGender } = this.props;
+        const followup = this.props.navigation.getParam('followup');
         return(
             <ScreenTemplate>
                 <Title text={patientName + " " + patientAge + " " + patientGender} />
@@ -74,27 +83,43 @@ class Dashboard extends Component {
                 </View>
                 <CustomSubTitle text="Diagnosis" />
                     <View style={styles.GridContainer}>
-                        <CustomButton
+                        {followup? (<CustomButton
+                            white
+                            largePadding
+                            overrideStyles={styles.GridChildren}
+                            text={butt3}
+                            onPress={this.handleSymptomsFollow}
+                        />) : (
+                            <CustomButton
                             white
                             largePadding
                             overrideStyles={styles.GridChildren}
                             text={butt3}
                             onPress={this.handleSymptoms}
                         />
-                        <CustomButton
+                        )}
+                        {!followup && 
+                            <CustomButton
+                                largePadding
+                                white
+                                overrideStyles={styles.GridChildren}
+                                text="Comorbidities"
+                                onPress={this.handleComorbidities}/>}
+                        {followup? (<CustomButton
                             largePadding
                             white
                             overrideStyles={styles.GridChildren}
-                            text="Comorbidities"
-                            onPress={this.handleComorbidities}
-                        />
-                        <CustomButton
+                            text={butt4}
+                            onPress={this.handleInvestigationsFollow}
+                        />) : (<CustomButton
                             largePadding
                             white
                             overrideStyles={styles.GridChildren}
                             text={butt4}
                             onPress={this.handleInvestigations}
                         />
+
+                        )}
                     </View>
                     <CustomSubTitle text="Results" />
                 <CustomButton large text="COMPLETE DIAGNOSIS" onPress={this.handleComplete} />
