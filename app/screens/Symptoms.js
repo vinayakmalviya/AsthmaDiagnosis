@@ -34,19 +34,19 @@ class Symptoms extends Component {
         dispatch(symptomsSubmit(values));
     }
 
+    required = v => {
+        if(!v || v == '' || v == null) {
+            return "This field is required";
+        }
+        return undefined;
+    }
+
     render() {
-        const { handleSubmit } = this.props;
-<<<<<<< HEAD
-        const followup = this.props.navigation.getParam('followup');
-        return(
-            <ScreenTemplate>
-                {followup ? (<CustomSubTitle text="Select Symptoms For Followup"/>) : (<CustomSubTitle text="Select Symptoms"/>)}
-=======
+        const { handleSubmit, valid } = this.props;
         const { followup } = this.props.navigation.state.params;
         return(
             <ScreenTemplate>
                 {followup ? <CustomSubTitle text="Select Follow Up Symptoms" /> : <CustomSubTitle text="Select Symptoms" />}
->>>>>>> upstream/master
                 <CustomCard>
                     <View style={styles.GridContainer}>
                         <Text style={{ marginHorizontal: 12, marginTop: 20, fontWeight: 'bold', fontSize: 16, width: '24%' }}>Wheezing:</Text>
@@ -57,11 +57,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer, ]}>
@@ -73,11 +74,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer, ]}>
@@ -89,11 +91,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     {followup && 
@@ -106,11 +109,12 @@ class Symptoms extends Component {
                                 label="Select"
                                 overrideStyles={[styles.GridChildren]}
                                 items={[
-                                    { label: 'No Occurence', value: 0 },
-                                    { label: '2 Days a week', value: 1 },
-                                    { label: 'Daily', value: 2 },
-                                    { label: 'Multiple times in a day', value: 3 },
+                                    { label: 'No Occurence', value: '0' },
+                                    { label: '2 Days a week', value: '1' },
+                                    { label: 'Daily', value: '2' },
+                                    { label: 'Multiple times in a day', value: '3' },
                                 ]}
+                                validate={this.required}
                             />
                         </View>}
                     <View style={[styles.GridContainer]}>
@@ -122,11 +126,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer]}>
@@ -138,11 +143,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer]}>
@@ -154,11 +160,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                 </CustomCard>
@@ -172,7 +179,7 @@ class Symptoms extends Component {
                         component={CustomInput}
                     />
                 </CustomCard>
-                <CustomButton text="Submit Symptoms" onPress={handleSubmit(this.submitSymptoms)} />
+                <CustomButton disabled={!valid} text="Submit Symptoms" onPress={handleSubmit(this.submitSymptoms)} />
             </ScreenTemplate>
         );
     }

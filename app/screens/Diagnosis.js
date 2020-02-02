@@ -56,6 +56,23 @@ class Diagnosis extends Component {
                         </DataTable.Row>
                     </DataTable>
                     <CustomOverline text="Spirometry:" />
+                    <DataTable>
+                        <DataTable.Header>
+                            <DataTable.Title>Label</DataTable.Title>
+                            <DataTable.Title>Pre-Bronchodilator</DataTable.Title>
+                            <DataTable.Title>Post-Bronchodilator</DataTable.Title>
+                        </DataTable.Header>
+                        <DataTable.Row>
+                            <DataTable.Cell>FEV1</DataTable.Cell>
+                            <DataTable.Cell>5</DataTable.Cell>
+                            <DataTable.Cell>4</DataTable.Cell>
+                        </DataTable.Row>
+                        <DataTable.Row>
+                            <DataTable.Cell>FEV1/FVC</DataTable.Cell>
+                            <DataTable.Cell>2</DataTable.Cell>
+                            <DataTable.Cell>3</DataTable.Cell>
+                        </DataTable.Row>
+                    </DataTable>
                 </CustomCard>
                 <CustomSubTitle text="Diagnosis" />
                 <CustomCard>
