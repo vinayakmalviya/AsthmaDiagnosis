@@ -9,16 +9,23 @@ import { CustomCard } from '../components/Container'
 import { CustomInput } from '../components/Input';
 import { CustomButton } from '../components/Button';
 
+import { followupRefresh } from "../actions/infoActions";
+import { searchPatient } from "../actions/followupActions";
+import { CustomOverline } from '../components/Text';
+
 class SelectPatient extends Component {
     static propTypes = {
         handleSubmit: PropTypes.func,
         navigation: PropTypes.object,
     }
 
-    handleNext = (values) => {
+    componentDidMount() {
+        this.props.dispatch(followupRefresh());
+    }
+
+    handleNext = (values, dispatch) => {
         alert(JSON.stringify(values));
-        const { navigation } = this.props;
-        navigation.navigate("Dashboard", this.props.navigation.state.params);
+        dispatch(searchPatient(values));
     }
 
     render() {
@@ -34,14 +41,15 @@ class SelectPatient extends Component {
                         <Logo />
                         <View style={{ alignSelf: 'stretch', margin: 6 }}>
                             <CustomCard>
+                                <CustomOverline text="Patient Details" />
                                 <Field
                                     name="pname"
-                                    label="Patient Name"
+                                    label="Name"
                                     component={CustomInput}
                                 />
                                 <Field
                                     name="page"
-                                    label="Patient Age"
+                                    label="Age"
                                     suffix="years"
                                     keyboardType="numeric"
                                     component={CustomInput}
@@ -58,4 +66,7 @@ class SelectPatient extends Component {
 
 export default reduxForm({
     form: 'selectPatient',
+    onSubmitSuccess: (result, dispatch, props) => {
+        props.navigation.navigate("Dashboard", props.navigation.state.params);
+    }
 })(SelectPatient);

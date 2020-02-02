@@ -1,4 +1,4 @@
-import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES } from "../actions/infoActions";
+import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH } from "../actions/infoActions";
 
 const initialState = {
     name: '',
@@ -137,6 +137,10 @@ const reducer = (state = initialState, action) => {
                     resp_rate: action.values.resp_rate,       
                     urt_findings: action.values.urt_findings,
                 }
+            }
+        case HANDLE_REFRESH:
+            return {
+                ...initialState,
             }
         default:
             return state;

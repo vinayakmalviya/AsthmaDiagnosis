@@ -34,6 +34,13 @@ class Symptoms extends Component {
         dispatch(symptomsSubmit(values));
     }
 
+    required = v => {
+        if(!v || v == '') {
+            return "This field is required";
+        }
+        return undefined;
+    }
+
     render() {
         const { handleSubmit } = this.props;
         const { followup } = this.props.navigation.state.params;
@@ -165,7 +172,7 @@ class Symptoms extends Component {
                         component={CustomInput}
                     />
                 </CustomCard>
-                <CustomButton text="Submit Symptoms" onPress={handleSubmit(this.submitSymptoms)} />
+                <CustomButton disabled={!valid} text="Submit Symptoms" onPress={handleSubmit(this.submitSymptoms)} />
             </ScreenTemplate>
         );
     }
