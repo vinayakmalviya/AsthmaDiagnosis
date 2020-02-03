@@ -42,7 +42,7 @@ class Symptoms extends Component {
     }
 
     render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit, valid } = this.props;
         const { followup } = this.props.navigation.state.params;
         return(
             <ScreenTemplate>

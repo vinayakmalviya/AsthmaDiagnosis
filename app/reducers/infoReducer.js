@@ -1,4 +1,5 @@
 import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH } from "../actions/infoActions";
+import { SEARCH_COMPLETE } from "../actions/followupActions";
 
 const initialState = {
     name: '',
@@ -141,6 +142,10 @@ const reducer = (state = initialState, action) => {
         case HANDLE_REFRESH:
             return {
                 ...initialState,
+            }
+        case SEARCH_COMPLETE:
+            return {
+                ...action.result
             }
         default:
             return state;

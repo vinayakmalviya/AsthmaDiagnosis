@@ -43,12 +43,12 @@ class SelectPatient extends Component {
                             <CustomCard>
                                 <CustomOverline text="Patient Details" />
                                 <Field
-                                    name="pname"
+                                    name="name"
                                     label="Name"
                                     component={CustomInput}
                                 />
                                 <Field
-                                    name="page"
+                                    name="age"
                                     label="Age"
                                     suffix="years"
                                     keyboardType="numeric"
