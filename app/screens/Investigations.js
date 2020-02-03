@@ -9,7 +9,7 @@ import { CustomSubTitle, CustomOverline } from "../components/Text";
 import { CustomButton } from '../components/Button';
 import { CustomInput } from '../components/Input';
 import { CustomPicker } from "../components/Picker";
-import { CustomChipGroup } from "../components/Chip";
+import { CustomChipGroup, CustomChipPicker } from "../components/Chip";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
 import { investigationsSubmit } from '../actions/infoActions';
@@ -43,7 +43,6 @@ class Investigations extends Component {
     render() {
         const { handleSubmit, dispatch } = this.props;
         const { followup } = this.props.navigation.state.params;
-        dispatch
         if(followup) {
             return(
                 <ScreenTemplate>
@@ -232,8 +231,9 @@ class Investigations extends Component {
                     </CustomCard>
                     <CustomSubTitle text="Skin Prick" />
                     <CustomCard>
+                        <CustomOverline text="Findings" />
                         <RowView>
-                            <Field
+                            {/* <Field
                                 name="skin_prick"
                                 label="Findings:"
                                 component={CustomChipGroup}
@@ -244,8 +244,46 @@ class Investigations extends Component {
                                     { name: 'pollen', label: 'Pollen'},
                                     { name: 'food', label: 'Food'},
                                 ]}
+                            /> */}
+                            <Field
+                                name="fungal"
+                                component={CustomChipPicker}
+                                label="Fungal"
+                                pickerLabel="Select"
+                                pickerItems={[
+                                    { value: 'Alternaria alternata', label: 'Alternaria alternata' },
+                                    { value: 'Aspergillus fumigatus', label: 'Aspergillus fumigatus' },
+                                    { value: 'Cladosporium herbarum', label: 'Cladosporium herbarum' },
+                                    { value: 'Curvularia lunata', label: 'Curvularia lunata' },
+                                    { value: 'Fusarium moniliforme', label: 'Fusarium moniliforme' },
+                                    { value: 'Helminthosporium halodes', label: 'Helminthosporium halodes' },
+                                    { value: 'Mucor mucedo', label: 'Mucor mucedo' },
+                                    { value: 'Penicilium notatum', label: 'Penicilium notatum' },
+                                    { value: 'Rhizopus nigricans', label: 'Rhizopus nigricans' },
+                                ]}
                             />
                         </RowView>
+                        <Field
+                            name="insect"
+                            component={CustomChipPicker}
+                            label="Insect"
+                            pickerLabel="Select"
+                            pickerItems={[
+                                { value: 'Dermatophagoides farinae', label: 'Dermatophagoides farinae' },
+                                { value: 'Dermatophagoides pteronyssinus', label: 'Dermatophagoides pteronyssinus' },
+                                { value: 'Blomia tropicalis', label: 'Blomia tropicalis' },
+                                { value: 'Tyrophagus putrescentiae', label: 'Tyrophagus putrescentiae' },
+                            ]}
+                        />
+                        <Field
+                                name="skin_prick"
+                                component={CustomChipGroup}
+                                data={[
+                                    { name: 'dust', label: 'Dust'},
+                                    { name: 'pollen', label: 'Pollen'},
+                                    { name: 'food', label: 'Food'},
+                                ]}
+                            />
                     </CustomCard>
                     <CustomSubTitle text="Observations" />
                     <CustomCard>
