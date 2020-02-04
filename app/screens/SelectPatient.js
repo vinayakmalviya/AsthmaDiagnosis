@@ -25,7 +25,9 @@ class SelectPatient extends Component {
 
     handleNext = (values, dispatch) => {
         alert(JSON.stringify(values));
-        dispatch(searchPatient(values));
+        return new Promise((resolve, reject) => {
+            dispatch(searchPatient(values, resolve, reject));
+        });
     }
 
     render() {

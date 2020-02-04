@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { takeEvery, select, call, put } from "redux-saga/effects";
+import { startSubmit, setSubmitFailed, stopSubmit, isSubmitting, submit } from "redux-form";
 
 import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
 
@@ -14,9 +15,11 @@ function* followUpPatient(action) {
        const response = yield call(search, patientData);
        const result = response[0];
        
-       if(result.error) {
-           yield put({ type: SEARCH_ERROR, result });
+       if(result === undefined ) {
+           yield call(action.reject);
+           yield put({ type: SEARCH_ERROR, error: 'Patient Not Found' });
        } else {
+           yield call(action.resolve);
            yield put({ type: SEARCH_COMPLETE, result });
        }
     } catch(e) {
