@@ -5,14 +5,17 @@ import { StatusBar, View } from 'react-native';
 import { CustomContainer } from "../components/Container";
 import { Logo } from '../components/Logo';
 import { CustomButton } from '../components/Button';
+import { connectAlert } from "../components/Alert";
 
 class Home extends Component {
     static propTypes = {
         navigation: PropTypes.object,
+        alertWithType: PropTypes.func,
     };
 
     newPatient = () => {
         const { navigation } = this.props;
+        this.props.alertWithType('success', 'Success', 'It works BC');
         navigation.navigate('PersonalInfo', { followup: false });
     }
 
@@ -34,4 +37,4 @@ class Home extends Component {
     };
 }
 
-export default Home;
+export default connectAlert(Home);

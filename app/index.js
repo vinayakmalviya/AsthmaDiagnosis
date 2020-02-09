@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Provider } from "react-redux";
 
+import { AlertProvider } from './components/Alert';
 import AppContainer from "./config/routes";
 import store from './config/store';
 
@@ -18,7 +19,9 @@ export default class App extends Component {
     render() {
         return(
             <Provider store={store}>
-                <AppContainer />
+                <AlertProvider>
+                    <AppContainer />
+                </AlertProvider>
             </Provider>
         )
     }
