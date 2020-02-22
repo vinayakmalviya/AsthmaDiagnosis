@@ -10,13 +10,11 @@ import { connectAlert } from "../components/Alert";
 class Home extends Component {
     static propTypes = {
         navigation: PropTypes.object,
-        alertWithType: PropTypes.func,
     };
 
     newPatient = () => {
         const { navigation } = this.props;
-        this.props.alertWithType('success', 'Success', 'It works BC');
-        navigation.navigate('PersonalInfo', { followup: false });
+        navigation.navigate('Test', { followup: false });
     }
 
     followUp = () => {
@@ -37,4 +35,4 @@ class Home extends Component {
     };
 }
 
-export default connectAlert(Home);
+export default Home;

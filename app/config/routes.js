@@ -87,4 +87,4 @@ const MainRoute = createStackNavigator({
     headerMode: 'none',
 });
 
-export default createAppContainer(MainRoute);
+export default createAppContainer(HomeStack);

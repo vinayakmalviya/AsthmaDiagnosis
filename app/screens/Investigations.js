@@ -276,14 +276,14 @@ class Investigations extends Component {
                             ]}
                         />
                         <Field
-                                name="skin_prick"
-                                component={CustomChipGroup}
-                                data={[
-                                    { name: 'dust', label: 'Dust'},
-                                    { name: 'pollen', label: 'Pollen'},
-                                    { name: 'food', label: 'Food'},
-                                ]}
-                            />
+                            name="skin_prick"
+                            component={CustomChipGroup}
+                            data={[
+                                { name: 'dust', label: 'Dust'},
+                                { name: 'pollen', label: 'Pollen'},
+                                { name: 'food', label: 'Food'},
+                            ]}
+                        />
                     </CustomCard>
                     <CustomSubTitle text="Observations" />
                     <CustomCard>
