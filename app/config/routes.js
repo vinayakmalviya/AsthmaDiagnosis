@@ -11,6 +11,8 @@ import Comorbidities from "../screens/Comorbidities";
 import Test from "../screens/Test";
 import Diagnosis from "../screens/Diagnosis";
 import SelectPatient from "../screens/SelectPatient";
+import Login from '../screens/Login';
+import Register from '../screens/Register';
 
 const HomeStack = createStackNavigator({
     Home: {
@@ -19,6 +21,12 @@ const HomeStack = createStackNavigator({
             header: () => null,
         },
     },
+    Login: {
+        screen: Login
+     },
+    Register: {
+        screen: Register
+     },
     PersonalInfo: {
         screen: PersonalInfo,
         navigationOptions: {
@@ -81,6 +89,18 @@ const HomeStack = createStackNavigator({
 });
 
 const MainRoute = createStackNavigator({
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: () => null,
+        }
+    },
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            header: () => null,
+        }
+    },
     Home: HomeStack,
 }, {
     mode: 'screen',

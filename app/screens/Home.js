@@ -22,6 +22,7 @@ class Home extends Component {
         navigation.navigate('Dashboard', { followup: true });
         navigation.navigate('SelectPatient', { followup: true });
     }
+
     render() {
         return(
             <CustomContainer gradient>
