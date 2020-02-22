@@ -57,11 +57,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer, ]}>
@@ -73,11 +74,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer, ]}>
@@ -89,11 +91,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     {followup && 
@@ -106,11 +109,12 @@ class Symptoms extends Component {
                                 label="Select"
                                 overrideStyles={[styles.GridChildren]}
                                 items={[
-                                    { label: 'No Occurence', value: 0 },
-                                    { label: '2 Days a week', value: 1 },
-                                    { label: 'Daily', value: 2 },
-                                    { label: 'Multiple times in a day', value: 3 },
+                                    { label: 'No Occurence', value: '0' },
+                                    { label: '2 Days a week', value: '1' },
+                                    { label: 'Daily', value: '2' },
+                                    { label: 'Multiple times in a day', value: '3' },
                                 ]}
+                                validate={this.required}
                             />
                         </View>}
                     <View style={[styles.GridContainer]}>
@@ -122,11 +126,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer]}>
@@ -138,11 +143,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                     <View style={[styles.GridContainer]}>
@@ -154,11 +160,12 @@ class Symptoms extends Component {
                             label="Select"
                             overrideStyles={[styles.GridChildren]}
                             items={[
-                                { label: 'No Occurence', value: 0 },
-                                { label: '2 Days a week', value: 1 },
-                                { label: 'Daily', value: 2 },
-                                { label: 'Multiple times in a day', value: 3 },
+                                { label: 'No Occurence', value: '0' },
+                                { label: '2 Days a week', value: '1' },
+                                { label: 'Daily', value: '2' },
+                                { label: 'Multiple times in a day', value: '3' },
                             ]}
+                            validate={this.required}
                         />
                     </View>
                 </CustomCard>

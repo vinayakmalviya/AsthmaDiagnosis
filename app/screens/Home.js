@@ -19,8 +19,10 @@ class Home extends Component {
 
     followUp = () => {
         const { navigation } = this.props;
+        navigation.navigate('Dashboard', { followup: true });
         navigation.navigate('SelectPatient', { followup: true });
     }
+
     render() {
         return(
             <CustomContainer gradient>
