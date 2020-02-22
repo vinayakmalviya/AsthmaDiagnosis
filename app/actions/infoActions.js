@@ -6,6 +6,7 @@ export const HANDLE_INVESTIGATIONS = 'HANDLE_INVESTIGATIONS';
 export const HANDLE_COMORBIDITIES = 'HANDLE_COMORBIDITIES';
 export const HANDLE_LOGIN_INFO = 'HANDLE_LOGIN_INFO';
 export const HANDLE_REGISTER_INFO = 'HANDLE_REGISTER_INFO';
+export const HANDLE_REFRESH = 'HANDLE_REFRESH';
 
 export const testSubmit = values => ({
     type: HANDLE_TEST_ACTION,
@@ -46,4 +47,8 @@ export const investigationsSubmit = values => ({
 export const comorbiditiesSubmit = values => ({
     type: HANDLE_COMORBIDITIES,
     values,
+});
+
+export const followupRefresh = () => ({
+    type: HANDLE_REFRESH,
 });

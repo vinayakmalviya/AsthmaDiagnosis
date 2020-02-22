@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, change } from 'redux-form';
 
 import { CustomCard, RowView } from "../components/Container";
 import { CustomSubTitle, CustomOverline } from "../components/Text";
 import { CustomButton } from '../components/Button';
 import { CustomInput } from '../components/Input';
 import { CustomPicker } from "../components/Picker";
-import { CustomChip, CustomChipGroup } from "../components/Chip";
+import { CustomChipGroup, CustomChipPicker } from "../components/Chip";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
 import { investigationsSubmit } from '../actions/infoActions';
@@ -36,8 +36,12 @@ class Investigations extends Component {
         dispatch(investigationsSubmit(values));
     }
 
+    calculateAEC = () => {
+        
+    }
+
     render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit, dispatch } = this.props;
         const { followup } = this.props.navigation.state.params;
         if(followup) {
             return(
@@ -106,6 +110,7 @@ class Investigations extends Component {
                                 editable={false}
                                 keyboardType="numeric"
                                 overrideStyles={[styles.GridChildren]}
+                                value={this.calculateAEC}
                                 component={CustomInput}
                             />
                         </RowView>
@@ -218,15 +223,17 @@ class Investigations extends Component {
                     </CustomCard>
                     <CustomSubTitle text="IgE" />
                     <CustomCard>
-                        <CustomOverline text="Select if High" />
-                        <RowView>
-                            <Field name="ige" label="High" component={CustomChip} />
-                        </RowView>
+                        <Field
+                            name="ige"
+                            label="Value"
+                            component={CustomInput}
+                        />
                     </CustomCard>
                     <CustomSubTitle text="Skin Prick" />
                     <CustomCard>
+                        <CustomOverline text="Findings" />
                         <RowView>
-                            <Field
+                            {/* <Field
                                 name="skin_prick"
                                 label="Findings:"
                                 component={CustomChipGroup}
@@ -237,8 +244,46 @@ class Investigations extends Component {
                                     { name: 'pollen', label: 'Pollen'},
                                     { name: 'food', label: 'Food'},
                                 ]}
+                            /> */}
+                            <Field
+                                name="fungal"
+                                component={CustomChipPicker}
+                                label="Fungal"
+                                pickerLabel="Select"
+                                pickerItems={[
+                                    { value: 'Alternaria alternata', label: 'Alternaria alternata' },
+                                    { value: 'Aspergillus fumigatus', label: 'Aspergillus fumigatus' },
+                                    { value: 'Cladosporium herbarum', label: 'Cladosporium herbarum' },
+                                    { value: 'Curvularia lunata', label: 'Curvularia lunata' },
+                                    { value: 'Fusarium moniliforme', label: 'Fusarium moniliforme' },
+                                    { value: 'Helminthosporium halodes', label: 'Helminthosporium halodes' },
+                                    { value: 'Mucor mucedo', label: 'Mucor mucedo' },
+                                    { value: 'Penicilium notatum', label: 'Penicilium notatum' },
+                                    { value: 'Rhizopus nigricans', label: 'Rhizopus nigricans' },
+                                ]}
                             />
                         </RowView>
+                        <Field
+                            name="insect"
+                            component={CustomChipPicker}
+                            label="Insect"
+                            pickerLabel="Select"
+                            pickerItems={[
+                                { value: 'Dermatophagoides farinae', label: 'Dermatophagoides farinae' },
+                                { value: 'Dermatophagoides pteronyssinus', label: 'Dermatophagoides pteronyssinus' },
+                                { value: 'Blomia tropicalis', label: 'Blomia tropicalis' },
+                                { value: 'Tyrophagus putrescentiae', label: 'Tyrophagus putrescentiae' },
+                            ]}
+                        />
+                        <Field
+                            name="skin_prick"
+                            component={CustomChipGroup}
+                            data={[
+                                { name: 'dust', label: 'Dust'},
+                                { name: 'pollen', label: 'Pollen'},
+                                { name: 'food', label: 'Food'},
+                            ]}
+                        />
                     </CustomCard>
                     <CustomSubTitle text="Observations" />
                     <CustomCard>

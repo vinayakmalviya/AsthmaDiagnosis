@@ -111,6 +111,6 @@ class Comorbidities extends Component {
 export default reduxForm({
     form: 'comorbidities',
     onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Test");
+        props.navigation.navigate("Dashboard", props.navigation.state.params);
     }
 })(Comorbidities);
