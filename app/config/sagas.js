@@ -46,6 +46,7 @@ function* loginUser(action) {
         };
 
         const response = yield call(login, loginData);
+        console.log(response);
         
         if(response._error) {
             yield call(action.reject, { ...response });

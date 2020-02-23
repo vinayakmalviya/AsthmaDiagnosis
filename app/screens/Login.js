@@ -10,6 +10,7 @@ import { CustomInput } from '../components/Input';
 import { CustomButton } from '../components/Button';
 
 import { loginUser } from "../actions/authActions";
+import { connectAlert } from '../components/Alert';
 
 const styles = EStyleSheet.create({
     ButtonText: {
@@ -124,7 +125,6 @@ class Login extends Component {
                                         <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
                                     </CustomCard>
                                 </View>
-                                
                             </KeyboardAvoidingView>
                         </TouchableWithoutFeedback>
                     </SafeAreaView>
@@ -134,9 +134,14 @@ class Login extends Component {
     };
 }
 
-export default reduxForm({
-    form: 'login',
-    onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Home");
-    }
-})(Login);
+export default connectAlert(
+    reduxForm({
+        form: 'login',
+        onSubmitSuccess: (result, dispatch, props) => {
+            props.navigation.navigate("Home", { followUp: false });
+        },
+        onSubmitFail: (errors, dispatch, submitError, props) => {
+            props.alertWithType(submitError.type, submitError.heading, submitError._error);
+        }
+    })(Login)
+);
