@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image, ScrollView, StatusBar, SafeAreaView, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { reduxForm, Field } from 'redux-form';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -9,13 +9,13 @@ import { CustomCard } from "../components/Container";
 import { CustomInput } from '../components/Input';
 import { CustomButton } from '../components/Button';
 import { registerSubmit } from '../actions/infoActions';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const styles = EStyleSheet.create({
     ButtonText: {
-        textTransform: 'uppercase',
         fontWeight: 'bold',
-        color: '#000000',
-        fontSize: 20,
+        color: '#444444',
+        fontSize: 32,
         margin: 6,
     },
     innerText: {
@@ -32,13 +32,25 @@ const styles = EStyleSheet.create({
         textAlign: 'center',
     },
     LogoImage: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#FFFFFF',
+        padding: 8,
+        borderRadius: 120,
+        top: -80,
+        position: 'absolute',
+        alignSelf: 'center',
+        margin: 10,
+        zIndex: 2
     },
-    // card: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    // },
+    imageStyles: {
+        width: 120,
+        height: 120
+    },
+    bottomBar: {
+        marginLeft: 6,
+        width: 80,
+        height: 4,
+        backgroundColor: '#48FF7F'
+    }
 });
 
 class Register extends Component {
@@ -63,63 +75,75 @@ class Register extends Component {
     render() {
         const { handleSubmit, valid } = this.props;
         return (
-                <ScrollView>
-                    <CustomContainer gradient>
-                    <View>
-                        <CustomCard>
-                            <View style={styles.LogoImage}>
-                                <Image source={require('../components/Logo/images/loginimg.png')}/>
-                            </View>
-                            <View>
-                                <Text style={styles.ButtonText}>
-                                    Register
-                                </Text>
-                                <Field 
-                                    name="name"
-                                    label="Name"
-                                    validate={this.required}
-                                    component={CustomInput}
-                                />
-                                <Field 
-                                    name="hosname"
-                                    label="Hospital Name"
-                                    validate={this.required}
-                                    component={CustomInput}
-                                />
-                                <Field 
-                                    name="eid"
-                                    label="Email id"
-                                    validate={this.required}
-                                    component={CustomInput}
-                                />
-                                <Field 
-                                    name="number"
-                                    label="Phone Number"
-                                    keyboardType="numeric"
-                                    validate={this.required}
-                                    component={CustomInput}
-                                />
+            <CustomContainer gradient>
+                <StatusBar translucent={true} barStyle="light-content" />
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                                <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+                                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                                        <CustomCard>
+                                            <View>
+                                                <Text style={styles.ButtonText}>
+                                                    Register
+                                                </Text>
+                                                <View style={styles.LogoImage}>
+                                                    <Image
+                                                        style={styles.imageStyles}
+                                                        resizeMode="contain"
+                                                        source={require('../components/Logo/images/lungs_logo.png')}
+                                                    />
+                                                </View>
+                                                <View style={styles.bottomBar}></View>
+                                            </View>
+                                            <View>
+                                                <Field 
+                                                    name="name"
+                                                    label="Name"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="hosname"
+                                                    label="Hospital Name"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="eid"
+                                                    label="Email id"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="number"
+                                                    label="Phone Number"
+                                                    keyboardType="numeric"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
 
-                            </View>
-                            <View style={{marginVertical: 3}}>
-                                <Field 
-                                    name="password"
-                                    label="Password"
-                                    validate={this.required}
-                                    component={CustomInput}
-                                />
-                                <Field 
-                                    name="confirm_password"
-                                    label="Confirm Password"
-                                    validate={this.required}
-                                    component={CustomInput}
-                                />
-                            </View>
-                            <CustomButton disabled={!valid} text="Register" white='false' onPress={handleSubmit(this.submitRegister)} />
-                        </CustomCard>
-                    </View>
-                </CustomContainer>
-            </ScrollView>
+                                            </View>
+                                            <View style={{marginVertical: 3}}>
+                                                <Field 
+                                                    name="password"
+                                                    label="Password"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="confirm_password"
+                                                    label="Confirm Password"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                            </View>
+                                            <CustomButton disabled={!valid} text="Register" white onPress={handleSubmit(this.submitRegister)} />
+                                        </CustomCard>
+                                    </View>
+                                </KeyboardAvoidingView>
+                        </ScrollView>
+                    </SafeAreaView>
+            </CustomContainer>
         );
     };
 }

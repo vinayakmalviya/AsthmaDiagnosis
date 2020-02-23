@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, SafeAreaView, ScrollView } from 'react-native';
 import { reduxForm, Field } from 'redux-form';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -8,14 +8,14 @@ import { CustomContainer } from "../components/Container";
 import { CustomCard } from "../components/Container";
 import { CustomInput } from '../components/Input';
 import { CustomButton } from '../components/Button';
-import { loginSubmit } from '../actions/infoActions';
+
+import { loginUser } from "../actions/authActions";
 
 const styles = EStyleSheet.create({
     ButtonText: {
-        textTransform: 'uppercase',
         fontWeight: 'bold',
-        color: '#000000',
-        fontSize: 20,
+        color: '#444444',
+        fontSize: 32,
         margin: 6,
     },
     innerText: {
@@ -32,9 +32,25 @@ const styles = EStyleSheet.create({
         textAlign: 'center',
     },
     LogoImage: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#FFFFFF',
+        padding: 8,
+        borderRadius: 120,
+        top: -80,
+        position: 'absolute',
+        alignSelf: 'center',
+        margin: 10,
+        zIndex: 2
     },
+    imageStyles: {
+        width: 120,
+        height: 120
+    },
+    bottomBar: {
+        marginLeft: 6,
+        width: 80,
+        height: 4,
+        backgroundColor: '#48FF7F'
+    }
 });
 
 class Login extends Component {
@@ -45,8 +61,9 @@ class Login extends Component {
     };
 
     submitLogin = (values, dispatch) => {
-        alert(JSON.stringify(values));
-        dispatch(loginSubmit(values));
+        return new Promise((resolve, reject) => {
+            dispatch(loginUser(values, resolve, reject));
+        });
     }
 
     register = () => {
@@ -64,34 +81,54 @@ class Login extends Component {
     render() {
         const { handleSubmit, valid } = this.props;
         return (
-                <CustomContainer gradient>
-                <CustomCard>
-                    <View style={styles.LogoImage}>
-                        <Image source={require('../components/Logo/images/loginimg.png')}/>
-                    </View>
-                    <View>
-                        <Text style={styles.ButtonText}>
-                            Login
-                        </Text>
-                        <Field 
-                            name="eid"
-                            label="Email id"
-                            validate={this.required}
-                            component={CustomInput}
-                        />
-
-                    </View>
-                    <View style={{marginVertical: 3}}>
-                        <Field 
-                            name="password"
-                            label="Password"
-                            validate={this.required}
-                            component={CustomInput}
-                        />
-                    </View>
-                    <CustomButton disabled={!valid} text="Login" white='false' onPress={handleSubmit(this.submitLogin)} />
-                    <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
-                </CustomCard>
+            <CustomContainer gradient>
+                <StatusBar translucent={true} barStyle="light-content" />
+                <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss() }>
+                            <KeyboardAvoidingView
+                                style={{ flex: 1 }}
+                                behavior="padding"
+                            >
+                                <View style={{ flex: 1, justifyContent: 'center' }}>
+                                    <CustomCard>
+                                        <View>
+                                            <Text style={styles.ButtonText}>
+                                                Login
+                                            </Text>
+                                            <View style={styles.LogoImage}>
+                                                <Image
+                                                    style={styles.imageStyles}
+                                                    resizeMode="contain"
+                                                    source={require('../components/Logo/images/lungs_logo.png')}
+                                                />
+                                            </View>
+                                            <View style={styles.bottomBar}></View>
+                                            <Field 
+                                                name="email"
+                                                label="Email ID"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+                                        </View>
+                                        <View style={{marginVertical: 3}}>
+                                            <Field 
+                                                name="password"
+                                                label="Password"
+                                                textContentType="password"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+                                        </View>
+                                        <CustomButton disabled={!valid} text="Login" white onPress={handleSubmit(this.submitLogin)} />
+                                        <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
+                                    </CustomCard>
+                                </View>
+                                
+                            </KeyboardAvoidingView>
+                        </TouchableWithoutFeedback>
+                    </SafeAreaView>
+                </ScrollView>
             </CustomContainer>
         );
     };
