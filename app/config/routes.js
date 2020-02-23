@@ -21,12 +21,6 @@ const HomeStack = createStackNavigator({
             header: () => null,
         },
     },
-    Login: {
-        screen: Login
-     },
-    Register: {
-        screen: Register
-     },
     PersonalInfo: {
         screen: PersonalInfo,
         navigationOptions: {
@@ -107,4 +101,4 @@ const MainRoute = createStackNavigator({
     headerMode: 'none',
 });
 
-export default createAppContainer(HomeStack);
+export default createAppContainer(MainRoute);

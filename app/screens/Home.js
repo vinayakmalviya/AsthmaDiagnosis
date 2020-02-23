@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StatusBar, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import { CustomContainer } from "../components/Container";
 import { Logo } from '../components/Logo';
 import { CustomButton } from '../components/Button';
-import { connectAlert } from "../components/Alert";
 
 class Home extends Component {
     static propTypes = {
         navigation: PropTypes.object,
     };
 
+    componentDidMount() {
+        const { isLoggedIn } = this.props;
+        alert(isLoggedIn);
+    }
+
     newPatient = () => {
         const { navigation } = this.props;
-        navigation.navigate('Test', { followup: false });
+        navigation.navigate('PersonalInfo', { followup: false });
     }
 
     followUp = () => {
@@ -37,4 +42,8 @@ class Home extends Component {
     };
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.infoReducer.isLoggedIn,
+})
+
+export default connect(mapStateToProps)(Home);

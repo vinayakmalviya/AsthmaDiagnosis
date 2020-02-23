@@ -34,11 +34,15 @@ const styles = EStyleSheet.create({
     LogoImage: {
         alignItems: 'center',
         justifyContent: 'center',
+        // position: 'absolute',
+        // top: 10,
+        // // left: 125,
     },
-    // card: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    // },
+    card: {
+        //alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+    },
 });
 
 class Register extends Component {
@@ -63,9 +67,9 @@ class Register extends Component {
     render() {
         const { handleSubmit, valid } = this.props;
         return (
-                <ScrollView>
-                    <CustomContainer gradient>
-                    <View>
+                <CustomContainer gradient>
+                    <ScrollView>
+                    <View style={styles.card}>
                         <CustomCard>
                             <View style={styles.LogoImage}>
                                 <Image source={require('../components/Logo/images/loginimg.png')}/>
@@ -118,8 +122,8 @@ class Register extends Component {
                             <CustomButton disabled={!valid} text="Register" white='false' onPress={handleSubmit(this.submitRegister)} />
                         </CustomCard>
                     </View>
+                    </ScrollView>
                 </CustomContainer>
-            </ScrollView>
         );
     };
 }

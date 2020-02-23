@@ -34,6 +34,17 @@ const styles = EStyleSheet.create({
     LogoImage: {
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'absolute',
+        top: -50,
+        left: 125,
+    },
+    card: {
+        //alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        // position: 'absolute',
+        // top: 75,
+        // right: 75,
     },
 });
 
@@ -65,33 +76,35 @@ class Login extends Component {
         const { handleSubmit, valid } = this.props;
         return (
                 <CustomContainer gradient>
-                <CustomCard>
-                    <View style={styles.LogoImage}>
-                        <Image source={require('../components/Logo/images/loginimg.png')}/>
-                    </View>
-                    <View>
-                        <Text style={styles.ButtonText}>
-                            Login
-                        </Text>
-                        <Field 
-                            name="eid"
-                            label="Email id"
-                            validate={this.required}
-                            component={CustomInput}
-                        />
+                 <View style={styles.card}>
+                    <CustomCard>
+                        <View style={styles.LogoImage}>
+                            <Image source={require('../components/Logo/images/loginimg.png')}/>
+                        </View>
+                        <View>
+                            <Text style={styles.ButtonText}>
+                                Login
+                            </Text>
+                            <Field 
+                                name="eid"
+                                label="Email id"
+                                validate={this.required}
+                                component={CustomInput}
+                            />
 
-                    </View>
-                    <View style={{marginVertical: 3}}>
-                        <Field 
-                            name="password"
-                            label="Password"
-                            validate={this.required}
-                            component={CustomInput}
-                        />
-                    </View>
-                    <CustomButton disabled={!valid} text="Login" white='false' onPress={handleSubmit(this.submitLogin)} />
-                    <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
-                </CustomCard>
+                        </View>
+                        <View style={{marginVertical: 3}}>
+                            <Field 
+                                name="password"
+                                label="Password"
+                                validate={this.required}
+                                component={CustomInput}
+                            />
+                        </View>
+                        <CustomButton disabled={!valid} text="Login" white='false' onPress={handleSubmit(this.submitLogin)} />
+                        <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
+                    </CustomCard>
+                </View>
             </CustomContainer>
         );
     };
