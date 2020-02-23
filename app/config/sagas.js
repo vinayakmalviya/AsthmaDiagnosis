@@ -4,11 +4,11 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
 import { HANDLE_LOGIN } from '../actions/authActions';
 
-const search = values => axios.post("apilink", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
+const search = values => axios.post("", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
 
-const addNew = values => axios.post("apilink", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
+const addNew = values => axios.post("", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
 
-const login = values => axios.post("apilink", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
+const login = values => axios.post("", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
 function* followUpPatient(action) {
     try {

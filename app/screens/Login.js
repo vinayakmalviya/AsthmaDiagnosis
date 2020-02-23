@@ -51,6 +51,17 @@ const styles = EStyleSheet.create({
         width: 80,
         height: 4,
         backgroundColor: '#48FF7F'
+    },
+    LogoTitle: {
+        top: 160,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 48,
+        lineHeight: 48,
+        textShadowColor: 'rgba(0,0,0,0.25)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 6,
+        color: '#ffffff',
     }
 });
 
@@ -91,6 +102,7 @@ class Login extends Component {
                                 style={{ flex: 1 }}
                                 behavior="padding"
                             >
+                                <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
                                     <CustomCard>
                                         <View>
