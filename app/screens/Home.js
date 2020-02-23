@@ -14,7 +14,7 @@ class Home extends Component {
 
     newPatient = () => {
         const { navigation } = this.props;
-        navigation.navigate('Test', { followup: false });
+        navigation.navigate('PersonalInfo', { followup: false });
     }
 
     followUp = () => {
