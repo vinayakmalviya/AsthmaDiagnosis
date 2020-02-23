@@ -5,7 +5,6 @@ import { StatusBar, View } from 'react-native';
 import { CustomContainer } from "../components/Container";
 import { Logo } from '../components/Logo';
 import { CustomButton } from '../components/Button';
-import { connectAlert } from "../components/Alert";
 
 class Home extends Component {
     static propTypes = {
@@ -19,7 +18,6 @@ class Home extends Component {
 
     followUp = () => {
         const { navigation } = this.props;
-        navigation.navigate('Dashboard', { followup: true });
         navigation.navigate('SelectPatient', { followup: true });
     }
 
