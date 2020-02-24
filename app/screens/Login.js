@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, SafeAreaView, ScrollView } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StatusBar,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard,
+    SafeAreaView,
+    ScrollView,
+    ActivityIndicator
+} from "react-native";
 import { reduxForm, Field } from 'redux-form';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -91,13 +102,13 @@ class Login extends Component {
     }
 
     render() {
-        const { handleSubmit, valid } = this.props;
+        const { handleSubmit, valid, submitting } = this.props;
         return (
-            <CustomContainer gradient>
-                <StatusBar translucent={true} barStyle="light-content" />
-                <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                    <SafeAreaView style={{ flex: 1 }}>
-                        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss() }>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <CustomContainer gradient>
+                    <StatusBar translucent={true} barStyle="light-content" />
+                    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                        <SafeAreaView style={{ flex: 1 }}>
                             <KeyboardAvoidingView
                                 style={{ flex: 1 }}
                                 behavior="padding"
@@ -120,6 +131,9 @@ class Login extends Component {
                                             <Field 
                                                 name="email"
                                                 label="Email ID"
+                                                textContentType="emailAddress"
+                                                autoCompleteType="email"
+                                                keyboardType="email-address"
                                                 validate={this.required}
                                                 component={CustomInput}
                                             />
@@ -129,19 +143,20 @@ class Login extends Component {
                                                 name="password"
                                                 label="Password"
                                                 textContentType="password"
+                                                secureTextEntry={true}
                                                 validate={this.required}
                                                 component={CustomInput}
                                             />
                                         </View>
-                                        <CustomButton disabled={!valid} text="Login" white onPress={handleSubmit(this.submitLogin)} />
+                                        {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Login" white onPress={handleSubmit(this.submitLogin)} /> }
                                         <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
                                     </CustomCard>
                                 </View>
                             </KeyboardAvoidingView>
-                        </TouchableWithoutFeedback>
-                    </SafeAreaView>
-                </ScrollView>
-            </CustomContainer>
+                        </SafeAreaView>
+                    </ScrollView>
+                </CustomContainer>
+            </TouchableWithoutFeedback>
         );
     };
 }

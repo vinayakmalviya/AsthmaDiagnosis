@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, getFormValues, change } from 'redux-form';
+import { bindActionCreators } from 'redux'
+import { connect } from "react-redux";
  
 import { CustomCard, RowView } from "../components/Container";
 import { CustomSubTitle, CustomOverline } from "../components/Text";
 import { CustomButton } from '../components/Button';
 import { CustomInput } from '../components/Input';
 import { CustomPicker } from "../components/Picker";
-import { CustomChipGroup, CustomChipPicker } from "../components/Chip";
+import { CustomChipPicker } from "../components/Chip";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
 import { investigationsSubmit } from '../actions/infoActions';
@@ -23,6 +25,17 @@ const styles = EStyleSheet.create({
         flex: 1,
         flexBasis: '40%',
     },
+    GridChildren2: {
+        flex: 1,
+        flexBasis: '40%',
+        display: 'none',
+    },
+    text: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 16,
+        fontWeight: 'bold'
+    }
 });
 
 class Investigations extends Component {
@@ -37,25 +50,14 @@ class Investigations extends Component {
     }
 
     render() {
-        const { change, handleSubmit, dispatch } = this.props;
+        const { handleSubmit, vals } = this.props;
         const { followup } = this.props.navigation.state.params;
-        let wbcVal = 0;
-        let eos = 0;
-        let aecVal = 0;
 
-        const calculateAEC = (event, value) => {
-            wbcVal = value;
-            aecVal = wbcVal * eos;
-            change('aec', aecVal);
+        const calculateAec = (e, v) => {
+            if(vals != undefined) {
+                this.props.change("aec", vals.eosin*vals.wbc/100);
+            }
         }
-
-        const calc = (event, value) => {
-            eos = value;
-            aecVal = wbcVal * eos;
-            alert(aecVal);
-            change('aec', aecVal);
-        }
-
 
         if(followup) {
             return(
@@ -107,7 +109,7 @@ class Investigations extends Component {
                                 keyboardType="numeric"
                                 overrideStyles={[styles.GridChildren]}
                                 component={CustomInput}
-                                onChange = {calculateAEC}
+                                onChange={calculateAec}
                             />
                         </RowView>
                         <RowView>
@@ -118,16 +120,18 @@ class Investigations extends Component {
                                 keyboardType="numeric"
                                 overrideStyles={[styles.GridChildren]}
                                 component={CustomInput}
-                                onChange = {calc}
+                                onChange={calculateAec}
                             />
                             <Field
                                 name="aec"
                                 label="AEC"
-                                editable={false}
                                 keyboardType="numeric"
-                                overrideStyles={[styles.GridChildren]}
-                                component={CustomInput}
+                                overrideStyles={[styles.GridChildren2]}
+                                component={CustomInput}                          
                             />
+                            <View style={[styles.GridChildren, { margin: 6, justifyContent: 'center' }]}>
+                                <Text style={styles.text}>AEC: {vals != undefined ? vals.aec : 0}</Text>
+                            </View>
                         </RowView>
                     </CustomCard>
                     <CustomSubTitle text="X-Ray" />
@@ -434,22 +438,23 @@ class Investigations extends Component {
     }
 }
 
-export default reduxForm({
-    form: 'investigations',
-    onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Dashboard", props.navigation.state.params);
-    }
-})(Investigations);
+const mapStateToProps = state => ({
+    vals: getFormValues("investigations")(state)
+});
 
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(change, dispatch);
+}
 
-// const form = 'investigations';
-
-// const Investigations = reduxForm({
-//   form
-// })(Investigations);
-
-// const selector = formValueSelector(form);
-
-// export default connect(state => ({
-//   wbcVal: selector(state, 'aec')
-// }))(Investigations);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    reduxForm({
+        form: 'investigations',
+        initialValues: {
+            eosin: 0,
+            wbc: 0,
+        },
+        onSubmitSuccess: (result, dispatch, props) => {
+            props.navigation.navigate("Dashboard", props.navigation.state.params);
+        }
+    })(Investigations)
+);

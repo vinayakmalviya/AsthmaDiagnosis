@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, ScrollView, StatusBar, SafeAreaView, Keyboard, KeyboardAvoidingView } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    StatusBar,
+    SafeAreaView,
+    Keyboard,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    ActivityIndicator
+} from "react-native";
 import { reduxForm, Field } from 'redux-form';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -8,8 +19,9 @@ import { CustomContainer } from "../components/Container";
 import { CustomCard } from "../components/Container";
 import { CustomInput } from '../components/Input';
 import { CustomButton } from '../components/Button';
-import { registerSubmit } from '../actions/infoActions';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+import { registerUser } from '../actions/authActions';
+import { connectAlert } from '../components/Alert';
 
 const styles = EStyleSheet.create({
     ButtonText: {
@@ -52,7 +64,9 @@ const styles = EStyleSheet.create({
         backgroundColor: '#48FF7F'
     },
     LogoTitle: {
-        top: 50,
+        /* alignSelf: 'center',
+        justifyContent: 'flex-start', */
+        top: 34,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 48,
@@ -61,6 +75,19 @@ const styles = EStyleSheet.create({
         textShadowOffset: { width: 0, height: 2 },
         textShadowRadius: 6,
         color: '#ffffff',
+    },
+    innerText: {
+        color: '#008000',
+        fontWeight: 'bold',
+        fontSize: 15, 
+        margin: 6,
+        textAlign: 'center',
+    },
+    text: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        margin: 6,
+        textAlign: 'center',
     }
 });
 
@@ -72,8 +99,14 @@ class Register extends Component {
     };
 
     submitRegister = (values, dispatch) => {
-        alert(JSON.stringify(values));
-        dispatch(registerSubmit(values));
+        return new Promise((resolve, reject) => {
+            dispatch(registerUser(values, resolve, reject));
+        });
+    }
+
+    login = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Login");
     }
 
     required = v => {
@@ -83,86 +116,111 @@ class Register extends Component {
         return undefined;
     }
 
-    render() {
-        const { handleSubmit, valid } = this.props;
-        return (
-            <CustomContainer gradient>
-                <StatusBar translucent={true} barStyle="light-content" />
-                    <SafeAreaView style={{ flex: 1 }}>
-                        <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                                <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-                                    <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
-                                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                                        <CustomCard>
-                                            <View>
-                                                <Text style={styles.ButtonText}>
-                                                    Register
-                                                </Text>
-                                                <View style={styles.LogoImage}>
-                                                    <Image
-                                                        style={styles.imageStyles}
-                                                        resizeMode="contain"
-                                                        source={require('../components/Logo/images/lungs_logo.png')}
-                                                    />
-                                                </View>
-                                                <View style={styles.bottomBar}></View>
-                                            </View>
-                                            <View>
-                                                <Field 
-                                                    name="name"
-                                                    label="Name"
-                                                    validate={this.required}
-                                                    component={CustomInput}
-                                                />
-                                                <Field 
-                                                    name="hosname"
-                                                    label="Hospital Name"
-                                                    validate={this.required}
-                                                    component={CustomInput}
-                                                />
-                                                <Field 
-                                                    name="eid"
-                                                    label="Email id"
-                                                    validate={this.required}
-                                                    component={CustomInput}
-                                                />
-                                                <Field 
-                                                    name="number"
-                                                    label="Phone Number"
-                                                    keyboardType="numeric"
-                                                    validate={this.required}
-                                                    component={CustomInput}
-                                                />
+    validatePassword = (value, allValues) => {
+        if(value != allValues.password || value != allValues.confirmpass) {
+            return "Passwords do not match";
+        }
+        return undefined;
+    }
 
-                                            </View>
-                                            <View style={{marginVertical: 3}}>
-                                                <Field 
-                                                    name="password"
-                                                    label="Password"
-                                                    validate={this.required}
-                                                    component={CustomInput}
+    render() {
+        const { handleSubmit, valid, submitting } = this.props;
+        return (
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <CustomContainer gradient>
+                    <StatusBar translucent={true} barStyle="light-content" />
+                    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                        <SafeAreaView style={{ flex: 1 }}>
+                            <KeyboardAvoidingView
+                                style={{ flex: 1 }}
+                                behavior="padding"
+                            >
+                                <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
+                                <View style={{ flex: 1, justifyContent: 'center' }}>
+                                    <CustomCard>
+                                        <View>
+                                            <Text style={styles.ButtonText}>
+                                                Register
+                                            </Text>
+                                            <View style={styles.LogoImage}>
+                                                <Image
+                                                    style={styles.imageStyles}
+                                                    resizeMode="contain"
+                                                    source={require('../components/Logo/images/lungs_logo.png')}
                                                 />
-                                                <Field 
-                                                    name="confirm_password"
-                                                    label="Confirm Password"
-                                                    validate={this.required}
-                                                    component={CustomInput}
-                                                />
                                             </View>
-                                            <CustomButton disabled={!valid} text="Register" white onPress={handleSubmit(this.submitRegister)} />
-                                        </CustomCard>
-                                    </View>
-                                </KeyboardAvoidingView>
-                        </ScrollView>
-                    </SafeAreaView>
-            </CustomContainer>
+                                            <View style={styles.bottomBar}></View>
+                                        </View>
+                                        <View>
+                                            <Field 
+                                                name="name"
+                                                label="Name"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+                                            <Field 
+                                                name="hospital"
+                                                label="Hospital Name"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+                                            <Field 
+                                                name="email"
+                                                label="Email id"
+                                                textContentType="emailAddress"
+                                                autoCompleteType="email"
+                                                keyboardType="email-address"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+                                            <Field 
+                                                name="phone"
+                                                label="Phone Number"
+                                                keyboardType="numeric"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+
+                                        </View>
+                                        <View style={{marginVertical: 3}}>
+                                            <Field 
+                                                name="password"
+                                                label="Password"
+                                                textContentType="password"
+                                                secureTextEntry={true}
+                                                validate={[this.required, this.validatePassword]}
+                                                component={CustomInput}
+                                            />
+                                            <Field 
+                                                name="confirmpass"
+                                                label="Confirm Password"
+                                                textContentType="password"
+                                                secureTextEntry={true}
+                                                validate={[this.required, this.validatePassword]}
+                                                component={CustomInput}
+                                            />
+                                        </View>
+                                        {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Login" white onPress={handleSubmit(this.submitRegister)} /> }
+                                        <Text style={styles.text}>Already have an Account? <Text style={styles.innerText} onPress={this.login}>Login!</Text></Text> 
+                                    </CustomCard>
+                                </View>
+                            </KeyboardAvoidingView>
+                        </SafeAreaView>
+                    </ScrollView>
+                </CustomContainer>
+            </TouchableWithoutFeedback>
         );
     };
 }
 
-export default reduxForm({
-    form: 'register',
-    onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Home");
-    }
-})(Register);
+export default connectAlert(
+    reduxForm({
+        form: 'register',
+        onSubmitSuccess: (result, dispatch, props) => {
+            props.navigation.navigate("Home", { followUp: false });
+        },
+        onSubmitFail: (errors, dispatch, submitError, props) => {
+            props.alertWithType(submitError.type, submitError.heading, submitError._error);
+        }
+    })(Register)
+);

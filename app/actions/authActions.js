@@ -10,5 +10,7 @@ export const loginUser = (values, resolve, reject) => ({
 
 export const registerUser = values => ({
     type: HANDLE_REGISTER,
-    values
+    values,
+    resolve: resolve,
+    reject: reject
 });
