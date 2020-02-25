@@ -1,7 +1,9 @@
 import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH } from "../actions/infoActions";
 import { SEARCH_COMPLETE } from "../actions/followupActions";
+import { AUTH_COMPLETE } from "../actions/authActions";
 
 const initialState = {
+    userID: '',
     isLoggedIn: false,
     name: '',
     age: 0,
@@ -59,6 +61,12 @@ const reducer = (state = initialState, action) => {
                 name: action.name,
                 gender: action.gender,
             }
+        case AUTH_COMPLETE: {
+            return {
+                ...initialState,
+                userID: action.userID
+            }
+        }
         case HANDLE_PERSONAL_INFO:
             return {
                 ...state,

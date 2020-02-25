@@ -1,5 +1,6 @@
 export const HANDLE_LOGIN = 'HANDLE_LOGIN';
 export const HANDLE_REGISTER = 'HANDLE_REGISTER';
+export const AUTH_COMPLETE = 'AUTH_COMPLETE';
 
 export const loginUser = (values, resolve, reject) => ({
     type: HANDLE_LOGIN,
@@ -14,3 +15,8 @@ export const registerUser = (values, resolve, reject) => ({
     resolve: resolve,
     reject: reject
 });
+
+export const authComplete = (userID) => ({
+    type: AUTH_COMPLETE,
+    userID,
+})

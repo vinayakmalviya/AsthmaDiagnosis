@@ -2,7 +2,7 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import api from './API';
 
 import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
-import { HANDLE_LOGIN, HANDLE_REGISTER } from '../actions/authActions';
+import { HANDLE_LOGIN, HANDLE_REGISTER, AUTH_COMPLETE } from '../actions/authActions';
 
 const search = values => api.post("/searchPatient", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
@@ -47,8 +47,10 @@ function* loginUser(action) {
         if(response._error) {
             yield call(action.reject, { ...response });
         } else {
+            let userID = response._id;
+
             yield call(action.resolve);
-            yield put({ type: SEARCH_COMPLETE, response });
+            yield put({ type: AUTH_COMPLETE, userID: userID});
         }
 
     } catch(e) {
@@ -67,13 +69,12 @@ function* registerUser(action) {
         };
 
         const response = yield call(register, registerData);
-        console.log("<<<<Ye idhar hai!!!!>>>>",response);
         
         if(response._error) {
             yield call(action.reject, { ...response });
         } else {
             yield call(action.resolve);
-            yield put({ type: SEARCH_COMPLETE, response });
+            yield put({ type: AUTH_COMPLETE, ...response });
         }
 
     } catch(e) {
