@@ -63,8 +63,11 @@ const styles = EStyleSheet.create({
         height: 4,
         backgroundColor: '#48FF7F'
     },
+    textLogo: {
+        marginTop: StatusBar.currentHeight + 8,
+        marginBottom: 74
+    },
     LogoTitle: {
-        top: 160,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 48,
@@ -113,44 +116,48 @@ class Login extends Component {
                                 style={{ flex: 1 }}
                                 behavior="padding"
                             >
-                                <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
-                                <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <CustomCard>
-                                        <View>
-                                            <Text style={styles.ButtonText}>
-                                                Login
-                                            </Text>
-                                            <View style={styles.LogoImage}>
-                                                <Image
-                                                    style={styles.imageStyles}
-                                                    resizeMode="contain"
-                                                    source={require('../components/Logo/images/lungs_logo.png')}
+                                <View style={{ flex: 1, justifyContent: 'flex-end', margin: 6 }}>
+                                    <View style={styles.textLogo}>
+                                        <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
+                                    </View>
+                                    <View>
+                                        <CustomCard>
+                                            <View>
+                                                <Text style={styles.ButtonText}>
+                                                    Login
+                                                </Text>
+                                                <View style={styles.LogoImage}>
+                                                    <Image
+                                                        style={styles.imageStyles}
+                                                        resizeMode="contain"
+                                                        source={require('../components/Logo/images/lungs_logo.png')}
+                                                    />
+                                                </View>
+                                                <View style={styles.bottomBar}></View>
+                                                <Field 
+                                                    name="email"
+                                                    label="Email ID"
+                                                    textContentType="emailAddress"
+                                                    autoCompleteType="email"
+                                                    keyboardType="email-address"
+                                                    validate={this.required}
+                                                    component={CustomInput}
                                                 />
                                             </View>
-                                            <View style={styles.bottomBar}></View>
-                                            <Field 
-                                                name="email"
-                                                label="Email ID"
-                                                textContentType="emailAddress"
-                                                autoCompleteType="email"
-                                                keyboardType="email-address"
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-                                        </View>
-                                        <View style={{marginVertical: 3}}>
-                                            <Field 
-                                                name="password"
-                                                label="Password"
-                                                textContentType="password"
-                                                secureTextEntry={true}
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-                                        </View>
-                                        {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Login" white onPress={handleSubmit(this.submitLogin)} /> }
-                                        <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
-                                    </CustomCard>
+                                            <View style={{marginVertical: 3}}>
+                                                <Field 
+                                                    name="password"
+                                                    label="Password"
+                                                    textContentType="password"
+                                                    secureTextEntry={true}
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                            </View>
+                                            {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Login" onPress={handleSubmit(this.submitLogin)} /> }
+                                            <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
+                                        </CustomCard>
+                                    </View>
                                 </View>
                             </KeyboardAvoidingView>
                         </SafeAreaView>

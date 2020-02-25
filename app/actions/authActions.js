@@ -8,7 +8,7 @@ export const loginUser = (values, resolve, reject) => ({
     reject: reject
 });
 
-export const registerUser = values => ({
+export const registerUser = (values, resolve, reject) => ({
     type: HANDLE_REGISTER,
     values,
     resolve: resolve,

@@ -47,10 +47,9 @@ const styles = EStyleSheet.create({
         backgroundColor: '#FFFFFF',
         padding: 8,
         borderRadius: 120,
-        top: -80,
+        top: -76,
         position: 'absolute',
         alignSelf: 'center',
-        margin: 10,
         zIndex: 2
     },
     imageStyles: {
@@ -63,10 +62,11 @@ const styles = EStyleSheet.create({
         height: 4,
         backgroundColor: '#48FF7F'
     },
+    textLogo: {
+        marginTop: StatusBar.currentHeight + 8,
+        marginBottom: 74
+    },
     LogoTitle: {
-        /* alignSelf: 'center',
-        justifyContent: 'flex-start', */
-        top: 34,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 48,
@@ -81,13 +81,13 @@ const styles = EStyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15, 
         margin: 6,
-        textAlign: 'center',
+        textAlign: 'left',
     },
     text: {
         fontWeight: 'bold',
         fontSize: 15,
         margin: 6,
-        textAlign: 'center',
+        textAlign: 'left',
     }
 });
 
@@ -129,84 +129,88 @@ class Register extends Component {
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <CustomContainer gradient>
                     <StatusBar translucent={true} barStyle="light-content" />
-                    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                        <SafeAreaView style={{ flex: 1 }}>
-                            <KeyboardAvoidingView
-                                style={{ flex: 1 }}
-                                behavior="padding"
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <KeyboardAvoidingView
+                            style={{ flex: 1 }}
+                            behavior="padding"
                             >
-                                <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
-                                <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <CustomCard>
-                                        <View>
-                                            <Text style={styles.ButtonText}>
-                                                Register
-                                            </Text>
-                                            <View style={styles.LogoImage}>
-                                                <Image
-                                                    style={styles.imageStyles}
-                                                    resizeMode="contain"
-                                                    source={require('../components/Logo/images/lungs_logo.png')}
+                            <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+                                <View style={{ flex: 1, justifyContent: 'flex-end', margin: 6 }}>
+                                    <View style={styles.textLogo}>
+                                        <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
+                                    </View>
+                                    <View>
+                                        <CustomCard>
+                                            <View>
+                                                <Text style={styles.ButtonText}>
+                                                    Sign Up
+                                                </Text>
+                                                <View style={styles.LogoImage}>
+                                                    <Image
+                                                        style={styles.imageStyles}
+                                                        resizeMode="contain"
+                                                        source={require('../components/Logo/images/lungs_logo.png')}
+                                                    />
+                                                </View>
+                                                <View style={styles.bottomBar}></View>
+                                            </View>
+                                            <View>
+                                                <Field 
+                                                    name="name"
+                                                    label="Name"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="hospital"
+                                                    label="Hospital Name"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="email"
+                                                    label="Email id"
+                                                    textContentType="emailAddress"
+                                                    autoCompleteType="email"
+                                                    keyboardType="email-address"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="phone"
+                                                    label="Phone Number"
+                                                    keyboardType="numeric"
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+
+                                            </View>
+                                            <View style={{marginVertical: 3}}>
+                                                <Field 
+                                                    name="password"
+                                                    label="Password"
+                                                    textContentType="password"
+                                                    secureTextEntry={true}
+                                                    validate={[this.required, this.validatePassword]}
+                                                    component={CustomInput}
+                                                />
+                                                <Field 
+                                                    name="confirmpass"
+                                                    label="Confirm Password"
+                                                    textContentType="password"
+                                                    secureTextEntry={true}
+                                                    validate={[this.required, this.validatePassword]}
+                                                    component={CustomInput}
                                                 />
                                             </View>
-                                            <View style={styles.bottomBar}></View>
-                                        </View>
-                                        <View>
-                                            <Field 
-                                                name="name"
-                                                label="Name"
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-                                            <Field 
-                                                name="hospital"
-                                                label="Hospital Name"
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-                                            <Field 
-                                                name="email"
-                                                label="Email id"
-                                                textContentType="emailAddress"
-                                                autoCompleteType="email"
-                                                keyboardType="email-address"
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-                                            <Field 
-                                                name="phone"
-                                                label="Phone Number"
-                                                keyboardType="numeric"
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-
-                                        </View>
-                                        <View style={{marginVertical: 3}}>
-                                            <Field 
-                                                name="password"
-                                                label="Password"
-                                                textContentType="password"
-                                                secureTextEntry={true}
-                                                validate={[this.required, this.validatePassword]}
-                                                component={CustomInput}
-                                            />
-                                            <Field 
-                                                name="confirmpass"
-                                                label="Confirm Password"
-                                                textContentType="password"
-                                                secureTextEntry={true}
-                                                validate={[this.required, this.validatePassword]}
-                                                component={CustomInput}
-                                            />
-                                        </View>
-                                        {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Login" white onPress={handleSubmit(this.submitRegister)} /> }
-                                        <Text style={styles.text}>Already have an Account? <Text style={styles.innerText} onPress={this.login}>Login!</Text></Text> 
-                                    </CustomCard>
+                                            {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Sign Up" onPress={handleSubmit(this.submitRegister)} /> }
+                                            <Text style={styles.text}>Already have an Account? <Text style={styles.innerText} onPress={this.login}>Login!</Text></Text> 
+                                        </CustomCard>
+                                    </View>
                                 </View>
-                            </KeyboardAvoidingView>
-                        </SafeAreaView>
-                    </ScrollView>
+                            </ScrollView>
+                        </KeyboardAvoidingView>
+                    </SafeAreaView>
                 </CustomContainer>
             </TouchableWithoutFeedback>
         );

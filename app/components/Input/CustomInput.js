@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { View, TextInput, Animated } from 'react-native';
+import { View, Text, TextInput, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 const styles = EStyleSheet.create({
+  Wrapper: {
+    margin: 6,
+  },
   Container: {
     flexDirection: 'row',
-    margin: 6,
     backgroundColor: '#F6F6F6',
     borderColor: '#AAAAAA',
     borderBottomWidth: 2,
@@ -19,6 +21,7 @@ const styles = EStyleSheet.create({
     left: 12,
     color: '#AAAAAA',
     fontSize: 16,
+    // fontWeight: 'bold',
   },
   Input: {
     flex: 1,
@@ -38,6 +41,14 @@ const styles = EStyleSheet.create({
   SuffixIcon: {
     marginRight: 12,
     alignSelf: 'center',
+  },
+  ErrorText: {
+    fontSize: 14,
+    marginHorizontal: 6,
+    marginVertical: 2,
+    fontWeight: 'bold',
+    color: '#D32F2F',
+    alignSelf: 'flex-end',
   },
 });
 
@@ -65,6 +76,9 @@ const CustomInput = ({
     [value]
   );
 
+  const isError = meta.error && meta.touched;
+  const themeColor = isError ? '#D32F2F' : '#0A7B61';
+
   useEffect(() => {
     if (input.onChange) input.onChange(value);
   }, [value]);
@@ -73,11 +87,11 @@ const CustomInput = ({
   const _animatedFocused = useRef(new Animated.Value(0)).current;
   const _animatedValued = useRef(new Animated.Value(input.value ? 1 : 0))
     .current;
-
+ 
   useEffect(() => {
     Animated.parallel([
       Animated.timing(_animatedFocused, {
-        toValue: isFocused ? 1 : 0,
+        toValue: isFocused || isError ? 1 : 0,
         duration: 150,
       }),
       Animated.timing(_animatedValued, {
@@ -91,13 +105,13 @@ const CustomInput = ({
     Container: {
       borderColor: _animatedFocused.interpolate({
         inputRange: [0, 1],
-        outputRange: ['#AAAAAA', '#0A7B61'],
+        outputRange: ['#AAAAAA', themeColor],
       }),
     },
     Label: {
       color: _animatedFocused.interpolate({
         inputRange: [0, 1],
-        outputRange: ['#AAAAAA', '#0A7B61'],
+        outputRange: ['#AAAAAA', themeColor],
       }),
       top: _animatedValued.interpolate({
         inputRange: [0, 1],
@@ -111,7 +125,7 @@ const CustomInput = ({
     Suffix: {
       color: _animatedFocused.interpolate({
         inputRange: [0, 1],
-        outputRange: ['#AAAAAA', '#0A7B61'],
+        outputRange: ['#AAAAAA', themeColor],
       }),
       paddingTop: _animatedValued.interpolate({
         inputRange: [0, 1],
@@ -130,40 +144,35 @@ const CustomInput = ({
 
   // Render
   return (
-    <Animated.View
-      style={[styles.Container, animatedStyles.Container, overrideStyles]}>
-      <Animated.Text style={[styles.Label, animatedStyles.Label]}>
-        {label}
-      </Animated.Text>
-      <TextInput
-        {...input}
-        {...props}
-        style={[styles.Input]}
-        value={value}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onChangeText={handleChangeText}
-        placeholder=""
-      />
-      {typeof suffix == 'string' ? (
-        suffix ? (
-          <Animated.Text style={[styles.Suffix, animatedStyles.Suffix]}>
-            {suffix}
-          </Animated.Text>
-        ) : null
-      ) : (
-        <View style={styles.SuffixIcon}>{suffix}</View>
-      )}
-    </Animated.View>
+    <View style={styles.Wrapper}>
+      <Animated.View
+        style={[styles.Container, animatedStyles.Container, overrideStyles]}>
+        <Animated.Text style={[styles.Label, animatedStyles.Label]}>
+          {label}
+        </Animated.Text>
+        <TextInput
+          {...input}
+          {...props}
+          style={[styles.Input]}
+          value={value}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChangeText={handleChangeText}
+          placeholder=""
+        />
+        {typeof suffix == 'string' ? (
+          suffix ? (
+            <Animated.Text style={[styles.Suffix, animatedStyles.Suffix]}>
+              {suffix}
+            </Animated.Text>
+          ) : null
+        ) : (
+          <View style={styles.SuffixIcon}>{suffix}</View>
+        )}
+      </Animated.View>
+      {isError && <Text style={styles.ErrorText}>{meta.error}</Text>}
+    </View>
   );
 };
-
-CustomInput.propTypes = {
-  input: PropTypes.object,
-  meta: PropTypes.object,
-  label: PropTypes.string,
-  suffix: PropTypes.string,
-  overrideStyles: PropTypes.any,
-}
 
 export default CustomInput;

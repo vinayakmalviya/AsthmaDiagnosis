@@ -1,16 +1,16 @@
-import axios from 'axios';
 import { takeEvery, call, put } from "redux-saga/effects";
+import api from './API';
 
 import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
 import { HANDLE_LOGIN, HANDLE_REGISTER } from '../actions/authActions';
 
-const search = values => axios.post("apilink", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
+const search = values => api.post("/searchPatient", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
-const addNew = values => axios.post("apilink", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
+const addNew = values => api.post("/addPatient", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
 
-const login = values => axios.post("apilink", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
+const login = values => api.post("/loginUser", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
-const register = values => axios.post("apilink", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
+const register = values => api.post("/registerUser", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
 function* followUpPatient(action) {
     try {
@@ -18,23 +18,18 @@ function* followUpPatient(action) {
             ...action.values,
         };
 
+        console.log(patientData);
+
        const response = yield call(search, patientData);
-       let result = {};
+
+       console.log(response);
        
-       if(response.length <= 0) {
-           result._error = "Patient Not Found";
-           result.heading = "Error";
-           result.type = "error";
-       } else {
-           result = response[0];
-       }
-       
-       if(result._error) {
-           yield call(action.reject, { ...result });
-           yield put({ type: SEARCH_ERROR, error: result._error });
+       if(response._error) {
+           yield call(action.reject, { ...response });
+           yield put({ type: SEARCH_ERROR, error: response._error });
        } else {
            yield call(action.resolve);
-           yield put({ type: SEARCH_COMPLETE, result });
+           yield put({ type: SEARCH_COMPLETE, response });
        }
     } catch(e) {
         yield put({ type: SEARCH_ERROR, error: e.message });
@@ -68,11 +63,11 @@ function* registerUser(action) {
             email: action.values.email,
             phone: action.values.phone,
             hospital: action.values.hospital,
-            password: action.values.password,
+            password: action.values.password
         };
 
         const response = yield call(register, registerData);
-        console.log(response);
+        console.log("<<<<Ye idhar hai!!!!>>>>",response);
         
         if(response._error) {
             yield call(action.reject, { ...response });
