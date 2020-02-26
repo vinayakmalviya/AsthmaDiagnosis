@@ -5,11 +5,18 @@ import { StatusBar, View } from 'react-native';
 import { CustomContainer } from "../components/Container";
 import { Logo } from '../components/Logo';
 import { CustomButton } from '../components/Button';
+import { connect } from 'react-redux';
 
 class Home extends Component {
     static propTypes = {
         navigation: PropTypes.object,
     };
+
+    componentDidMount() {
+        if(!this.props.isLoggedIn) {
+            this.props.navigation.navigate("Login");
+        }
+    }
 
     newPatient = () => {
         const { navigation } = this.props;
@@ -35,4 +42,8 @@ class Home extends Component {
     };
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.infoReducer.isLoggedIn,
+});
+
+export default connect(mapStateToProps)(Home);

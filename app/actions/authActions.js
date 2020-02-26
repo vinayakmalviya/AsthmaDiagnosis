@@ -18,5 +18,6 @@ export const registerUser = (values, resolve, reject) => ({
 
 export const authComplete = (userID) => ({
     type: AUTH_COMPLETE,
+    isLoggedIn: true,
     userID,
 })

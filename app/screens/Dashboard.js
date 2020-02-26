@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { Title, CustomSubTitle } from "../components/Text";
 import { CustomButton } from '../components/Button';
 import { ScreenTemplate } from "../components/ScreenTemplate";
+import { midwaySubmit } from '../actions/infoActions';
 
 const butt1 = "Personal\nInformation";
 const butt2 = "Background\nInformation";
@@ -27,6 +28,13 @@ const styles = EStyleSheet.create({
 class Dashboard extends Component {
     static propTypes = {
         navigation: PropTypes.object,
+    }
+
+    componentDidMount() {
+        const { followup } = this.props.navigation.state.params;
+        if(!followup) {
+            this.props.dispatch(midwaySubmit());
+        }
     }
 
     handlePersonal = () => {

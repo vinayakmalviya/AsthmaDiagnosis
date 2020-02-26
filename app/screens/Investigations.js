@@ -178,26 +178,6 @@ class Investigations extends Component {
                                 component={CustomPicker}
                             />
                         </RowView>
-                        <CustomOverline text="FVC:" />
-                        <RowView>
-                            <Field
-                                name="fvc"
-                                label="Value"
-                                overrideStyles={[styles.GridChildren]}
-                                component={CustomInput} />
-                            <Field
-                                mode="dropdown"
-                                name="fvc_range"
-                                label="Range"
-                                items={[
-                                    { label: 'Normal', value: 0 },
-                                    { label: 'Between 60% to 80%', value: 1 },
-                                    { label: 'Less than 60%', value: 2 },
-                                ]}
-                                overrideStyles={[styles.GridChildren]}
-                                component={CustomPicker}
-                            />
-                        </RowView>
                         <CustomOverline text="FEV1/FVC:" />
                         <RowView>
                             <Field
@@ -217,6 +197,14 @@ class Investigations extends Component {
                                 overrideStyles={[styles.GridChildren]}
                                 component={CustomPicker}
                             />
+                        </RowView>
+                        <CustomOverline text="FVC:" />
+                        <RowView>
+                            <Field
+                                name="fvc"
+                                label="Value"
+                                overrideStyles={[styles.GridChildren]}
+                                component={CustomInput} />
                         </RowView>
                         <CustomOverline text="MMEF:" />
                         <RowView>
@@ -247,26 +235,6 @@ class Investigations extends Component {
                                 component={CustomPicker}
                             />
                         </RowView>
-                        <CustomOverline text="FVC:" />
-                        <RowView>
-                            <Field
-                                name="fvcP"
-                                label="Value"
-                                overrideStyles={[styles.GridChildren]}
-                                component={CustomInput} />
-                            <Field
-                                mode="dropdown"
-                                name="fvc_rangeP"
-                                label="Range"
-                                items={[
-                                    { label: 'Normal', value: 0 },
-                                    { label: 'Between 60% to 80%', value: 1 },
-                                    { label: 'Less than 60%', value: 2 },
-                                ]}
-                                overrideStyles={[styles.GridChildren]}
-                                component={CustomPicker}
-                            />
-                        </RowView>
                         <CustomOverline text="FEV1/FVC:" />
                         <RowView>
                             <Field
@@ -286,6 +254,14 @@ class Investigations extends Component {
                                 overrideStyles={[styles.GridChildren]}
                                 component={CustomPicker}
                             />
+                        </RowView>
+                        <CustomOverline text="FVC:" />
+                        <RowView>
+                            <Field
+                                name="fvcP"
+                                label="Value"
+                                overrideStyles={[styles.GridChildren]}
+                                component={CustomInput} />
                         </RowView>
                         <CustomOverline text="MMEF:" />
                         <RowView>
@@ -308,18 +284,6 @@ class Investigations extends Component {
                     <CustomCard>
                         <CustomOverline text="Findings" />
                         <RowView>
-                            {/* <Field
-                                name="skin_prick"
-                                label="Findings:"
-                                component={CustomChipGroup}
-                                data={[
-                                    { name: 'fungal', label: 'Fungal'},
-                                    { name: 'insect', label: 'Insect'},
-                                    { name: 'dust', label: 'Dust'},
-                                    { name: 'pollen', label: 'Pollen'},
-                                    { name: 'food', label: 'Food'},
-                                ]}
-                            /> */}
                             <Field
                                 name="fungal"
                                 component={CustomChipPicker}
