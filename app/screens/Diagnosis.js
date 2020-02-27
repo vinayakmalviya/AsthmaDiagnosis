@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'react-native';
 import { DataTable } from "react-native-paper";
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 
 import { ScreenTemplate } from "../components/ScreenTemplate";
 import { CustomCard } from "../components/Container";
-import { CustomSubTitle, CustomOverline, Title } from "../components/Text";
+import { CustomSubTitle, CustomOverline } from "../components/Text";
+import { symptomsSubmit } from "../actions/infoActions";
+import { CustomButton } from '../components/Button';
+
+
+const getSym = props => {
+    const symList = useSelector(state => state.ini_symptoms);
+    // let symList = symptomsSubmit.values;
+    alert(symList);
+}
 
 class Diagnosis extends Component {
     static propTypes = {
@@ -15,6 +24,8 @@ class Diagnosis extends Component {
         personal: PropTypes.object,
     }
     render() {
+
+        
         // const { tests, symptoms, personal } = this.props;
         return(
             <ScreenTemplate>
@@ -31,7 +42,7 @@ class Diagnosis extends Component {
                             <DataTable.Title>Occurence</DataTable.Title>
                         </DataTable.Header>
                         <DataTable.Row>
-                            <DataTable.Cell>Wheezing</DataTable.Cell>
+                            <DataTable.Cell></DataTable.Cell>
                             <DataTable.Cell>0</DataTable.Cell>
                         </DataTable.Row>
                         <DataTable.Row>
@@ -76,6 +87,7 @@ class Diagnosis extends Component {
                 </CustomCard>
                 <CustomSubTitle text="Diagnosis" />
                 <CustomCard>
+                    <CustomButton text="Try" onPress = {getSym} />
                     <CustomOverline text="After analysing the entered details with the help of GINA Guidelines, the following diagnosis can be made:" />
                     <CustomOverline text="The patient should be diagnosed for Mild Persistent Asthma" />
                 </CustomCard>

@@ -4,7 +4,7 @@ import api from './API';
 
 import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
 import { HANDLE_LOGIN, HANDLE_REGISTER, AUTH_COMPLETE } from '../actions/authActions';
-import { HANDLE_MID_SUBMIT, ADD_COMPLETE, MID_FAIL } from "../actions/infoActions";
+import { HANDLE_MID_SUBMIT, ADD_COMPLETE, MID_FAIL, HANDLE_FOLLOWUPSYM } from "../actions/infoActions";
 
 const search = values => api.post("/searchPatient", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
@@ -13,6 +13,18 @@ const login = values => api.post("/loginUser", values).then(({ data }) => data )
 const register = values => api.post("/registerUser", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
 const addNew = values => api.post("/addPatient", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
+
+const update = (values, id) =>
+  api
+    .put(`/updatePatient/${id}`, values)
+    .then(({ data }) => data)
+    .catch(err => [
+      {
+        type: "info",
+        heading: "Info",
+        _error: "Network Error! Please try again after sometime"
+      }
+    ]);
 
 function* loginUser(action) {
     try {
@@ -110,10 +122,29 @@ function* followUpPatient(action) {
     }
 }
 
+function* addfollowupSymptoms(action) {
+	try {
+		let updateData = yield select(state => state.infoReducer);
+
+		const response = yield call(update, updateData, updateData._id);
+
+		if (response._error) {
+			alert("Sab sahi hoga");
+			yield call(action.reject);
+		} else {
+			alert("Done");
+			yield call(action.resolve);
+			yield put({ type: ADD_COMPLETE });
+		}
+	} catch (e) {
+		yield put({ type: SEARCH_ERROR, error: e.message });
+	}
+}
 
 export default function* rootSaga() {
     yield takeEvery(HANDLE_LOGIN, loginUser);
     yield takeEvery(HANDLE_REGISTER, registerUser);
     yield takeEvery(HANDLE_MID_SUBMIT, addPatient);
     yield takeEvery(HANDLE_SEARCH, followUpPatient);
+    yield takeEvery(HANDLE_FOLLOWUPSYM, addfollowupSymptoms);
 }

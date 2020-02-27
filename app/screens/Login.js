@@ -90,6 +90,8 @@ class Login extends Component {
         return new Promise((resolve, reject) => {
             dispatch(loginUser(values, resolve, reject));
         });
+        // const { navigation } = this.props;
+        // navigation.navigate('Home');
     }
 
     register = () => {

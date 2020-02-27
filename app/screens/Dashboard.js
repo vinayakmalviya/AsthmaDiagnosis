@@ -47,7 +47,12 @@ class Dashboard extends Component {
 
     handleSymptoms = () => {
         const { navigation } = this.props;
-        navigation.navigate("Symptoms", this.props.navigation.state.params);
+        const { followup } = this.props.navigation.state.params;
+        if (!followup) {
+            navigation.navigate("Symptoms", this.props.navigation.state.params);
+        } else {
+            navigation.navigate("FollowupSym", this.props.navigation.state.params);
+        }
     };
 
     handleComorbidities = () => {
@@ -97,6 +102,7 @@ class Dashboard extends Component {
                             text={butt3}
                             onPress={this.handleSymptoms}
                         />
+                        
                         {!followup && 
                             <CustomButton
                                 largePadding

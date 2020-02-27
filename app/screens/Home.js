@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { StatusBar, View } from "react-native";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { StatusBar, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import { CustomContainer } from "../components/Container";
-import { Logo } from "../components/Logo";
-import { CustomButton } from "../components/Button";
-import { connect } from "react-redux";
+import { Logo } from '../components/Logo';
+import { CustomButton } from '../components/Button';
 
 class Home extends Component {
 	static propTypes = {

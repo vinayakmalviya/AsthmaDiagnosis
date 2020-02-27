@@ -8,6 +8,7 @@ export const HANDLE_COMORBIDITIES = 'HANDLE_COMORBIDITIES';
 export const ADD_COMPLETE = 'ADD_COMPLETE';
 export const MID_FAIL = 'MID_FAIL';
 export const HANDLE_REFRESH = 'HANDLE_REFRESH';
+export const HANDLE_FOLLOWUPSYM = 'HANDLE_FOLLOWUPSYM';
 
 export const testSubmit = values => ({
     type: HANDLE_TEST_ACTION,
@@ -46,4 +47,11 @@ export const comorbiditiesSubmit = values => ({
 
 export const followupRefresh = () => ({
     type: HANDLE_REFRESH,
+});
+
+export const followupSymSubmit = (values, resolve, reject) => ({
+    type: HANDLE_FOLLOWUPSYM,
+    values,
+    resolve: resolve,
+    reject: reject
 });

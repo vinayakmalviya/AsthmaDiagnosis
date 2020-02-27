@@ -1,4 +1,4 @@
-import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH, ADD_COMPLETE } from "../actions/infoActions";
+import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH, ADD_COMPLETE, HANDLE_FOLLOWUPSYM } from "../actions/infoActions";
 import { SEARCH_COMPLETE } from "../actions/followupActions";
 import { AUTH_COMPLETE } from "../actions/authActions";
 
@@ -177,6 +177,16 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.response
+            }
+        case HANDLE_FOLLOWUPSYM:
+            return {
+                ...state,
+                follow_up: [...state.follow_up,
+                                {
+                                    symptom: action.values,
+                                    date: date
+                                }
+                ]
             }
         default:
             return state;
