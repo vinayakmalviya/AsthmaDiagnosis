@@ -20,13 +20,7 @@ class BackgroundInfo extends Component {
         alert(JSON.stringify(values));
         dispatch(backgroundInfoSubmit(values));
     };
-
-    required = v => {
-        if(!v || v == '') {
-            return "This field is required";
-        }
-        return undefined;
-    }
+    
     render() {
         const { handleSubmit, valid } = this.props;
         return(
@@ -39,7 +33,6 @@ class BackgroundInfo extends Component {
                         autoCompleteType="name"
                         textContentType="name"
                         keyboardType="default"
-                        validate={this.required}
                         component={CustomInput}
                     />
                     <Field 
@@ -48,7 +41,6 @@ class BackgroundInfo extends Component {
                         autoCompleteType="name"
                         textContentType="name"
                         keyboardType="default"
-                        validate={this.required}
                         component={CustomInput}
                     />
                 </CustomCard>
@@ -84,7 +76,7 @@ class BackgroundInfo extends Component {
                         component={CustomInput}
                     />
                 </CustomCard>
-                <CustomButton disabled={!valid} text="ADD PATIENT" onPress={handleSubmit(this.handleNext)} />
+                <CustomButton text="ADD PATIENT" onPress={handleSubmit(this.handleNext)} />
             </ScreenTemplate>
         );
     };

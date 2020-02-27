@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, StatusBar, KeyboardAvoidingView } from 'react-native';
+import {
+    View,
+    StatusBar,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard,
+    SafeAreaView,
+    ActivityIndicator
+} from "react-native";
 import { reduxForm, Field, submit } from "redux-form";
 
 import { CustomContainer } from "../components/Container";
@@ -13,6 +21,7 @@ import { connectAlert } from "../components/Alert";
 import { followupRefresh } from "../actions/infoActions";
 import { searchPatient } from "../actions/followupActions";
 import { CustomOverline } from '../components/Text';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class SelectPatient extends Component {
     static propTypes = {
@@ -33,38 +42,53 @@ class SelectPatient extends Component {
         navigation.navigate('Dashboard');
     }
 
+    required = v => {
+        if(!v || v == '') {
+            return "This field is required";
+        }
+        return undefined;
+    }
+
     render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit, submitting, valid } = this.props;
         return(
-            <CustomContainer gradient>
-                <StatusBar translucent={true} barStyle="light-content" />
-                <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior="padding"
-                >
-                    <View style={{ flex: 1 }}>
-                        <Logo />
-                        <View style={{ alignSelf: 'stretch', margin: 6 }}>
-                            <CustomCard>
-                                <CustomOverline text="Patient Details" />
-                                <Field
-                                    name="name"
-                                    label="Name"
-                                    component={CustomInput}
-                                />
-                                <Field
-                                    name="age"
-                                    label="Age"
-                                    suffix="years"
-                                    keyboardType="numeric"
-                                    component={CustomInput}
-                                />
-                            </CustomCard>
-                            <CustomButton text="Search Patient" white large onPress={handleSubmit(this.handleNext)} />
-                        </View>
-                    </View>
-                </KeyboardAvoidingView>
-            </CustomContainer>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <CustomContainer gradient>
+                    <StatusBar translucent={true} barStyle="light-content" />
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <KeyboardAvoidingView
+                            style={{ flex: 1 }}
+                            behavior="padding"
+                        >
+                            <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+                                <View style={{ flex: 1 }}>
+                                    <Logo />
+                                    <View style={{ alignSelf: 'stretch', margin: 6 }}>
+                                        <CustomCard>
+                                            <CustomOverline text="Patient Details" />
+                                            <Field
+                                                name="name"
+                                                label="Name"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+                                            <Field
+                                                name="age"
+                                                label="Age"
+                                                suffix="years"
+                                                keyboardType="numeric"
+                                                validate={this.required}
+                                                component={CustomInput}
+                                            />
+                                            {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Search Patient" onPress={handleSubmit(this.handleNext)} /> }
+                                        </CustomCard>
+                                    </View>
+                                </View>
+                            </ScrollView>
+                        </KeyboardAvoidingView>
+                    </SafeAreaView>
+                </CustomContainer>
+            </TouchableWithoutFeedback>
         );
     };
 }

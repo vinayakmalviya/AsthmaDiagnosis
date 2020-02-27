@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { reduxForm, Field, change } from 'redux-form';
-
+import { reduxForm, Field, getFormValues, change } from 'redux-form';
+import { bindActionCreators } from 'redux'
+import { connect } from "react-redux";
+ 
 import { CustomCard, RowView } from "../components/Container";
 import { CustomSubTitle, CustomOverline } from "../components/Text";
 import { CustomButton } from '../components/Button';
 import { CustomInput } from '../components/Input';
 import { CustomPicker } from "../components/Picker";
-import { CustomChipGroup, CustomChipPicker } from "../components/Chip";
+import { CustomChipPicker } from "../components/Chip";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
 import { investigationsSubmit } from '../actions/infoActions';
@@ -23,6 +25,17 @@ const styles = EStyleSheet.create({
         flex: 1,
         flexBasis: '40%',
     },
+    GridChildren2: {
+        flex: 1,
+        flexBasis: '40%',
+        display: 'none',
+    },
+    text: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 16,
+        fontWeight: 'bold'
+    }
 });
 
 class Investigations extends Component {
@@ -36,13 +49,16 @@ class Investigations extends Component {
         dispatch(investigationsSubmit(values));
     }
 
-    calculateAEC = () => {
-        
-    }
-
     render() {
-        const { handleSubmit, dispatch } = this.props;
+        const { handleSubmit, vals } = this.props;
         const { followup } = this.props.navigation.state.params;
+
+        const calculateAec = (e, v) => {
+            if(vals != undefined) {
+                this.props.change("aec", vals.eosin*vals.wbc/100);
+            }
+        }
+
         if(followup) {
             return(
                 <ScreenTemplate>
@@ -93,6 +109,7 @@ class Investigations extends Component {
                                 keyboardType="numeric"
                                 overrideStyles={[styles.GridChildren]}
                                 component={CustomInput}
+                                onChange={calculateAec}
                             />
                         </RowView>
                         <RowView>
@@ -103,16 +120,18 @@ class Investigations extends Component {
                                 keyboardType="numeric"
                                 overrideStyles={[styles.GridChildren]}
                                 component={CustomInput}
+                                onChange={calculateAec}
                             />
                             <Field
                                 name="aec"
                                 label="AEC"
-                                editable={false}
                                 keyboardType="numeric"
-                                overrideStyles={[styles.GridChildren]}
-                                value={this.calculateAEC}
-                                component={CustomInput}
+                                overrideStyles={[styles.GridChildren2]}
+                                component={CustomInput}                          
                             />
+                            <View style={[styles.GridChildren, { margin: 6, justifyContent: 'center' }]}>
+                                <Text style={styles.text}>AEC: {vals != undefined ? vals.aec : 0}</Text>
+                            </View>
                         </RowView>
                     </CustomCard>
                     <CustomSubTitle text="X-Ray" />
@@ -179,6 +198,22 @@ class Investigations extends Component {
                                 component={CustomPicker}
                             />
                         </RowView>
+                        <CustomOverline text="FVC:" />
+                        <RowView>
+                            <Field
+                                name="fvc"
+                                label="Value"
+                                overrideStyles={[styles.GridChildren]}
+                                component={CustomInput} />
+                        </RowView>
+                        <CustomOverline text="MMEF:" />
+                        <RowView>
+                            <Field
+                                name="mmef"
+                                label="Value"
+                                overrideStyles={[styles.GridChildren]}
+                                component={CustomInput} />
+                        </RowView>
                         <Text style={{ fontSize: 14, fontWeight: 'bold' }}>Post-Bronchodilator</Text>
                         <CustomOverline text="FEV1:" />
                         <RowView>
@@ -220,6 +255,22 @@ class Investigations extends Component {
                                 component={CustomPicker}
                             />
                         </RowView>
+                        <CustomOverline text="FVC:" />
+                        <RowView>
+                            <Field
+                                name="fvcP"
+                                label="Value"
+                                overrideStyles={[styles.GridChildren]}
+                                component={CustomInput} />
+                        </RowView>
+                        <CustomOverline text="MMEF:" />
+                        <RowView>
+                            <Field
+                                name="mmefP"
+                                label="Value"
+                                overrideStyles={[styles.GridChildren]}
+                                component={CustomInput} />
+                        </RowView>
                     </CustomCard>
                     <CustomSubTitle text="IgE" />
                     <CustomCard>
@@ -233,18 +284,6 @@ class Investigations extends Component {
                     <CustomCard>
                         <CustomOverline text="Findings" />
                         <RowView>
-                            {/* <Field
-                                name="skin_prick"
-                                label="Findings:"
-                                component={CustomChipGroup}
-                                data={[
-                                    { name: 'fungal', label: 'Fungal'},
-                                    { name: 'insect', label: 'Insect'},
-                                    { name: 'dust', label: 'Dust'},
-                                    { name: 'pollen', label: 'Pollen'},
-                                    { name: 'food', label: 'Food'},
-                                ]}
-                            /> */}
                             <Field
                                 name="fungal"
                                 component={CustomChipPicker}
@@ -273,9 +312,70 @@ class Investigations extends Component {
                                 { value: 'Dermatophagoides pteronyssinus', label: 'Dermatophagoides pteronyssinus' },
                                 { value: 'Blomia tropicalis', label: 'Blomia tropicalis' },
                                 { value: 'Tyrophagus putrescentiae', label: 'Tyrophagus putrescentiae' },
+                                { value: 'Dog Epithelia', label: 'Dog Epithelia' },
+                                { value: 'Cat Epithelia', label: 'Cat Epithelia' },
+                                { value: 'Mosquito', label: 'Mosquito' },
+                            
+                            ]}
+                        />
+
+                        <Field
+                            name="pollen"
+                            component={CustomChipPicker}
+                            label="Pollen"
+                            pickerLabel="Select"
+                            pickerItems={[
+                                { value: 'Cynodon dactylon (Bermuda Grass)', label: 'Cynodon dactylon (Bermuda Grass)' },
+                                { value: 'Lolium perenne (Rye Grass)', label: 'Lolium perenne (Rye Grass)' },
+                                { value: 'Poa pratensis (Kentucky Blue Grass)', label: 'Poa pratensis (Kentucky Blue Grass)' },
+                                { value: 'Avena sativa (Oat)', label: 'Avena sativa (Oat)' },
+                                { value: 'Triticum sativum (Wheat)', label: 'Triticum sativum (Wheat)' },
+                                { value: 'Zea mays (Corn)', label: 'Zea mays (Corn)' },
+                                { value: 'Ambrosia artemisifolia (Ragweed)', label: 'Ambrosia artemisifolia (Ragweed)' },
+                                { value: 'Ricinus communis (Castor)', label: 'Ricinus communis (Castor)' },
+                                { value: 'Urtica dioica (Nettle)', label: 'Urtica dioica (Nettle)' },                            
+                            ]}
+                        />
+
+                        <Field
+                            name="food"
+                            component={CustomChipPicker}
+                            label="Food"
+                            pickerLabel="Select"
+                            pickerItems={[
+                                { value: 'Hens Egg (White)', label: 'Hens Egg (White)' },
+                                { value: 'Rice', label: 'Rice' },
+                                { value: 'Wheat Flour', label: 'Wheat Flour' },
+                                { value: 'Corn Flour', label: 'Corn Flour' },
+                                { value: 'Soy Flour', label: 'Soy Flour' },
+                                { value: 'Chicken', label: 'Chicken' },
+                                { value: 'Mutton', label: 'Mutton' },
+                                { value: 'Shrimp (Prawn)', label: 'Shrimp (Prawn)' },
+                                { value: 'Crab', label: 'Crab' },
+                                { value: 'Salmon', label: 'Salmon' },                            
+                                { value: 'Peanut', label: 'Peanut' },
+                                { value: 'Walnut', label: 'Walnut' },                            
+                                { value: 'Orange', label: 'Orange' },                            
+                                { value: 'Banana', label: 'Banana' },
+                                { value: 'Pea', label: 'Pea' },                            
+                                { value: 'Spinach', label: 'Spinach' },                            
+                                { value: 'Black Lentil (Urad)', label: 'Black Lentil (Urad)' },                            
+                                { value: 'Green Lentil (Moong)', label: 'Green Lentil (Moong)' },
+                                { value: 'Bengal Gram (Chickpea)', label: 'Bengal Gram (Chickpea)' },                            
+                                { value: 'Toor Dal (Arhar)', label: 'Toor Dal (Arhar)' },                            
                             ]}
                         />
                         <Field
+                            name="others"
+                            component={CustomChipPicker}
+                            label="Others"
+                            pickerLabel="Select"
+                            pickerItems={[
+                                { value: 'Latex', label: 'Latex' },
+                            ]}
+                        />
+
+                        {/* <Field
                             name="skin_prick"
                             component={CustomChipGroup}
                             data={[
@@ -283,7 +383,7 @@ class Investigations extends Component {
                                 { name: 'pollen', label: 'Pollen'},
                                 { name: 'food', label: 'Food'},
                             ]}
-                        />
+                        /> */}
                     </CustomCard>
                     <CustomSubTitle text="Observations" />
                     <CustomCard>
@@ -302,9 +402,23 @@ class Investigations extends Component {
     }
 }
 
-export default reduxForm({
-    form: 'investigations',
-    onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Dashboard", props.navigation.state.params);
-    }
-})(Investigations);
+const mapStateToProps = state => ({
+    vals: getFormValues("investigations")(state)
+});
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(change, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+    reduxForm({
+        form: 'investigations',
+        initialValues: {
+            eosin: 0,
+            wbc: 0,
+        },
+        onSubmitSuccess: (result, dispatch, props) => {
+            props.navigation.navigate("Dashboard", props.navigation.state.params);
+        }
+    })(Investigations)
+);

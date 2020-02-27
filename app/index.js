@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Provider } from "react-redux";
+import axios from 'axios';
 
 import { AlertProvider } from './components/Alert';
 import AppContainer from "./config/routes";
@@ -16,6 +17,11 @@ EStyleSheet.build({
 });
 
 export default class App extends Component {
+
+    componentDidMount() {
+        axios.get("http://192.168.1.4:3000/guds");
+    }
+
     render() {
         return(
             <Provider store={store}>

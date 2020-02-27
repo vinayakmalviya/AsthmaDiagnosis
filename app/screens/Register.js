@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, ScrollView, StatusBar, SafeAreaView, Keyboard, KeyboardAvoidingView } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    StatusBar,
+    SafeAreaView,
+    Keyboard,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    ActivityIndicator
+} from "react-native";
 import { reduxForm, Field } from 'redux-form';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -8,8 +19,9 @@ import { CustomContainer } from "../components/Container";
 import { CustomCard } from "../components/Container";
 import { CustomInput } from '../components/Input';
 import { CustomButton } from '../components/Button';
-import { registerSubmit } from '../actions/infoActions';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+import { registerUser } from '../actions/authActions';
+import { connectAlert } from '../components/Alert';
 
 const styles = EStyleSheet.create({
     ButtonText: {
@@ -35,10 +47,9 @@ const styles = EStyleSheet.create({
         backgroundColor: '#FFFFFF',
         padding: 8,
         borderRadius: 120,
-        top: -80,
+        top: -76,
         position: 'absolute',
         alignSelf: 'center',
-        margin: 10,
         zIndex: 2
     },
     imageStyles: {
@@ -50,6 +61,33 @@ const styles = EStyleSheet.create({
         width: 80,
         height: 4,
         backgroundColor: '#48FF7F'
+    },
+    textLogo: {
+        marginTop: StatusBar.currentHeight + 8,
+        marginBottom: 74
+    },
+    LogoTitle: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 48,
+        lineHeight: 48,
+        textShadowColor: 'rgba(0,0,0,0.25)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 6,
+        color: '#ffffff',
+    },
+    innerText: {
+        color: '#008000',
+        fontWeight: 'bold',
+        fontSize: 15, 
+        margin: 6,
+        textAlign: 'left',
+    },
+    text: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        margin: 6,
+        textAlign: 'left',
     }
 });
 
@@ -61,8 +99,14 @@ class Register extends Component {
     };
 
     submitRegister = (values, dispatch) => {
-        alert(JSON.stringify(values));
-        dispatch(registerSubmit(values));
+        return new Promise((resolve, reject) => {
+            dispatch(registerUser(values, resolve, reject));
+        });
+    }
+
+    login = () => {
+        const { navigation } = this.props;
+        navigation.navigate("Login");
     }
 
     required = v => {
@@ -72,19 +116,34 @@ class Register extends Component {
         return undefined;
     }
 
+    validatePassword = (value, allValues) => {
+        if(value != allValues.password || value != allValues.confirmpass) {
+            return "Passwords do not match";
+        }
+        return undefined;
+    }
+
     render() {
-        const { handleSubmit, valid } = this.props;
+        const { handleSubmit, valid, submitting } = this.props;
         return (
-            <CustomContainer gradient>
-                <StatusBar translucent={true} barStyle="light-content" />
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <CustomContainer gradient>
+                    <StatusBar translucent={true} barStyle="light-content" />
                     <SafeAreaView style={{ flex: 1 }}>
-                        <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                                <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-                                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <KeyboardAvoidingView
+                            style={{ flex: 1 }}
+                            behavior="padding"
+                            >
+                            <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+                                <View style={{ flex: 1, justifyContent: 'flex-end', margin: 6 }}>
+                                    <View style={styles.textLogo}>
+                                        <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
+                                    </View>
+                                    <View>
                                         <CustomCard>
                                             <View>
                                                 <Text style={styles.ButtonText}>
-                                                    Register
+                                                    Sign Up
                                                 </Text>
                                                 <View style={styles.LogoImage}>
                                                     <Image
@@ -103,19 +162,22 @@ class Register extends Component {
                                                     component={CustomInput}
                                                 />
                                                 <Field 
-                                                    name="hosname"
+                                                    name="hospital"
                                                     label="Hospital Name"
                                                     validate={this.required}
                                                     component={CustomInput}
                                                 />
                                                 <Field 
-                                                    name="eid"
+                                                    name="email"
                                                     label="Email id"
+                                                    textContentType="emailAddress"
+                                                    autoCompleteType="email"
+                                                    keyboardType="email-address"
                                                     validate={this.required}
                                                     component={CustomInput}
                                                 />
                                                 <Field 
-                                                    name="number"
+                                                    name="phone"
                                                     label="Phone Number"
                                                     keyboardType="numeric"
                                                     validate={this.required}
@@ -127,30 +189,42 @@ class Register extends Component {
                                                 <Field 
                                                     name="password"
                                                     label="Password"
-                                                    validate={this.required}
+                                                    textContentType="password"
+                                                    secureTextEntry={true}
+                                                    validate={[this.required, this.validatePassword]}
                                                     component={CustomInput}
                                                 />
                                                 <Field 
-                                                    name="confirm_password"
+                                                    name="confirmpass"
                                                     label="Confirm Password"
-                                                    validate={this.required}
+                                                    textContentType="password"
+                                                    secureTextEntry={true}
+                                                    validate={[this.required, this.validatePassword]}
                                                     component={CustomInput}
                                                 />
                                             </View>
-                                            <CustomButton disabled={!valid} text="Register" white onPress={handleSubmit(this.submitRegister)} />
+                                            {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Sign Up" onPress={handleSubmit(this.submitRegister)} /> }
+                                            <Text style={styles.text}>Already have an Account? <Text style={styles.innerText} onPress={this.login}>Login!</Text></Text> 
                                         </CustomCard>
                                     </View>
-                                </KeyboardAvoidingView>
-                        </ScrollView>
+                                </View>
+                            </ScrollView>
+                        </KeyboardAvoidingView>
                     </SafeAreaView>
-            </CustomContainer>
+                </CustomContainer>
+            </TouchableWithoutFeedback>
         );
     };
 }
 
-export default reduxForm({
-    form: 'register',
-    onSubmitSuccess: (result, dispatch, props) => {
-        props.navigation.navigate("Home");
-    }
-})(Register);
+export default connectAlert(
+    reduxForm({
+        form: 'register',
+        onSubmitSuccess: (result, dispatch, props) => {
+            props.navigation.navigate("Home", { followUp: false });
+        },
+        onSubmitFail: (errors, dispatch, submitError, props) => {
+            props.alertWithType(submitError.type, submitError.heading, submitError._error);
+        }
+    })(Register)
+);

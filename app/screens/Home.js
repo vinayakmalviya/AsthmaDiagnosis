@@ -12,13 +12,11 @@ class Home extends Component {
         navigation: PropTypes.object,
     };
 
-    // componentDidMount() {
-    //     const { isLoggedIn } = this.props;
-    //     const { navigation } = this.props;
-    //     if (!isLoggedIn) {
-    //         navigation.navigate('Login');
-    //     }
-    // }
+    componentDidMount() {
+        if(!this.props.isLoggedIn) {
+            this.props.navigation.navigate("Login");
+        }
+    }
 
     newPatient = () => {
         const { navigation } = this.props;
@@ -46,6 +44,6 @@ class Home extends Component {
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.infoReducer.isLoggedIn,
-})
+});
 
 export default connect(mapStateToProps)(Home);

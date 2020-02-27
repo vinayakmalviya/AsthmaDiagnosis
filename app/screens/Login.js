@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, StatusBar, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, SafeAreaView, ScrollView } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StatusBar,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard,
+    SafeAreaView,
+    ScrollView,
+    ActivityIndicator
+} from "react-native";
 import { reduxForm, Field } from 'redux-form';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -51,6 +62,20 @@ const styles = EStyleSheet.create({
         width: 80,
         height: 4,
         backgroundColor: '#48FF7F'
+    },
+    textLogo: {
+        marginTop: StatusBar.currentHeight + 8,
+        marginBottom: 74
+    },
+    LogoTitle: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 48,
+        lineHeight: 48,
+        textShadowColor: 'rgba(0,0,0,0.25)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 6,
+        color: '#ffffff',
     }
 });
 
@@ -82,56 +107,65 @@ class Login extends Component {
     }
 
     render() {
-        const { handleSubmit, valid } = this.props;
+        const { handleSubmit, valid, submitting } = this.props;
         return (
-            <CustomContainer gradient>
-                <StatusBar translucent={true} barStyle="light-content" />
-                <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
-                    <SafeAreaView style={{ flex: 1 }}>
-                        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss() }>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <CustomContainer gradient>
+                    <StatusBar translucent={true} barStyle="light-content" />
+                    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center' }}>
+                        <SafeAreaView style={{ flex: 1 }}>
                             <KeyboardAvoidingView
                                 style={{ flex: 1 }}
                                 behavior="padding"
                             >
-                                <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <CustomCard>
-                                        <View>
-                                            <Text style={styles.ButtonText}>
-                                                Login
-                                            </Text>
-                                            <View style={styles.LogoImage}>
-                                                <Image
-                                                    style={styles.imageStyles}
-                                                    resizeMode="contain"
-                                                    source={require('../components/Logo/images/lungs_logo.png')}
+                                <View style={{ flex: 1, justifyContent: 'flex-end', margin: 6 }}>
+                                    <View style={styles.textLogo}>
+                                        <Text style={styles.LogoTitle}>Asthma{'\n'}Diagnosis</Text>
+                                    </View>
+                                    <View>
+                                        <CustomCard>
+                                            <View>
+                                                <Text style={styles.ButtonText}>
+                                                    Login
+                                                </Text>
+                                                <View style={styles.LogoImage}>
+                                                    <Image
+                                                        style={styles.imageStyles}
+                                                        resizeMode="contain"
+                                                        source={require('../components/Logo/images/lungs_logo.png')}
+                                                    />
+                                                </View>
+                                                <View style={styles.bottomBar}></View>
+                                                <Field 
+                                                    name="email"
+                                                    label="Email ID"
+                                                    textContentType="emailAddress"
+                                                    autoCompleteType="email"
+                                                    keyboardType="email-address"
+                                                    validate={this.required}
+                                                    component={CustomInput}
                                                 />
                                             </View>
-                                            <View style={styles.bottomBar}></View>
-                                            <Field 
-                                                name="email"
-                                                label="Email ID"
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-                                        </View>
-                                        <View style={{marginVertical: 3}}>
-                                            <Field 
-                                                name="password"
-                                                label="Password"
-                                                textContentType="password"
-                                                validate={this.required}
-                                                component={CustomInput}
-                                            />
-                                        </View>
-                                        <CustomButton disabled={!valid} text="Login" white onPress={handleSubmit(this.submitLogin)} />
-                                        <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
-                                    </CustomCard>
+                                            <View style={{marginVertical: 3}}>
+                                                <Field 
+                                                    name="password"
+                                                    label="Password"
+                                                    textContentType="password"
+                                                    secureTextEntry={true}
+                                                    validate={this.required}
+                                                    component={CustomInput}
+                                                />
+                                            </View>
+                                            {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Login" onPress={handleSubmit(this.submitLogin)} /> }
+                                            <Text style={styles.text}>New User? <Text style={styles.innerText} onPress={this.register}>Sign Up!</Text></Text> 
+                                        </CustomCard>
+                                    </View>
                                 </View>
                             </KeyboardAvoidingView>
-                        </TouchableWithoutFeedback>
-                    </SafeAreaView>
-                </ScrollView>
-            </CustomContainer>
+                        </SafeAreaView>
+                    </ScrollView>
+                </CustomContainer>
+            </TouchableWithoutFeedback>
         );
     };
 }

@@ -1,10 +1,9 @@
-import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH, HANDLE_FOLLOWUPSYM } from "../actions/infoActions";
+import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH, ADD_COMPLETE, HANDLE_FOLLOWUPSYM } from "../actions/infoActions";
 import { SEARCH_COMPLETE } from "../actions/followupActions";
-import { HANDLE_LOGIN, HANDLE_REGISTER } from "../actions/authActions";
-import React from 'react';
-import Symptoms from "../screens/Symptoms";
+import { AUTH_COMPLETE } from "../actions/authActions";
 
 const initialState = {
+    userID: '',
     isLoggedIn: false,
     name: '',
     age: 0,
@@ -43,7 +42,7 @@ const initialState = {
     tests: {
         cbc: {},
         xray: '',
-        pefr: [],
+        pefr: '',
         spirometry: {},
         IGE: '',
         skin_prick: {},
@@ -62,6 +61,13 @@ const reducer = (state = initialState, action) => {
                 name: action.name,
                 gender: action.gender,
             }
+        case AUTH_COMPLETE: {
+            return {
+                ...initialState,
+                userID: action.userID,
+                isLoggedIn: action.isLoggedIn
+            }
+        }
         case HANDLE_PERSONAL_INFO:
             return {
                 ...state,
@@ -83,7 +89,10 @@ const reducer = (state = initialState, action) => {
                 background: {
                     family: action.values.family,
                     childhood: action.values.childhood,
-                    allergy_hist: action.values.allergy_hist,
+                    allergy_hist: { 
+                        ...action.values.allergy_hist,
+                        other: action.values.other_allergs
+                    },
                     observations: action.values.observations,
                 },
             }
@@ -112,23 +121,33 @@ const reducer = (state = initialState, action) => {
                         aec: action.values.aec,
                     },
                     xray: action.values.xray,
-                    pefr: [...state.tests.pefr, action.values.pefr],
+                    pefr: action.values.pefr,
                     spirometry: {
                         pre: {
                             fev1: action.values.fev1,
                             fev1_range: action.values.fev1_range,
                             ratio: action.values.ratio,
                             ratio_range: action.values.ratio_range,
+                            fvc: action.values.fvc,
+                            mmef: action.values.mmef
                         },
                         post: {
                             fev1: action.values.fev1P,
                             fev1_range: action.values.fev1_rangeP,
                             ratio: action.values.ratioP,
                             ratio_range: action.values.ratio_rangeP,
+                            fvc: action.values.fvcP,
+                            mmef: action.values.mmefP
                         }
                     },
                     ige: action.values.ige,
-                    skin_prick: action.values.skin_prick,
+                    skin_prick: {
+                        fungal: { ...action.values.fungal },
+                        insect: { ...action.values.insect },
+                        pollen: { ...action.values.pollen },
+                        food: { ...action.values.food },
+                        others: { ...action.values.others },
+                    },
                     observations: action.values.observations,
                 }
             }
@@ -146,10 +165,16 @@ const reducer = (state = initialState, action) => {
         case HANDLE_REFRESH:
             return {
                 ...initialState,
+                isLoggedIn: true,
+            }
+        case ADD_COMPLETE:
+            return {
+                ...state,
             }
         case SEARCH_COMPLETE:
             return {
-                ...action.result
+                ...state,
+                ...action.response
             }
         case HANDLE_FOLLOWUPSYM:
             return {
