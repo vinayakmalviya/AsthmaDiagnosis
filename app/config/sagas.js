@@ -4,7 +4,7 @@ import api from './API';
 
 import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
 import { HANDLE_LOGIN, HANDLE_REGISTER, AUTH_COMPLETE } from '../actions/authActions';
-import { HANDLE_MID_SUBMIT, ADD_COMPLETE } from "../actions/infoActions";
+import { HANDLE_MID_SUBMIT, ADD_COMPLETE, MID_FAIL } from "../actions/infoActions";
 
 const search = values => api.post("/searchPatient", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
@@ -75,9 +75,10 @@ function* addPatient(action) {
 
         if(response._error) {
             alert("Kuch to gadbad hai");
+            yield put({ type: MID_FAIL });
         } else {
             alert("Done");
-            yield put({ type: ADD_COMPLETE });
+            yield put({ type: ADD_COMPLETE, _id: response._id });
         }
 
     } catch(e) {

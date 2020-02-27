@@ -6,6 +6,7 @@ export const HANDLE_SYMPTOMS = 'HANDLE_SYMPTOMS';
 export const HANDLE_INVESTIGATIONS = 'HANDLE_INVESTIGATIONS';
 export const HANDLE_COMORBIDITIES = 'HANDLE_COMORBIDITIES';
 export const ADD_COMPLETE = 'ADD_COMPLETE';
+export const MID_FAIL = 'MID_FAIL';
 export const HANDLE_REFRESH = 'HANDLE_REFRESH';
 
 export const testSubmit = values => ({

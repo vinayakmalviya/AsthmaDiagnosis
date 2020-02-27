@@ -3,6 +3,7 @@ import { SEARCH_COMPLETE } from "../actions/followupActions";
 import { AUTH_COMPLETE } from "../actions/authActions";
 
 const initialState = {
+    _id: '',
     userID: '',
     isLoggedIn: false,
     name: '',
@@ -169,6 +170,7 @@ const reducer = (state = initialState, action) => {
             }
         case ADD_COMPLETE:
             return {
+                _id: action._id,
                 ...state,
             }
         case SEARCH_COMPLETE:

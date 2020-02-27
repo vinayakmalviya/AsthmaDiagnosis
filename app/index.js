@@ -18,9 +18,9 @@ EStyleSheet.build({
 
 export default class App extends Component {
 
-    componentDidMount() {
+    /* componentDidMount() {
         axios.get("http://192.168.1.4:3000/guds");
-    }
+    } */
 
     render() {
         return(
