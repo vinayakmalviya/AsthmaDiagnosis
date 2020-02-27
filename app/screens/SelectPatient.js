@@ -26,9 +26,11 @@ class SelectPatient extends Component {
     }
 
     handleNext = (values, dispatch) => {
-        return new Promise((resolve, reject) => {
-            dispatch(searchPatient(values, resolve, reject));
-        });
+        // return new Promise((resolve, reject) => {
+        //     dispatch(searchPatient(values, resolve, reject));
+        // });
+        const { navigation } = this.props;
+        navigation.navigate('Dashboard');
     }
 
     render() {

@@ -62,9 +62,11 @@ class Login extends Component {
     };
 
     submitLogin = (values, dispatch) => {
-        return new Promise((resolve, reject) => {
-            dispatch(loginUser(values, resolve, reject));
-        });
+        // return new Promise((resolve, reject) => {
+        //     dispatch(loginUser(values, resolve, reject));
+        // });
+        const { navigation } = this.props;
+        navigation.navigate('Home');
     }
 
     register = () => {

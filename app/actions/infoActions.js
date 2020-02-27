@@ -7,6 +7,7 @@ export const HANDLE_COMORBIDITIES = 'HANDLE_COMORBIDITIES';
 export const HANDLE_LOGIN_INFO = 'HANDLE_LOGIN_INFO';
 export const HANDLE_REGISTER_INFO = 'HANDLE_REGISTER_INFO';
 export const HANDLE_REFRESH = 'HANDLE_REFRESH';
+export const HANDLE_FOLLOWUPSYM = 'HANDLE_FOLLOWUPSYM';
 
 export const testSubmit = values => ({
     type: HANDLE_TEST_ACTION,
@@ -51,4 +52,9 @@ export const comorbiditiesSubmit = values => ({
 
 export const followupRefresh = () => ({
     type: HANDLE_REFRESH,
+});
+
+export const followupSymSubmit = values => ({
+    type: HANDLE_FOLLOWUPSYM,
+    values,
 });

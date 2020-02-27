@@ -8,3 +8,4 @@ export const searchPatient = (values, resolve, reject) => ({
     resolve: resolve,
     reject: reject,
 });
+

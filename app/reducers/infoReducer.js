@@ -1,6 +1,8 @@
-import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH } from "../actions/infoActions";
+import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH, HANDLE_FOLLOWUPSYM } from "../actions/infoActions";
 import { SEARCH_COMPLETE } from "../actions/followupActions";
 import { HANDLE_LOGIN, HANDLE_REGISTER } from "../actions/authActions";
+import React from 'react';
+import Symptoms from "../screens/Symptoms";
 
 const initialState = {
     isLoggedIn: false,
@@ -148,6 +150,16 @@ const reducer = (state = initialState, action) => {
         case SEARCH_COMPLETE:
             return {
                 ...action.result
+            }
+        case HANDLE_FOLLOWUPSYM:
+            return {
+                ...state,
+                follow_up: [...state.follow_up,
+                                {
+                                    symptom: action.values,
+                                    date: date
+                                }
+                ]
             }
         default:
             return state;

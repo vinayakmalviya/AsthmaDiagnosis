@@ -13,6 +13,7 @@ import Diagnosis from "../screens/Diagnosis";
 import SelectPatient from "../screens/SelectPatient";
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import FollowupSym from '../screens/FollowupSym';
 
 const HomeStack = createStackNavigator({
     Home: {
@@ -26,6 +27,12 @@ const HomeStack = createStackNavigator({
         navigationOptions: {
             headerTitle: 'New Patient',
         }
+    },
+    FollowupSym: {
+        screen: FollowupSym,
+        navigationOptions: {
+            headerTitle: 'Symptoms'
+        },
     },
     BackgroundInfo: {
         screen: BackgroundInfo,

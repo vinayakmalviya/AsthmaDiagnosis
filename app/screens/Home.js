@@ -12,10 +12,13 @@ class Home extends Component {
         navigation: PropTypes.object,
     };
 
-    componentDidMount() {
-        const { isLoggedIn } = this.props;
-        alert(isLoggedIn);
-    }
+    // componentDidMount() {
+    //     const { isLoggedIn } = this.props;
+    //     const { navigation } = this.props;
+    //     if (!isLoggedIn) {
+    //         navigation.navigate('Login');
+    //     }
+    // }
 
     newPatient = () => {
         const { navigation } = this.props;
