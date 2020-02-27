@@ -1,5 +1,6 @@
 export const HANDLE_LOGIN = 'HANDLE_LOGIN';
 export const HANDLE_REGISTER = 'HANDLE_REGISTER';
+export const HANDLE_FOLLOWUPSYMUSER = 'HANDLE_FOLLOWUPSYMUSER';
 export const AUTH_COMPLETE = 'AUTH_COMPLETE';
 
 export const loginUser = (values, resolve, reject) => ({

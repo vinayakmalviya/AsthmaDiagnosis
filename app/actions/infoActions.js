@@ -48,7 +48,9 @@ export const followupRefresh = () => ({
     type: HANDLE_REFRESH,
 });
 
-export const followupSymSubmit = values => ({
+export const followupSymSubmit = (values, resolve, reject) => ({
     type: HANDLE_FOLLOWUPSYM,
     values,
+    resolve: resolve,
+    reject: reject
 });

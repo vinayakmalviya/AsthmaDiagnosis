@@ -16,7 +16,6 @@ import { connect } from "react-redux";
 import useArray from "../components/useArray";
 import { followupSymSubmit } from "../actions/infoActions";
 import { CustomCard, RowView, CustomContainer } from "../components/Container";
-import { ScreenTemplate } from "../components/ScreenTemplate";
 import { CustomPicker } from "../components/Picker";
 import { CustomInput } from "../components/Input";
 import { CustomButton } from "../components/Button";
@@ -44,8 +43,11 @@ const FollowupSym = props => {
   };
 
   const submitFollowupSym = (values, dispatch) => {
-    alert(JSON.stringify(values));
-    dispatch(followupSymSubmit(values));
+    // alert(JSON.stringify(values));
+    // dispatch(followupSymSubmit(values));
+    return new Promise((resolve, reject) => {
+      dispatch(followupSymSubmit(values, resolve, reject));
+    });
   };
 
   return (
@@ -200,6 +202,13 @@ export default connect()(
     form: "followupsym",
     onSubmitSuccess: (result, dispatch, props) => {
       props.navigation.navigate("Dashboard", props.navigation.state.params);
+    },
+    onSubmitFail: (errors, dispatch, submitError, props) => {
+      props.alertWithType(
+        submitError.type,
+        submitError.heading,
+        submitError._error
+      );
     }
   })(FollowupSym)
 );
