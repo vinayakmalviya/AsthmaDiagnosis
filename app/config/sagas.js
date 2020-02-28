@@ -76,14 +76,11 @@ function* addPatient(action) {
     try {
         let patient = yield select(state => state.infoReducer);
 
-        patient = {
-            _id: shortid.generate(),
-            ...patient,
-        };
+        let id = shortid.generate();
+
+        patient._id = id;
 
         const response = yield call(addNew, patient);
-
-        console.log(response);
 
         if(response._error) {
             alert("Kuch to gadbad hai");
