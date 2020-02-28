@@ -9,6 +9,9 @@ export const ADD_COMPLETE = 'ADD_COMPLETE';
 export const MID_FAIL = 'MID_FAIL';
 export const HANDLE_REFRESH = 'HANDLE_REFRESH';
 export const HANDLE_FOLLOWUPSYM = 'HANDLE_FOLLOWUPSYM';
+export const HANDLE_INVESTIGATIONS_F = 'HANDLE_INVESTIGATIONS_F';
+export const HANDLE_UPDATE_PATIENT = 'HANDLE_UPDATE_PATIENT';
+export const UPDATE_COMPLETE = 'UPDATE_COMPLETE';
 
 export const testSubmit = values => ({
     type: HANDLE_TEST_ACTION,
@@ -28,7 +31,11 @@ export const backgroundInfoSubmit = values => ({
 
 export const midwaySubmit = () => ({
     type: HANDLE_MID_SUBMIT,
-})
+});
+
+export const updatePSubmit = () => ({
+    type: HANDLE_UPDATE_PATIENT,
+});
 
 export const symptomsSubmit = values => ({
     type: HANDLE_SYMPTOMS,

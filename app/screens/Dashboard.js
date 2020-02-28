@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { View } from "react-native";
 import { connect } from "react-redux";
+import { NavigationEvents } from "react-navigation";
 
 import { Title, CustomSubTitle } from "../components/Text";
 import { CustomButton } from '../components/Button';
 import { ScreenTemplate } from "../components/ScreenTemplate";
-import { midwaySubmit } from '../actions/infoActions';
+import { midwaySubmit, updatePSubmit } from '../actions/infoActions';
 
 const butt1 = "Personal\nInformation";
 const butt2 = "Background\nInformation";
@@ -32,8 +33,28 @@ class Dashboard extends Component {
 
     componentDidMount() {
         const { followup } = this.props.navigation.state.params;
+        const { track, dispatch } = this.props;
         if(!followup) {
-            this.props.dispatch(midwaySubmit());
+            if(!track.new.midway && track.new.personal && track.new.background) {
+                console.log("Mount Midway");
+                dispatch(midwaySubmit());
+            }
+        }
+    }
+
+    submitTracker = () => {
+        const { followup } = this.props.navigation.state.params;
+        const { track, dispatch } = this.props;
+        if(!followup) {
+            if(track.new.symptoms && track.new.investigations && track.new.comorbidities) {
+                if(track.new.midway) {
+                    console.log("Update submit");
+                    dispatch(updatePSubmit());
+                } else {
+                    console.log("Update midway submit");
+                    dispatch(midwaySubmit());
+                }
+            }
         }
     }
 
@@ -75,6 +96,7 @@ class Dashboard extends Component {
         const { followup } = this.props.navigation.state.params;
         return(
             <ScreenTemplate>
+                <NavigationEvents onDidFocus={this.submitTracker} />
                 <Title text={patientName + " " + patientAge + " " + patientGender} />
                 <CustomSubTitle text="Personal Information" />
                 <View style={styles.GridContainer}>
@@ -83,6 +105,7 @@ class Dashboard extends Component {
                         largePadding
                         overrideStyles={styles.GridChildren}
                         text={butt1}
+                        numberOfLines={2}
                         onPress={this.handlePersonal}
                     />
                     <CustomButton
@@ -90,6 +113,7 @@ class Dashboard extends Component {
                         largePadding
                         overrideStyles={styles.GridChildren}
                         text={butt2}
+                        numberOfLines={2}
                         onPress={this.handleBackground}
                     />
                 </View>
@@ -130,11 +154,12 @@ const mapStateToProps = (state) => {
     const patientName = state.infoReducer.name || "Name";
     const patientAge = state.infoReducer.age || "Age";
     const patientGender = state.infoReducer.gender || "Gender";
-    const ini_symptoms = state.infoReducer.ini_symptoms || "";
+    const tracking = state.trackReducer;
     return {
         patientName,
         patientGender,
         patientAge,
+        track: tracking
     };
 };
 

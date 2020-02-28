@@ -30,7 +30,6 @@ class Comorbidities extends Component {
     };
 
     submitComorbidities = (values, dispatch, props) => {
-        alert(JSON.stringify(values));
         dispatch(comorbiditiesSubmit(values));
     }
 

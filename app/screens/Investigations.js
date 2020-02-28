@@ -45,7 +45,6 @@ class Investigations extends Component {
     };
 
     submitInvestigations = (values, dispatch) => {
-        alert(JSON.stringify(values));
         dispatch(investigationsSubmit(values));
     }
 

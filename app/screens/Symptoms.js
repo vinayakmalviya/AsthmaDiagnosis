@@ -30,7 +30,6 @@ class Symptoms extends Component {
     };
 
     submitSymptoms = (values, dispatch) => {
-        alert(JSON.stringify(values));
         dispatch(symptomsSubmit(values));
     }
 

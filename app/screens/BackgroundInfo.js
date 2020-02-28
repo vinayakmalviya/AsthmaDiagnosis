@@ -17,7 +17,6 @@ class BackgroundInfo extends Component {
         dispatch: PropTypes.func,
     }
     handleNext = (values, dispatch) => {
-        alert(JSON.stringify(values));
         dispatch(backgroundInfoSubmit(values));
     };
     

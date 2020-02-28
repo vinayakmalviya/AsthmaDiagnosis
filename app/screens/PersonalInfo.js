@@ -32,7 +32,6 @@ class PersonalInfo extends Component {
     }
 
     handleNext = (values, dispatch) => {
-        alert(JSON.stringify(values));
         dispatch(personalInfoSubmit(values));
     };
 

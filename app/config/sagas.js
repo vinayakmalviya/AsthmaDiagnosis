@@ -4,7 +4,7 @@ import api from './API';
 
 import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
 import { HANDLE_LOGIN, HANDLE_REGISTER, AUTH_COMPLETE } from '../actions/authActions';
-import { HANDLE_MID_SUBMIT, ADD_COMPLETE, MID_FAIL, HANDLE_FOLLOWUPSYM } from "../actions/infoActions";
+import { HANDLE_MID_SUBMIT, ADD_COMPLETE, MID_FAIL, HANDLE_FOLLOWUPSYM, HANDLE_UPDATE_PATIENT, UPDATE_COMPLETE } from "../actions/infoActions";
 
 const search = values => api.post("/searchPatient", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
 
@@ -98,17 +98,30 @@ function* addPatient(action) {
     }
 }
 
+function* updatePatient(action) {
+    try {
+        let updateData = yield select(state => state.infoReducer);
+
+        const response = yield call(update, updateData, updateData._id);
+
+        if(response._error) {
+            alert("Update error from saga")
+        } else {
+            alert("3 form update done");
+            yield put({ type: UPDATE_COMPLETE });
+        }
+    } catch(err) {
+        yield put({ type: SEARCH_ERROR, error: e.message });
+    }
+}
+
 function* followUpPatient(action) {
     try {
         let patientData = {
             ...action.values,
         };
 
-        console.log(patientData);
-
        const response = yield call(search, patientData);
-
-       console.log(response);
        
        if(response._error) {
            yield call(action.reject, { ...response });
@@ -145,6 +158,7 @@ export default function* rootSaga() {
     yield takeEvery(HANDLE_LOGIN, loginUser);
     yield takeEvery(HANDLE_REGISTER, registerUser);
     yield takeEvery(HANDLE_MID_SUBMIT, addPatient);
+    yield takeEvery(HANDLE_UPDATE_PATIENT, updatePatient);
     yield takeEvery(HANDLE_SEARCH, followUpPatient);
     yield takeEvery(HANDLE_FOLLOWUPSYM, addfollowupSymptoms);
 }
