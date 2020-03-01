@@ -15,6 +15,7 @@ import { CustomChipPicker } from "../components/Chip";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 
 import { investigationsSubmit } from '../actions/infoActions';
+import { DataTable } from 'react-native-paper';
 
 const styles = EStyleSheet.create({
     GridContainer: {
@@ -48,6 +49,10 @@ class Investigations extends Component {
         dispatch(investigationsSubmit(values));
     }
 
+    submitInvestigationsF = (values, dispatch) => {
+        console.log("PEFR Submit");
+    }
+
     render() {
         const { handleSubmit, vals } = this.props;
         const { followup } = this.props.navigation.state.params;
@@ -61,6 +66,27 @@ class Investigations extends Component {
         if(followup) {
             return(
                 <ScreenTemplate>
+                    <CustomSubTitle text="Previous PEFR values" />
+                    <CustomCard>
+                        <DataTable>
+                            <DataTable.Header>
+                                <DataTable.Title>Date</DataTable.Title>
+                                <DataTable.Title>Value</DataTable.Title>
+                            </DataTable.Header>
+                            <DataTable.Row>
+                                <DataTable.Cell>{this.props.fPEFR.ini_symptoms.date ? this.props.fPEFR.ini_symptoms.date : "No data present"}</DataTable.Cell>
+                                <DataTable.Cell>{this.props.fPEFR.tests.pefr ? this.props.fPEFR.tests.pefr : "No data present"}</DataTable.Cell>
+                            </DataTable.Row>
+                            {this.props.fPEFR.follow_up.length >= 1 ? this.props.fPEFR.follow_up.map((value) => {
+                                <>
+                                    <DataTable.Row>
+                                        <DataTable.Cell>{value.date}</DataTable.Cell>
+                                        <DataTable.Cell>{value.pefr}</DataTable.Cell>
+                                    </DataTable.Row>
+                                </>
+                            }): null}
+                        </DataTable>
+                    </CustomCard>
                     <CustomSubTitle text="PEFR" />
                     <CustomCard>
                         <View>
@@ -84,7 +110,7 @@ class Investigations extends Component {
                             component={CustomInput}
                         />
                     </CustomCard>
-                    <CustomButton text="Submit Results" onPress={handleSubmit(this.submitInvestigations)} />
+                    <CustomButton text="Submit Results" onPress={handleSubmit(this.submitInvestigationsF)} />
                 </ScreenTemplate>
             );
         } else {
@@ -402,7 +428,8 @@ class Investigations extends Component {
 }
 
 const mapStateToProps = state => ({
-    vals: getFormValues("investigations")(state)
+    vals: getFormValues("investigations")(state),
+    fPEFR: state.infoReducer
 });
 
 const mapDispatchToProps = dispatch => {

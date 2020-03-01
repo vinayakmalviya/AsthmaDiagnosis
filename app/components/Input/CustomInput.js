@@ -144,9 +144,9 @@ const CustomInput = ({
 
     // Render
     return (
-        <View style={styles.Wrapper}>
+        <View style={[styles.Wrapper, overrideStyles]}>
             <Animated.View
-                style={[styles.Container, animatedStyles.Container, overrideStyles]}>
+                style={[styles.Container, animatedStyles.Container]}>
                 <Animated.Text style={[styles.Label, animatedStyles.Label]}>
                     {label}
                 </Animated.Text>

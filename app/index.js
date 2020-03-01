@@ -18,9 +18,9 @@ EStyleSheet.build({
 
 export default class App extends Component {
 
-    /* componentDidMount() {
-        axios.get("http://192.168.1.4:3000/guds");
-    } */
+    componentDidMount() {
+        axios.get("https://guarded-mountain-30437.herokuapp.com/guds");
+    }
 
     render() {
         return(

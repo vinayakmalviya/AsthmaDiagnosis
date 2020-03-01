@@ -30,10 +30,6 @@ const FollowupSym = props => {
   const [enteredVal, setEnteredVal] = useState("");
   const [isAddMode, setIsAddMode] = useState(false);
 
-  useEffect(() => {
-    console.log("Here!!!!->", symptoms);
-  }, [symptoms]);
-
   const symInputHandler = enteredText => {
     setEnteredSym(enteredText);
   };
@@ -43,8 +39,6 @@ const FollowupSym = props => {
   };
 
   const submitFollowupSym = (values, dispatch) => {
-    // alert(JSON.stringify(values));
-    // dispatch(followupSymSubmit(values));
     return new Promise((resolve, reject) => {
       dispatch(followupSymSubmit(values, resolve, reject));
     });
@@ -89,10 +83,10 @@ const FollowupSym = props => {
                         name="range"
                         label="Range"
                         items={[
-                          { label: "0", value: 0 },
-                          { label: "1", value: 1 },
-                          { label: "2", value: 2 },
-                          { label: "3", value: 3 }
+                          { label: "No Occurence", value: "0" },
+                          { label: "2 Days a week", value: "1" },
+                          { label: "Daily", value: "2" },
+                          { label: "Multiple times in a day", value: "3" }
                         ]}
                         onChange={valInputHandler}
                         value={enteredVal}
@@ -120,7 +114,7 @@ const FollowupSym = props => {
                     </DataTable.Header>
                     <View style={{ marginBottom: 18 }}>
                       {!symptoms.value.length && (
-                        <CustomOverline text="No Symptoms" />
+                        <CustomOverline text="No Symptoms Entered" />
                       )}
                       {!!symptoms.value.length &&
                         symptoms.value.map((symptom, index) => (
@@ -193,7 +187,6 @@ const styles = StyleSheet.create({
   addbtn: {
     flex: 1,
     justifyContent: "flex-end"
-    // position: 'absolute',
   }
 });
 

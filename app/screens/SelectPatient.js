@@ -78,7 +78,7 @@ class SelectPatient extends Component {
                                                 validate={this.required}
                                                 component={CustomInput}
                                             />
-                                            {submitting ? <ActivityIndicator size="large" color="#48FF7F" /> : <CustomButton disabled={!valid} text="Search Patient" onPress={handleSubmit(this.handleNext)} /> }
+                                            {submitting ? <ActivityIndicator size="large" color="#0A7B61" /> : <CustomButton disabled={!valid} text="Search Patient" onPress={handleSubmit(this.handleNext)} /> }
                                         </CustomCard>
                                     </View>
                                 </View>

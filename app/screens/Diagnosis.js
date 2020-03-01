@@ -161,7 +161,23 @@ class Diagnosis extends Component {
 					</View>
 				) : (
 					<View>
-						<Text>Hello</Text>
+						<CustomSubTitle text="Follow Up Summary" />
+						<CustomCard>
+							<DataTable>
+								<DataTable.Header>
+									<DataTable.Title>Symptom</DataTable.Title>
+									<DataTable.Title>Occurence</DataTable.Title>
+								</DataTable.Header>
+								<DataTable.Row>
+									<DataTable.Cell>Wheezing</DataTable.Cell>
+									<DataTable.Cell>Daily</DataTable.Cell>
+								</DataTable.Row>
+							</DataTable>
+						</CustomCard>
+						<CustomSubTitle text="Follow Up Summary" />
+						<CustomCard>
+							<CustomOverline text="Asthma Control and Treatment Step Up/Step Down" />
+						</CustomCard>
 					</View>
 				)}
 			</ScreenTemplate>

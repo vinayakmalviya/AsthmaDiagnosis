@@ -83,10 +83,8 @@ function* addPatient(action) {
         const response = yield call(addNew, patient);
 
         if(response._error) {
-            alert("Kuch to gadbad hai");
             yield put({ type: MID_FAIL });
         } else {
-            alert("Done");
             yield put({ type: ADD_COMPLETE, _id: response._id });
         }
 
@@ -102,9 +100,7 @@ function* updatePatient(action) {
         const response = yield call(update, updateData, updateData._id);
 
         if(response._error) {
-            alert("Update error from saga")
         } else {
-            alert("3 form update done");
             yield put({ type: UPDATE_COMPLETE });
         }
     } catch(err) {
@@ -139,10 +135,8 @@ function* addfollowupSymptoms(action) {
 		const response = yield call(update, updateData, updateData._id);
 
 		if (response._error) {
-			alert("Sab sahi hoga");
 			yield call(action.reject);
 		} else {
-			alert("Done");
 			yield call(action.resolve);
 			yield put({ type: ADD_COMPLETE });
 		}

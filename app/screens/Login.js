@@ -143,7 +143,7 @@ export default connectAlert(
     reduxForm({
         form: 'login',
         onSubmitSuccess: (result, dispatch, props) => {
-            props.navigation.navigate("Home", { followUp: false });
+            props.navigation.replace("Home", { followUp: false });
         },
         onSubmitFail: (errors, dispatch, submitError, props) => {
             props.alertWithType(submitError.type, submitError.heading, submitError._error);

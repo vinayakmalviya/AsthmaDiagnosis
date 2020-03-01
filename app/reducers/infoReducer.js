@@ -1,6 +1,6 @@
 import { HANDLE_TEST_ACTION, HANDLE_SYMPTOMS, HANDLE_PERSONAL_INFO, HANDLE_FAMILY_INFO, HANDLE_INVESTIGATIONS, HANDLE_COMORBIDITIES, HANDLE_REFRESH, ADD_COMPLETE, HANDLE_FOLLOWUPSYM } from "../actions/infoActions";
-import { SEARCH_COMPLETE } from "../actions/followupActions";
-import { AUTH_COMPLETE } from "../actions/authActions";
+import { SEARCH_COMPLETE, HANDLE_PEFR } from "../actions/followupActions";
+import { AUTH_COMPLETE, HANDLE_LOGOUT } from "../actions/authActions";
 
 const initialState = {
     _id: '',
@@ -69,6 +69,10 @@ const reducer = (state = initialState, action) => {
                 isLoggedIn: action.isLoggedIn
             }
         }
+        case HANDLE_LOGOUT:
+            return {
+                ...initialState
+            }
         case HANDLE_PERSONAL_INFO:
             return {
                 ...state,
@@ -168,11 +172,7 @@ const reducer = (state = initialState, action) => {
                 ...initialState,
                 isLoggedIn: true,
             }
-        case ADD_COMPLETE:
-            return {
-                _id: action._id,
-                ...state,
-            }
+        
         case SEARCH_COMPLETE:
             return {
                 ...state,
@@ -188,6 +188,18 @@ const reducer = (state = initialState, action) => {
                                 }
                 ]
             }
+        /* case HANDLE_PEFR:
+            let index = state.follow_up.length;
+            return {
+                ...state,
+                follow_up: [index]: { ...follow_up[index], pefr: action.values.pefr }
+            } */
+        case ADD_COMPLETE:
+            return {
+                _id: action._id,
+                ...state,
+            }
+        
         default:
             return state;
     }
