@@ -1,30 +1,20 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React from "react";
 import {
 	View,
 	Text,
-	TextInput,
 	Modal,
-	FlatList,
 	TouchableWithoutFeedback,
-	TouchableNativeFeedback,
 	ScrollView,
-	Animated,
 	StatusBar,
-	Dimensions
 } from "react-native";
-import PropTypes from "prop-types";
 import EStyleSheet from "react-native-extended-stylesheet";
-
-import { CustomCard } from "../Container";
-import { CustomButton } from "../Button";
-import { CustomIcon } from "../Icon";
 
 import useScreenDimensions from "../../hooks/useScreenDimensions";
 
 const styles = EStyleSheet.create({
 	BGOverlay: {
 		backgroundColor: "rgba(0,0,0,0.25)",
-		flex: 1
+		flex: 1,
 	},
 	DropBox: {
 		width: "100%",
@@ -34,19 +24,17 @@ const styles = EStyleSheet.create({
 		borderTopRightRadius: 8,
 		elevation: 4,
 		position: "absolute",
-		bottom: 0
+		bottom: 0,
 	},
 	DropTitle: {
 		fontSize: 18,
 		paddingHorizontal: 24,
 		paddingVertical: 16,
-		fontWeight: "bold"
-	}
+		fontWeight: "bold",
+	},
 });
 
 const CustomBottomSheet = ({
-	// input = {},
-	// meta = {},
 	label = "",
 	visible = false,
 	content = <View />,
@@ -63,17 +51,25 @@ const CustomBottomSheet = ({
 			onRequestClose={onVisibilityChange}
 			style={{ flex: 1 }}
 		>
-			<TouchableWithoutFeedback
-				onPress={onVisibilityChange}
-				style={{ flex: 1 }}
-			>
-				<View style={styles.BGOverlay}>
-					<View style={styles.DropBox}>
-						<Text style={styles.DropTitle}>{label}</Text>
-						<View style={{ maxHeight: Math.round(height * 0.75) }}>
-							<ScrollView style={{ flexGrow: 0 }}>
-								{content}
-							</ScrollView>
+			<TouchableWithoutFeedback onPress={onVisibilityChange}>
+				<View style={{ flex: 1 }}>
+					<StatusBar
+						backgroundColor="rgba(0,0,0,0.25)"
+						barStyle="dark-content"
+					/>
+					<View style={styles.BGOverlay}>
+						<View style={styles.DropBox}>
+							<Text style={styles.DropTitle}>{label}</Text>
+							<View
+								style={{ maxHeight: Math.round(height * 0.75) }}
+							>
+								<ScrollView
+									style={{ flexGrow: 0 }}
+									keyboardShouldPersistTaps="handled"
+								>
+									{content}
+								</ScrollView>
+							</View>
 						</View>
 					</View>
 				</View>

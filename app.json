@@ -1,39 +1,33 @@
 {
-  "expo": {
-    "name": "Asthma Diagnosis",
-    "slug": "AsthmaDiagnosis",
-    "privacy": "public",
-    "sdkVersion": "35.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon_temp.png",
-    "android": {
-      "splash": {
-        "mdpi": "./assets/splash/android/mdpi/splash.png",
-        "hdpi": "./assets/splash/android/hdpi/splash.png",
-        "xhdpi": "./assets/splash/android/xhdpi/splash.png",
-        "xxhdpi": "./assets/splash/android/xxhdpi/splash.png",
-        "xxxhdpi": "./assets/splash/android/xxxhdpi/splash.png",
-        "resizeMode": "cover"
-      }
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "splash": {
-        "image": "./assets/splash_alt.png",
-        "resizeMode": "cover"
-      },
-    }
-  }
+	"expo": {
+		"name": "Asthma Diagnosis",
+		"slug": "AsthmaDiagnosis",
+		"privacy": "public",
+		"sdkVersion": "35.0.0",
+		"platforms": ["ios", "android", "web"],
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon_final.png",
+		"android": {
+			"splash": {
+				"mdpi": "./assets/splash/android/mdpi/splash.png",
+				"hdpi": "./assets/splash/android/hdpi/splash.png",
+				"xhdpi": "./assets/splash/android/xhdpi/splash.png",
+				"xxhdpi": "./assets/splash/android/xxhdpi/splash.png",
+				"xxxhdpi": "./assets/splash/android/xxxhdpi/splash.png",
+				"resizeMode": "cover"
+			}
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"splash": {
+				"image": "./assets/splash_alt.png",
+				"resizeMode": "cover"
+			}
+		}
+	}
 }

@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 import { Text } from "react-native";
 
-import styles from './styles';
+import styles from "./styles";
 
 const CardHeaderText = ({ text }) => (
-    <Text style={styles.cardHeader}>{text}</Text>
+	<Text style={styles.cardHeader}>{text}</Text>
 );
 
 CardHeaderText.propTypes = {
-    text: PropTypes.string,
-}
+	text: PropTypes.string,
+};
 
 export default CardHeaderText;

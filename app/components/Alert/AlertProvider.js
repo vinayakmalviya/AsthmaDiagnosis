@@ -1,38 +1,43 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { View, StatusBar } from 'react-native';
-import DropdownAlert from 'react-native-dropdownalert';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { View, StatusBar } from "react-native";
+import DropdownAlert from "react-native-dropdownalert";
 
 class AlertProvider extends Component {
-    static childContextTypes = {
-        alertWithType: PropTypes.func,
-        alert: PropTypes.func,
-    };
+	static childContextTypes = {
+		alertWithType: PropTypes.func,
+		alert: PropTypes.func,
+	};
 
-    static propTypes = {
-        children: PropTypes.any,
-    };
+	static propTypes = {
+		children: PropTypes.any,
+	};
 
-    getChildContext() {
-        return {
-        alert: (...args) => this.dropdown.alert(...args),
-        alertWithType: (...args) => this.dropdown.alertWithType(...args),
-        };
-    }
+	getChildContext() {
+		return {
+			alert: (...args) => this.dropdown.alert(...args),
+			alertWithType: (...args) => this.dropdown.alertWithType(...args),
+		};
+	}
 
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                {React.Children.only(this.props.children)}
-                <DropdownAlert
-                    defaultContainer={{ padding: 8, paddingTop: StatusBar.currentHeight, flexDirection: 'row' }}
-                    ref={(ref) => {
-                        this.dropdown = ref;
-                    }}
-                />
-            </View>
-        );
-    };
-};
+	render() {
+		return (
+			<View style={{ flex: 1 }}>
+				{React.Children.only(this.props.children)}
+				<DropdownAlert
+					defaultContainer={{
+						padding: 8,
+						flexDirection: "row",
+						paddingTop: StatusBar.currentHeight,
+					}}
+					updateStatusBar={false}
+					ref={(ref) => {
+						this.dropdown = ref;
+					}}
+				/>
+			</View>
+		);
+	}
+}
 
 export default AlertProvider;

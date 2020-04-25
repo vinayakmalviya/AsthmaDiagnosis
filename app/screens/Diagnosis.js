@@ -14,15 +14,15 @@ import { CustomSubTitle, CustomOverline } from "../components/Text";
 const styles = EStyleSheet.create({
 	GridChildren: {
 		flex: 1,
-		flexBasis: "40%"
-	}
+		flexBasis: "40%",
+	},
 });
 
 class Diagnosis extends Component {
 	static propTypes = {
 		tests: PropTypes.object,
 		symptoms: PropTypes.object,
-		personal: PropTypes.object
+		personal: PropTypes.object,
 	};
 	render() {
 		const { followup } = this.props.navigation.state.params;
@@ -30,7 +30,7 @@ class Diagnosis extends Component {
 			"No Occurence",
 			"2 Days A Week",
 			"Daily",
-			"Multiple Times In A Day"
+			"Multiple Times In A Day",
 		];
 		return (
 			<ScreenTemplate>
@@ -149,10 +149,13 @@ class Diagnosis extends Component {
 								name="severity"
 								label="Severity"
 								items={[
-									{ label: "Intermittent", value: 0 },
-									{ label: "Persistent: Mild", value: 1 },
-									{ label: "Persistent: Moderate", value: 2 },
-									{ label: "Persistent: Severe", value: 3 }
+									{ label: "Intermittent", value: "0" },
+									{ label: "Persistent: Mild", value: "1" },
+									{
+										label: "Persistent: Moderate",
+										value: "2",
+									},
+									{ label: "Persistent: Severe", value: "3" },
 								]}
 								overrideStyles={[styles.GridChildren]}
 								component={CustomPicker}
@@ -185,12 +188,12 @@ class Diagnosis extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	vals: { ...state.infoReducer }
+const mapStateToProps = (state) => ({
+	vals: { ...state.infoReducer },
 });
 
 export default connect(mapStateToProps)(
 	reduxForm({
-		form: "investigations"
+		form: "investigations",
 	})(Diagnosis)
 );

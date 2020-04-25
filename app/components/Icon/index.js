@@ -1,3 +1,3 @@
-import CustomIcon from './CustomIcon';
+import CustomIcon from "./CustomIcon";
 
 export { CustomIcon };

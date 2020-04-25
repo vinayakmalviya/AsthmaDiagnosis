@@ -12,7 +12,7 @@ const CustomButton = ({
 	largePadding = null,
 	overrideStyles = null,
 	disabled = false,
-	numberOfLines = 1
+	numberOfLines = 1,
 }) => {
 	if (largePadding == null) largePadding = large;
 
@@ -27,7 +27,7 @@ const CustomButton = ({
 			overflow: "hidden",
 			height: HEIGHT,
 			borderRadius: 8,
-			elevation: largePadding ? 4 : 2
+			elevation: largePadding ? 4 : 2,
 		},
 		ButtonBox: {
 			padding: PADDING,
@@ -36,7 +36,7 @@ const CustomButton = ({
 			alignItems: "center",
 			flex: 1,
 			borderRadius: largePadding ? 8 : 4,
-			backgroundColor: "rgba(0,0,0,0.1)"
+			backgroundColor: "rgba(0,0,0,0.1)",
 		},
 		ButtonText: {
 			textTransform: "uppercase",
@@ -44,8 +44,8 @@ const CustomButton = ({
 			fontWeight: "bold",
 			color: "#FFFFFF",
 			fontSize: FONT_SIZE,
-			lineHeight: LINE_HEIGHT
-		}
+			lineHeight: LINE_HEIGHT,
+		},
 	});
 
 	if (white) {
@@ -63,7 +63,7 @@ const CustomButton = ({
 						<View
 							style={[
 								styles.ButtonBox,
-								{ backgroundColor: "#eee" }
+								{ backgroundColor: "#eee" },
 							]}
 						>
 							<Text style={styles.ButtonText}>{text}</Text>
@@ -72,13 +72,13 @@ const CustomButton = ({
 						<View
 							style={[
 								styles.ButtonBox,
-								{ backgroundColor: "#FFFFFF" }
+								{ backgroundColor: "#FFFFFF" },
 							]}
 						>
 							<Text
 								style={[
 									styles.ButtonText,
-									{ color: "#11372E" }
+									{ color: "#11372E" },
 								]}
 							>
 								{text}
@@ -104,7 +104,7 @@ const CustomButton = ({
 						<View
 							style={[
 								styles.ButtonBox,
-								{ backgroundColor: "#eee" }
+								{ backgroundColor: "#eee" },
 							]}
 						>
 							<Text style={styles.ButtonText}>{text}</Text>
@@ -133,7 +133,7 @@ CustomButton.propTypes = {
 	white: PropTypes.bool,
 	large: PropTypes.bool,
 	largePadding: PropTypes.bool,
-	overrideStyles: PropTypes.object
+	overrideStyles: PropTypes.object,
 };
 
 export default CustomButton;

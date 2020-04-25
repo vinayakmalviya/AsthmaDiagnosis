@@ -1,3 +1,3 @@
-import ScreenTemplate from './ScreenTemplate';
+import ScreenTemplate from "./ScreenTemplate";
 
 export { ScreenTemplate };

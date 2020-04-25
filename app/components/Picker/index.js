@@ -1,3 +1,3 @@
-import CustomPicker from './CustomPicker';
+import CustomPicker from "./CustomPicker";
 
 export { CustomPicker };

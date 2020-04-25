@@ -17,12 +17,12 @@ const Logo = ({ small = false }) => {
 			flex: 1,
 			margin: 12,
 			marginTop: 12 + StatusBar.currentHeight,
-			justifyContent: "center"
+			justifyContent: "center",
 		},
 		LogoImage: {
 			alignSelf: "center",
 			width: logoWidth,
-			height: logoWidth
+			height: logoWidth,
 		},
 		LogoTitle: {
 			alignSelf: "center",
@@ -34,8 +34,8 @@ const Logo = ({ small = false }) => {
 			textShadowColor: "rgba(0,0,0,0.25)",
 			textShadowOffset: { width: 0, height: 2 },
 			textShadowRadius: 6,
-			color: "#ffffff"
-		}
+			color: "#ffffff",
+		},
 	});
 
 	return (

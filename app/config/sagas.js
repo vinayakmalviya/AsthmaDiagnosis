@@ -1,144 +1,194 @@
+import { AsyncStorage } from "react-native";
 import { takeEvery, call, put, select } from "redux-saga/effects";
-import shortid from 'shortid';
-import api from './API';
+import shortid from "shortid";
+import api from "./API";
 
-import { SEARCH_ERROR, SEARCH_COMPLETE, HANDLE_SEARCH } from "../actions/followupActions";
-import { HANDLE_LOGIN, HANDLE_REGISTER, AUTH_COMPLETE } from '../actions/authActions';
-import { HANDLE_MID_SUBMIT, ADD_COMPLETE, MID_FAIL, HANDLE_FOLLOWUPSYM, HANDLE_UPDATE_PATIENT, UPDATE_COMPLETE } from "../actions/infoActions";
+import {
+	SEARCH_ERROR,
+	SEARCH_COMPLETE,
+	HANDLE_SEARCH,
+} from "../actions/followupActions";
 
-const search = values => api.post("/searchPatient", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
+import {
+	HANDLE_LOGIN,
+	HANDLE_REGISTER,
+	AUTH_COMPLETE,
+} from "../actions/authActions";
 
-const login = values => api.post("/loginUser", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
+import {
+	HANDLE_MID_SUBMIT,
+	ADD_COMPLETE,
+	MID_FAIL,
+	HANDLE_UPDATE_PATIENT,
+	UPDATE_COMPLETE,
+} from "../actions/infoActions";
 
-const register = values => api.post("/registerUser", values).then(({ data }) => data ).catch(err => ({ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }));
+const search = (values) =>
+	api
+		.post("/searchPatient", values)
+		.then(({ data }) => data)
+		.catch((err) => ({
+			type: "info",
+			heading: "Info",
+			_error: "Network Error! Please try again after sometime",
+		}));
 
-const addNew = values => api.post("/addPatient", values).then(({ data }) => data ).catch(err => ([{ type: "info", heading: "Info" , _error: "Network Error! Please try again after sometime" }]));
+const login = (values) =>
+	api
+		.post("/loginUser", values)
+		.then(({ data }) => data)
+		.catch((err) => ({
+			type: "info",
+			heading: "Info",
+			_error: "Network Error! Please try again after sometime",
+		}));
+
+const register = (values) =>
+	api
+		.post("/registerUser", values)
+		.then(({ data }) => data)
+		.catch((err) => ({
+			type: "info",
+			heading: "Info",
+			_error: "Network Error! Please try again after sometime",
+		}));
+
+const addNew = (values) =>
+	api
+		.post("/addPatient", values)
+		.then(({ data }) => data)
+		.catch((err) => [
+			{
+				type: "info",
+				heading: "Info",
+				_error: "Network Error! Please try again after sometime",
+			},
+		]);
 
 const update = (values, id) =>
-  api
-    .put(`/updatePatient/${id}`, values)
-    .then(({ data }) => data)
-    .catch(err => [
-      {
-        type: "info",
-        heading: "Info",
-        _error: "Network Error! Please try again after sometime"
-      }
-    ]);
+	api
+		.put(`/updatePatient/${id}`, values)
+		.then(({ data }) => data)
+		.catch((err) => [
+			{
+				type: "info",
+				heading: "Info",
+				_error: "Network Error! Please try again after sometime",
+			},
+		]);
+
+const storeAuth = async (data) => {
+	try {
+		await AsyncStorage.setItem("loginData", data);
+	} catch (err) {
+		console.log("AsyncStorage Error: ", err);
+	}
+};
 
 function* loginUser(action) {
-    try {
-        let loginData = {
-            ...action.values
-        };
+	try {
+		let loginData = {
+			...action.values,
+		};
 
-        const response = yield call(login, loginData);
-        
-        if(response._error) {
-            yield call(action.reject, { ...response });
-        } else {
-            let userID = response._id;
+		const response = yield call(login, loginData);
 
-            yield call(action.resolve);
-            yield put({ type: AUTH_COMPLETE, userID: userID, isLoggedIn: true });
-        }
+		if (response._error) {
+			yield call(action.reject, { ...response });
+		} else {
+			let userID = response._id;
 
-    } catch(e) {
-        yield put({ type: SEARCH_ERROR, error: e.message });
-    }
+			yield call(storeAuth, userID);
+
+			yield put({
+				type: AUTH_COMPLETE,
+				userID: userID,
+				isLoggedIn: true,
+			});
+
+			yield call(action.resolve);
+		}
+	} catch (e) {
+		yield put({ type: SEARCH_ERROR, error: e.message });
+	}
 }
 
 function* registerUser(action) {
-    try {
-        let registerData = {
-            name: action.values.name,
-            email: action.values.email,
-            phone: action.values.phone,
-            hospital: action.values.hospital,
-            password: action.values.password
-        };
+	try {
+		let registerData = {
+			name: action.values.name,
+			email: action.values.email,
+			phone: action.values.phone,
+			hospital: action.values.hospital,
+			password: action.values.password,
+		};
 
-        const response = yield call(register, registerData);
-        
-        if(response._error) {
-            yield call(action.reject, { ...response });
-        } else {
-            yield call(action.resolve);
-            yield put({ type: AUTH_COMPLETE, ...response, isLoggedIn: true });
-        }
+		const response = yield call(register, registerData);
 
-    } catch(e) {
-        yield put({ type: SEARCH_ERROR, error: e.message });
-    }
+		if (response._error) {
+			yield call(action.reject, { ...response });
+		} else {
+			yield call(action.resolve);
+			yield put({ type: AUTH_COMPLETE, ...response, isLoggedIn: true });
+		}
+	} catch (e) {
+		yield put({ type: SEARCH_ERROR, error: e.message });
+	}
 }
 
 function* addPatient(action) {
-    try {
-        let patient = yield select(state => state.infoReducer);
+	try {
+		let patient = yield select((state) => state.infoReducer);
 
-        let id = shortid.generate();
+		let id = shortid.generate();
 
-        patient._id = id;
+		patient._id = id;
 
-        const response = yield call(addNew, patient);
+		const response = yield call(addNew, patient);
 
-        if(response._error) {
-            yield put({ type: MID_FAIL });
-        } else {
-            yield put({ type: ADD_COMPLETE, _id: response._id });
-        }
-
-    } catch(e) {
-        yield put({ type: SEARCH_ERROR, error: e.message });
-    }
+		if (response._error) {
+			yield put({ type: MID_FAIL });
+		} else {
+			yield put({ type: ADD_COMPLETE, _id: response._id });
+		}
+	} catch (e) {
+		yield put({ type: SEARCH_ERROR, error: e.message });
+	}
 }
 
 function* updatePatient(action) {
-    try {
-        let updateData = yield select(state => state.infoReducer);
-
-        const response = yield call(update, updateData, updateData._id);
-
-        if(response._error) {
-        } else {
-            yield put({ type: UPDATE_COMPLETE });
-        }
-    } catch(err) {
-        yield put({ type: SEARCH_ERROR, error: e.message });
-    }
-}
-
-function* followUpPatient(action) {
-    try {
-        let patientData = {
-            ...action.values,
-        };
-
-       const response = yield call(search, patientData);
-       
-       if(response._error) {
-           yield call(action.reject, { ...response });
-           yield put({ type: SEARCH_ERROR, error: response._error });
-       } else {
-           yield call(action.resolve);
-           yield put({ type: SEARCH_COMPLETE, response });
-       }
-    } catch(e) {
-        yield put({ type: SEARCH_ERROR, error: e.message });
-    }
-}
-
-function* addfollowupSymptoms(action) {
 	try {
-		let updateData = yield select(state => state.infoReducer);
+		let updateData = yield select((state) => state.infoReducer);
 
 		const response = yield call(update, updateData, updateData._id);
 
 		if (response._error) {
-			yield call(action.reject);
 		} else {
-			yield call(action.resolve);
-			yield put({ type: ADD_COMPLETE });
+			yield put({ type: UPDATE_COMPLETE });
+		}
+	} catch (err) {
+		yield put({ type: SEARCH_ERROR, error: e.message });
+	}
+}
+
+function* followUpPatient(action) {
+	try {
+		let patientData = {
+			...action.values,
+		};
+
+		const response = yield call(search, patientData);
+
+		if (response._error) {
+			yield call(action.reject, { ...response });
+			yield put({ type: SEARCH_ERROR, error: response._error });
+		} else {
+			yield put({
+				type: SEARCH_COMPLETE,
+				response,
+				reject: action.reject,
+				resolve: action.resolve,
+			});
 		}
 	} catch (e) {
 		yield put({ type: SEARCH_ERROR, error: e.message });
@@ -146,10 +196,9 @@ function* addfollowupSymptoms(action) {
 }
 
 export default function* rootSaga() {
-    yield takeEvery(HANDLE_LOGIN, loginUser);
-    yield takeEvery(HANDLE_REGISTER, registerUser);
-    yield takeEvery(HANDLE_MID_SUBMIT, addPatient);
-    yield takeEvery(HANDLE_UPDATE_PATIENT, updatePatient);
-    yield takeEvery(HANDLE_SEARCH, followUpPatient);
-    yield takeEvery(HANDLE_FOLLOWUPSYM, addfollowupSymptoms);
+	yield takeEvery(HANDLE_LOGIN, loginUser);
+	yield takeEvery(HANDLE_REGISTER, registerUser);
+	yield takeEvery(HANDLE_MID_SUBMIT, addPatient);
+	yield takeEvery(HANDLE_UPDATE_PATIENT, updatePatient);
+	yield takeEvery(HANDLE_SEARCH, followUpPatient);
 }

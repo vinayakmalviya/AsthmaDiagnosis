@@ -6,7 +6,7 @@ const useScreenDimensions = () => {
 	const [screenData, setScreenData] = useState(Dimensions.get("screen"));
 
 	useEffect(() => {
-		const onChange = result => {
+		const onChange = (result) => {
 			setScreenData(result.screen);
 		};
 
@@ -18,7 +18,7 @@ const useScreenDimensions = () => {
 	return {
 		...screenData,
 		isLandscape: screenData.width > screenData.height,
-		aspectRatio: screenData.height / screenData.width
+		aspectRatio: screenData.height / screenData.width,
 	};
 };
 
