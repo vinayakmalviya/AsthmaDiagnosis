@@ -110,6 +110,7 @@ class Login extends Component {
 										textContentType="emailAddress"
 										autoCompleteType="email"
 										keyboardType="email-address"
+										autoCapitalize="none"
 										validate={this.required}
 										component={CustomInput}
 									/>

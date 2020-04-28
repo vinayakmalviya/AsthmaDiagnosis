@@ -117,6 +117,7 @@ class Register extends Component {
 										textContentType="emailAddress"
 										autoCompleteType="email"
 										keyboardType="email-address"
+										autoCapitalize="none"
 										ref={this.email}
 										validate={this.required}
 										returnKeyType="next"

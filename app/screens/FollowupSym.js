@@ -38,8 +38,17 @@ const FollowupSym = (props) => {
 		setEnteredVal(enteredText);
 	};
 
+	const symMap = [
+		"No Occurence",
+		"2 Days A Week",
+		"Daily",
+		"Multiple Times In A Day",
+	];
+
+	const checkDate = moment(new Date()).format("DD/MM/YYYY");
+
 	const submitFollowupSym = (values, dispatch) => {
-		const followUp = props.followUp;
+		const { followUp } = props;
 		let indexToSend = followUp.length;
 		const date = moment(new Date()).format("DD/MM/YYYY");
 
@@ -50,12 +59,7 @@ const FollowupSym = (props) => {
 		dispatch(followupSymSubmit(values, indexToSend));
 	};
 
-	const symMap = [
-		"No Occurence",
-		"2 Days A Week",
-		"Daily",
-		"Multiple Times In A Day",
-	];
+	console.log(props.track);
 
 	return (
 		<TouchableWithoutFeedback
@@ -164,46 +168,118 @@ const FollowupSym = (props) => {
 											</DataTable.Title>
 										</DataTable.Header>
 										<View style={{ marginBottom: 18 }}>
-											{!symptoms.value.length && (
-												<CustomOverline text="No Symptoms Entered" />
-											)}
-											{!!symptoms.value.length &&
+											{!!symptoms.value.length ? (
 												symptoms.value.map(
 													(symptom, index) => (
-														<>
-															<DataTable.Row>
-																<DataTable.Cell>
-																	{
+														<DataTable.Row
+															key={index}
+														>
+															<DataTable.Cell>
+																{
+																	symptom.split(
+																		","
+																	)[0]
+																}
+															</DataTable.Cell>
+															<DataTable.Cell>
+																{symMap[
+																	parseInt(
 																		symptom.split(
 																			","
-																		)[0]
-																	}
-																</DataTable.Cell>
-																<DataTable.Cell>
-																	{symMap[
-																		parseInt(
-																			symptom.split(
-																				","
-																			)[1]
-																		)
-																	]
-																		? symMap[
-																				parseInt(
-																					symptom.split(
-																						","
-																					)[1]
-																				)
-																		  ]
-																		: symptom.split(
-																				","
-																		  )[1]}
-																</DataTable.Cell>
-															</DataTable.Row>
-														</>
+																		)[1]
+																	)
+																]
+																	? symMap[
+																			parseInt(
+																				symptom.split(
+																					","
+																				)[1]
+																			)
+																	  ]
+																	: symptom.split(
+																			","
+																	  )[1]}
+															</DataTable.Cell>
+														</DataTable.Row>
 													)
-												)}
+												)
+											) : props.track.followup
+													.symptoms ? (
+												<CustomOverline text="No New Symptoms Entered" />
+											) : (
+												<CustomOverline text="No Symptoms Entered" />
+											)}
 										</View>
 									</DataTable>
+									{props.track.followup.symptoms && (
+										<>
+											<CustomOverline text="Previously Entered" />
+											<DataTable>
+												<DataTable.Header>
+													<DataTable.Title>
+														Symptom
+													</DataTable.Title>
+													<DataTable.Title>
+														Occurence
+													</DataTable.Title>
+												</DataTable.Header>
+												{props.track.followup.symptoms
+													? props.followUp.map(
+															(f, i) => {
+																if (
+																	f.date ==
+																	checkDate
+																) {
+																	if (
+																		f.symptom
+																	) {
+																		return f.symptom.map(
+																			(
+																				s,
+																				index
+																			) => {
+																				return (
+																					<DataTable.Row
+																						key={
+																							index
+																						}
+																					>
+																						<DataTable.Cell>
+																							{
+																								s.split(
+																									","
+																								)[0]
+																							}
+																						</DataTable.Cell>
+																						<DataTable.Cell>
+																							{symMap[
+																								parseInt(
+																									s.split(
+																										","
+																									)[1]
+																								)
+																							]
+																								? symMap[
+																										parseInt(
+																											s.split(
+																												","
+																											)[1]
+																										)
+																								  ]
+																								: "No data recorded"}
+																						</DataTable.Cell>
+																					</DataTable.Row>
+																				);
+																			}
+																		);
+																	}
+																}
+															}
+													  )
+													: null}
+											</DataTable>
+										</>
+									)}
 								</CustomCard>
 								<View style={styles.addbtn}>
 									<CustomButton
@@ -271,8 +347,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
 	const followUp = state.infoReducer.follow_up;
+	const track = state.trackReducer;
 	return {
 		followUp,
+		track,
 	};
 };
 

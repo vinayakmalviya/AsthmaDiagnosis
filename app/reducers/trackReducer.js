@@ -9,8 +9,9 @@ import {
 	HANDLE_FOLLOWUPSYM,
 	HANDLE_INVESTIGATIONS_F,
 	HANDLE_REFRESH,
+	HANDLE_DIAGNOSIS,
 } from "../actions/infoActions";
-import { SELECT_COMPLETE } from "../actions/followupActions";
+import { SELECT_COMPLETE, HANDLE_CONTROL } from "../actions/followupActions";
 
 const initialState = {
 	new: {
@@ -20,10 +21,12 @@ const initialState = {
 		symptoms: false,
 		comorbidities: false,
 		investigations: false,
+		diagnosis: false,
 	},
 	followup: {
 		symptoms: false,
 		investigations: false,
+		control: false,
 	},
 };
 
@@ -73,6 +76,15 @@ const reducer = (state = initialState, action) => {
 				},
 			};
 		}
+		case HANDLE_DIAGNOSIS: {
+			return {
+				...state,
+				new: {
+					...state.new,
+					diagnosis: true,
+				},
+			};
+		}
 		case HANDLE_FOLLOWUPSYM: {
 			return {
 				...state,
@@ -88,6 +100,15 @@ const reducer = (state = initialState, action) => {
 				followup: {
 					...state.followup,
 					investigations: true,
+				},
+			};
+		}
+		case HANDLE_CONTROL: {
+			return {
+				...state,
+				followup: {
+					...state.followup,
+					control: true,
 				},
 			};
 		}

@@ -1,6 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { DataTable } from "react-native-paper";
+import { View, Text } from "react-native";
 import { connect } from "react-redux";
 
 import { ScreenTemplate } from "../components/ScreenTemplate";
@@ -50,20 +49,29 @@ const PatientInfo = (props) => {
 						<Text style={{ marginTop: 6 }}>
 							{personal.risk
 								? occpationalRisk[parseInt(personal.risk)]
-								: "No data present"}
+								: "No data recorded"}
 						</Text>
 					</RowView>
 					<RowView>
 						<CustomOverline text="Habits:" />
 						<View style={{ marginTop: 6 }}>
-							<RowView>
-								{personal.smoker && <Text>Smoker </Text>}
-								{personal.diabetic && <Text>Diabetic </Text>}
-								{personal.hypertension && (
-									<Text>Hypertension </Text>
-								)}
-								{personal.obesity && <Text>Obesity </Text>}
-							</RowView>
+							{personal.smoker ||
+							personal.obesity ||
+							personal.hypertension ||
+							personal.diabetic ? (
+								<RowView>
+									{personal.smoker && <Text>Smoker </Text>}
+									{personal.diabetic && (
+										<Text>Diabetic </Text>
+									)}
+									{personal.hypertension && (
+										<Text>Hypertension </Text>
+									)}
+									{personal.obesity && <Text>Obesity </Text>}
+								</RowView>
+							) : (
+								<Text>None</Text>
+							)}
 						</View>
 					</RowView>
 					<View style={{ marginBottom: 6 }}>
@@ -86,7 +94,7 @@ const PatientInfo = (props) => {
 						<Text style={{ marginTop: 6, flexShrink: 1 }}>
 							{background.family
 								? background.family
-								: "No data present"}
+								: "No data recorded"}
 						</Text>
 					</RowView>
 					<RowView>
@@ -94,7 +102,7 @@ const PatientInfo = (props) => {
 						<Text style={{ marginTop: 6, flexShrink: 1 }}>
 							{background.childhood
 								? background.childhood
-								: "No data present"}
+								: "No data recorded"}
 						</Text>
 					</RowView>
 					<RowView>
@@ -102,7 +110,9 @@ const PatientInfo = (props) => {
 						<Text style={{ marginTop: 6, flexShrink: 1 }}>
 							{background.allergy_hist
 								? allerg
-								: "No allergy history"}
+									? allerg
+									: "No allergy history"
+								: "No data recorded"}
 						</Text>
 					</RowView>
 					{background.allergy_hist.other && (

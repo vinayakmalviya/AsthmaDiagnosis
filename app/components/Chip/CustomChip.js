@@ -105,7 +105,11 @@ const CustomChip = ({
 			<TouchableWithoutFeedback onPress={handlePress}>
 				<View style={styles.Container}>
 					<Animated.View style={[styles.Icon, animatedStyles.Icon]}>
-						<CustomIcon icon="check" {...styles.IconInner} />
+						<CustomIcon
+							icon="check"
+							fill="#FFFFFF"
+							{...styles.IconInner}
+						/>
 					</Animated.View>
 					<Animated.Text style={[styles.Label, animatedStyles.Label]}>
 						{label}

@@ -12,6 +12,7 @@ export const HANDLE_FOLLOWUPSYM = "HANDLE_FOLLOWUPSYM";
 export const HANDLE_INVESTIGATIONS_F = "HANDLE_INVESTIGATIONS_F";
 export const HANDLE_UPDATE_PATIENT = "HANDLE_UPDATE_PATIENT";
 export const UPDATE_COMPLETE = "UPDATE_COMPLETE";
+export const HANDLE_DIAGNOSIS = "HANDLE_DIAGNOSIS";
 
 export const testSubmit = (values) => ({
 	type: HANDLE_TEST_ACTION,
@@ -66,4 +67,9 @@ export const followupInvestigations = (values, index) => ({
 	type: HANDLE_INVESTIGATIONS_F,
 	values,
 	index: index,
+});
+
+export const diagnosisSubmit = (values) => ({
+	type: HANDLE_DIAGNOSIS,
+	payload: { ...values },
 });

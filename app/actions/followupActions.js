@@ -2,7 +2,7 @@ export const HANDLE_SEARCH = "HANDLE_SEARCH";
 export const SEARCH_ERROR = "SEARCH_ERROR";
 export const SEARCH_COMPLETE = "SEARCH_COMPLETE";
 export const SELECT_COMPLETE = "SELECT_COMPLETE";
-export const HANDLE_PEFR = "HANDLE_PEFR";
+export const HANDLE_CONTROL = "HANDLE_CONTROL";
 
 export const searchPatient = (values, resolve, reject) => ({
 	type: HANDLE_SEARCH,
@@ -16,7 +16,9 @@ export const selectComplete = (patient) => ({
 	patient: patient,
 });
 
-export const pefrFollowUp = (values) => ({
-	type: HANDLE_PEFR,
-	values,
+export const controlSubmit = (values) => ({
+	type: HANDLE_CONTROL,
+	control: values.control,
+	treatment: values.treatment,
+	index: values.index,
 });

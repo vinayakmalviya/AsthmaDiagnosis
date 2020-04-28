@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { DataTable } from "react-native-paper";
+import { DataTable, Divider } from "react-native-paper";
+
 import { CustomCard, RowView } from "../components/Container";
-import { CustomButton } from "../components/Button";
 import { ScreenTemplate } from "../components/ScreenTemplate";
 import { connect } from "react-redux";
 import { Title, CustomSubTitle } from "../components/Text";
@@ -18,7 +18,7 @@ const SymptonInfo = (props) => {
 		"Daily",
 		"Multiple Times In A Day",
 	];
-	const spiro = ["Normal", "Between 60% to 80%", "Less than 60%"];
+	const spiro = ["Normal", "Between 60%\nto 80%", "Less than\n60%"];
 	let dns = "";
 	let pharyn = "";
 	let rhonchi = "";
@@ -53,22 +53,54 @@ const SymptonInfo = (props) => {
 			: "";
 	}
 	if (props.vals.tests.skin_prick) {
-		fungal = props.vals.tests.skin_prick.fungal.selected
-			? props.vals.tests.skin_prick.fungal.value + " "
+		fungal = props.vals.tests.skin_prick.fungal
+			? props.vals.tests.skin_prick.fungal.selected
+				? props.vals.tests.skin_prick.fungal.value + " "
+				: ""
 			: "";
-		insect = props.vals.tests.skin_prick.insect.selected
-			? props.vals.tests.skin_prick.insect.value + " "
+		insect = props.vals.tests.skin_prick.insect
+			? props.vals.tests.skin_prick.insect.selected
+				? props.vals.tests.skin_prick.insect.value + " "
+				: ""
 			: "";
-		food = props.vals.tests.skin_prick.food.selected
-			? props.vals.tests.skin_prick.food.value + " "
+		food = props.vals.tests.skin_prick.food
+			? props.vals.tests.skin_prick.food.selected
+				? props.vals.tests.skin_prick.food.value + " "
+				: ""
 			: "";
-		pollen = props.vals.tests.skin_prick.pollen.selected
-			? props.vals.tests.skin_prick.pollen.value + " "
+		pollen = props.vals.tests.skin_prick.pollen
+			? props.vals.tests.skin_prick.pollen.selected
+				? props.vals.tests.skin_prick.pollen.value + " "
+				: ""
 			: "";
-		others = props.vals.tests.skin_prick.others.selected
-			? props.vals.tests.skin_prick.others.value + " "
+		others = props.vals.tests.skin_prick.others
+			? props.vals.tests.skin_prick.others.selected
+				? props.vals.tests.skin_prick.others.value + " "
+				: ""
 			: "";
+	} else {
+		others = "No data recorded";
 	}
+	const severity = [
+		"Intermittent",
+		"Persistent: Mild",
+		"Persistent: Moderate",
+		"Persistent: Severe",
+	];
+
+	const renderInhaler = () => {
+		let inhaler = "";
+		if (props.vals.diagnosis.inhaler.ics) {
+			inhaler = inhaler.concat(" ", "ICS");
+		}
+		if (props.vals.diagnosis.inhaler.laba) {
+			inhaler = inhaler.concat(" ", "LABA");
+		}
+		if (props.vals.diagnosis.inhaler.lama) {
+			inhaler = inhaler.concat(" ", "LAMA");
+		}
+		return <Text style={{ marginTop: 6 }}>{inhaler}</Text>;
+	};
 
 	return (
 		<ScreenTemplate>
@@ -76,12 +108,105 @@ const SymptonInfo = (props) => {
 				<Title
 					text={patientName + " " + patientAge + " " + patientGender}
 				/>
+				<CustomSubTitle text="Diagnosis" />
+				<CustomCard>
+					<View style={{ marginBottom: 6 }}>
+						<RowView>
+							<CustomOverline text="First Checkup: " />
+							<Text style={{ marginTop: 6 }}>
+								{props.vals.ini_symptoms.date
+									? props.vals.ini_symptoms.date
+									: "No data present"}
+							</Text>
+						</RowView>
+						{props.vals.diagnosis ? (
+							<>
+								<RowView>
+									<CustomOverline text="Diagnosis: " />
+									<Text style={{ marginTop: 6 }}>
+										{props.vals.diagnosis.severity
+											? severity[
+													parseInt(
+														props.vals.diagnosis
+															.severity
+													)
+											  ]
+											: "No data present"}
+									</Text>
+								</RowView>
+								<RowView>
+									<CustomOverline text="Inhaler: " />
+
+									{props.vals.diagnosis.inhaler ? (
+										renderInhaler()
+									) : (
+										<Text style={{ marginTop: 6 }}>
+											No data present
+										</Text>
+									)}
+								</RowView>
+								<RowView>
+									<CustomOverline text="Dosage:" />
+									<Text style={{ marginTop: 6 }}>
+										{props.vals.diagnosis.dosage
+											? props.vals.diagnosis.dosage
+											: "No data present"}
+									</Text>
+								</RowView>
+								<RowView>
+									<CustomOverline text="Immunotherapy:" />
+									<Text style={{ marginTop: 6 }}>
+										{props.vals.diagnosis.immuno
+											? props.vals.diagnosis.immuno
+											: "Not prescribed"}
+									</Text>
+								</RowView>
+								<RowView>
+									<CustomOverline text="Oral Medications:" />
+									<Text style={{ marginTop: 6 }}>
+										{props.vals.diagnosis.oral_m
+											? props.vals.diagnosis.oral_m
+											: "Not prescribed"}
+									</Text>
+								</RowView>
+								<RowView>
+									<CustomOverline text="Biological Medications:" />
+									<Text style={{ marginTop: 6 }}>
+										{props.vals.diagnosis.bio_m
+											? props.vals.diagnosis.bio_m
+											: "Not prescribed"}
+									</Text>
+								</RowView>
+								<RowView>
+									<CustomOverline text="Supportive Therapy:" />
+									<Text style={{ marginTop: 6 }}>
+										{props.vals.diagnosis.supp
+											? props.vals.diagnosis.supp
+											: "Not prescribed"}
+									</Text>
+								</RowView>
+								<RowView>
+									<CustomOverline text="Other Specifications:" />
+									<Text style={{ marginTop: 6 }}>
+										{props.vals.diagnosis.specs
+											? props.vals.diagnosis.specs
+											: "None"}
+									</Text>
+								</RowView>
+							</>
+						) : (
+							<CustomOverline text="No medication data recorded" />
+						)}
+					</View>
+				</CustomCard>
 				<CustomSubTitle text="Symptoms" />
 				<CustomCard>
 					<RowView>
 						<CustomOverline text="First Checkup: " />
 						<Text style={{ marginTop: 6 }}>
-							{props.vals.ini_symptoms.date}
+							{props.vals.ini_symptoms.date
+								? props.vals.ini_symptoms.date
+								: "No data recorded"}
 						</Text>
 					</RowView>
 					<DataTable>
@@ -235,95 +360,115 @@ const SymptonInfo = (props) => {
 						</DataTable.Row>
 					</DataTable>
 					<CustomOverline text="Spirometry" />
-					<DataTable>
-						<DataTable.Header>
-							<DataTable.Title>Label</DataTable.Title>
-							<DataTable.Title>
-								Pre-Bronchodilator
-							</DataTable.Title>
-							<DataTable.Title>
-								Post-Bronchodilator
-							</DataTable.Title>
-						</DataTable.Header>
-						<DataTable.Row>
-							<DataTable.Cell>FEV1</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.pre.fev1}
-							</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.post.fev1}
-							</DataTable.Cell>
-						</DataTable.Row>
-						<DataTable.Row>
-							<DataTable.Cell>FEV1 Range</DataTable.Cell>
-							<DataTable.Cell>
-								<Text style={{ flex: 1, flexWrap: "wrap" }}>
-									{
-										spiro[
-											props.vals.tests.spirometry.pre
-												.fev1_range
-										]
-									}
-								</Text>
-							</DataTable.Cell>
-							<DataTable.Cell>
-								<Text style={{ flex: 1, flexWrap: "wrap" }}>
-									{
-										spiro[
-											props.vals.tests.spirometry.post
-												.fev1_range
-										]
-									}
-								</Text>
-							</DataTable.Cell>
-						</DataTable.Row>
-						<DataTable.Row>
-							<DataTable.Cell>FEV1/FVC</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.pre.ratio}
-							</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.post.ratio}
-							</DataTable.Cell>
-						</DataTable.Row>
-						<DataTable.Row>
-							<DataTable.Cell>FEV1/FVC Range</DataTable.Cell>
-							<DataTable.Cell>
-								{
-									spiro[
-										props.vals.tests.spirometry.pre
-											.ratio_range
-									]
-								}
-							</DataTable.Cell>
-							<DataTable.Cell>
-								{
-									spiro[
-										props.vals.tests.spirometry.post
-											.ratio_range
-									]
-								}
-							</DataTable.Cell>
-						</DataTable.Row>
-						<DataTable.Row>
-							<DataTable.Cell>FVC</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.pre.fvc}
-							</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.post.fvc}
-							</DataTable.Cell>
-						</DataTable.Row>
-						<DataTable.Row>
-							<DataTable.Cell>MMEF</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.pre.mmef}
-							</DataTable.Cell>
-							<DataTable.Cell>
-								{props.vals.tests.spirometry.post.mmef}
-							</DataTable.Cell>
-						</DataTable.Row>
-					</DataTable>
+					{props.vals.tests.spirometry ? (
+						<DataTable>
+							<DataTable.Header>
+								<DataTable.Title>Label</DataTable.Title>
+								<DataTable.Title>
+									Pre-Bronchodilator
+								</DataTable.Title>
+								<DataTable.Title>
+									Post-Bronchodilator
+								</DataTable.Title>
+							</DataTable.Header>
+							<DataTable.Row>
+								<DataTable.Cell>FEV1</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.pre
+										? props.vals.tests.spirometry.pre.fev1
+										: "No data recorded"}
+								</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.post
+										? props.vals.tests.spirometry.post.fev1
+										: "No data recorded"}
+								</DataTable.Cell>
+							</DataTable.Row>
+							<DataTable.Row>
+								<DataTable.Cell>FEV1 Range</DataTable.Cell>
+								<DataTable.Cell>
+									<Text style={{ flex: 1, flexWrap: "wrap" }}>
+										{props.vals.tests.spirometry.pre
+											? spiro[
+													props.vals.tests.spirometry
+														.pre.fev1_range
+											  ]
+											: "No data recorded"}
+									</Text>
+								</DataTable.Cell>
+								<DataTable.Cell>
+									<Text style={{ flex: 1, flexWrap: "wrap" }}>
+										{props.vals.tests.spirometry.post
+											? spiro[
+													props.vals.tests.spirometry
+														.post.fev1_range
+											  ]
+											: "No data recorded"}
+									</Text>
+								</DataTable.Cell>
+							</DataTable.Row>
+							<DataTable.Row>
+								<DataTable.Cell>FEV1/FVC</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.pre
+										? props.vals.tests.spirometry.pre.ratio
+										: "No data recorded"}
+								</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.post
+										? props.vals.tests.spirometry.post.ratio
+										: "No data recorded"}
+								</DataTable.Cell>
+							</DataTable.Row>
+							<DataTable.Row>
+								<DataTable.Cell>FEV1/FVC Range</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.pre
+										? spiro[
+												props.vals.tests.spirometry.pre
+													.ratio_range
+										  ]
+										: "No data recorded"}
+								</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.post
+										? spiro[
+												props.vals.tests.spirometry.post
+													.ratio_range
+										  ]
+										: "No data recorded"}
+								</DataTable.Cell>
+							</DataTable.Row>
+							<DataTable.Row>
+								<DataTable.Cell>FVC</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.pre
+										? props.vals.tests.spirometry.pre.fvc
+										: "No data recorded"}
+								</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.post
+										? props.vals.tests.spirometry.post.fvc
+										: "No data recorded"}
+								</DataTable.Cell>
+							</DataTable.Row>
+							<DataTable.Row>
+								<DataTable.Cell>MMEF</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.pre
+										? props.vals.tests.spirometry.pre.mmef
+										: "No data recorded"}
+								</DataTable.Cell>
+								<DataTable.Cell>
+									{props.vals.tests.spirometry.post
+										? props.vals.tests.spirometry.post.mmef
+										: "No data recorded"}
+								</DataTable.Cell>
+							</DataTable.Row>
+						</DataTable>
+					) : (
+						<Text style={{ marginTop: 6 }}>No data recorded</Text>
+					)}
 					<RowView>
 						<CustomOverline text={"X-Ray: "} />
 						{props.vals.tests.xray ? (
@@ -344,7 +489,7 @@ const SymptonInfo = (props) => {
 							</Text>
 						) : (
 							<Text style={{ marginTop: 6 }}>
-								No Observations
+								No data recorded
 							</Text>
 						)}
 					</RowView>
@@ -353,18 +498,6 @@ const SymptonInfo = (props) => {
 						{props.vals.tests.ige ? (
 							<Text style={{ marginTop: 6 }}>
 								{props.vals.tests.ige}
-							</Text>
-						) : (
-							<Text style={{ marginTop: 6 }}>
-								No Observations
-							</Text>
-						)}
-					</RowView>
-					<RowView>
-						<CustomOverline text={"Observations: "} />
-						{props.vals.tests.observations ? (
-							<Text style={{ marginTop: 6, flexShrink: 1 }}>
-								{props.vals.tests.observations}
 							</Text>
 						) : (
 							<Text style={{ marginTop: 6 }}>
@@ -384,7 +517,156 @@ const SymptonInfo = (props) => {
 							</Text>
 						)}
 					</RowView>
+					<RowView>
+						<CustomOverline text={"Observations: "} />
+						{props.vals.tests.observations ? (
+							<Text style={{ marginTop: 6, flexShrink: 1 }}>
+								{props.vals.tests.observations}
+							</Text>
+						) : (
+							<Text style={{ marginTop: 6 }}>
+								No Observations
+							</Text>
+						)}
+					</RowView>
 				</CustomCard>
+				{props.vals.follow_up ? (
+					props.vals.follow_up.length > 0 ? (
+						<>
+							<CustomSubTitle text="Follow Ups" />
+							<CustomCard>
+								{props.vals.follow_up.map((f, i) => {
+									return (
+										<React.Fragment key={i}>
+											<Text
+												style={{
+													fontSize: 16,
+													fontWeight: "bold",
+													textTransform: "uppercase",
+													marginTop: 6,
+													letterSpacing: 1,
+													marginHorizontal: 12,
+													textAlign: "left",
+													color: "#000000",
+												}}
+												children={i + 1 + "."}
+											/>
+											<RowView>
+												<CustomOverline text="Follow Up Date:" />
+												<Text style={{ marginTop: 6 }}>
+													{f.date}
+												</Text>
+											</RowView>
+											<RowView>
+												<CustomOverline text="Pefr:" />
+												<Text style={{ marginTop: 6 }}>
+													{f.pefr
+														? f.pefr + " L/min"
+														: "No data present"}
+												</Text>
+											</RowView>
+											<RowView>
+												<CustomOverline text="Control:" />
+												<Text style={{ marginTop: 6 }}>
+													{f.control
+														? f.control
+														: "No data present"}
+												</Text>
+											</RowView>
+											<RowView>
+												<CustomOverline text="Treatment:" />
+												<Text style={{ marginTop: 6 }}>
+													{f.treatment
+														? f.treatment
+														: "No data present"}
+												</Text>
+											</RowView>
+											{f.specs ? (
+												<RowView>
+													<CustomOverline text="Other Specifications:" />
+													<Text
+														style={{ marginTop: 6 }}
+													>
+														{f.specs
+															? f.specs
+															: "No data present"}
+													</Text>
+												</RowView>
+											) : null}
+											<View>
+												<CustomOverline text="Symptoms:" />
+												{f.symptom &&
+												f.symptom.length > 0 ? (
+													<DataTable>
+														<DataTable.Header>
+															<DataTable.Title>
+																Symptom
+															</DataTable.Title>
+															<DataTable.Title>
+																Occurence
+															</DataTable.Title>
+														</DataTable.Header>
+														{f.symptom.map(
+															(sym, index) => {
+																return (
+																	<DataTable.Row
+																		key={
+																			index
+																		}
+																	>
+																		<DataTable.Cell>
+																			{
+																				sym.split(
+																					","
+																				)[0]
+																			}
+																		</DataTable.Cell>
+																		<DataTable.Cell>
+																			{name[
+																				parseInt(
+																					sym.split(
+																						","
+																					)[1]
+																				)
+																			]
+																				? name[
+																						parseInt(
+																							sym.split(
+																								","
+																							)[1]
+																						)
+																				  ]
+																				: "No data present"}
+																		</DataTable.Cell>
+																	</DataTable.Row>
+																);
+															}
+														)}
+													</DataTable>
+												) : (
+													<Text
+														style={{
+															marginLeft: 12,
+															marginTop: 6,
+														}}
+													>
+														No symptoms recorded
+													</Text>
+												)}
+											</View>
+											<Divider
+												style={{
+													marginVertical: 6,
+													marginHorizontal: -8,
+												}}
+											/>
+										</React.Fragment>
+									);
+								})}
+							</CustomCard>
+						</>
+					) : null
+				) : null}
 			</View>
 		</ScreenTemplate>
 	);

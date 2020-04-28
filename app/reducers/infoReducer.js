@@ -11,12 +11,11 @@ import {
 	ADD_COMPLETE,
 	HANDLE_FOLLOWUPSYM,
 	HANDLE_INVESTIGATIONS_F,
+	HANDLE_DIAGNOSIS,
 } from "../actions/infoActions";
-import {
-	SEARCH_COMPLETE,
-	HANDLE_PEFR,
-	SELECT_COMPLETE,
-} from "../actions/followupActions";
+
+import { SELECT_COMPLETE, HANDLE_CONTROL } from "../actions/followupActions";
+
 import { AUTH_COMPLETE, HANDLE_LOGOUT } from "../actions/authActions";
 
 const initialState = {
@@ -27,6 +26,7 @@ const initialState = {
 	age: 0,
 	gender: "",
 	phone: 0,
+	diagnosis: "",
 	personal: {
 		risk: 0,
 		smoker: false,
@@ -218,14 +218,20 @@ const reducer = (state = initialState, action) => {
 					...state,
 					follow_up: state.follow_up.map((foll, index) =>
 						index == action.index
-							? {
-									...foll,
-									symptom: [
-										...foll.symptom,
-										...action.values.value,
-									],
-									date: date,
-							  }
+							? foll.symptom && foll.symptom.length > 0
+								? {
+										...foll,
+										symptom: [
+											...foll.symptom,
+											...action.values.value,
+										],
+										date: date,
+								  }
+								: {
+										...foll,
+										symptom: [...action.values.value],
+										date: date,
+								  }
 							: foll
 					),
 				};
@@ -252,6 +258,27 @@ const reducer = (state = initialState, action) => {
 					),
 				};
 			}
+		case HANDLE_DIAGNOSIS:
+			return {
+				...state,
+				diagnosis: {
+					...state.diagnosis,
+					...action.payload,
+				},
+			};
+		case HANDLE_CONTROL:
+			return {
+				...state,
+				follow_up: state.follow_up.map((foll, index) =>
+					index == action.index
+						? {
+								...foll,
+								control: action.control,
+								treatment: action.treatment,
+						  }
+						: foll
+				),
+			};
 		case ADD_COMPLETE:
 			return {
 				_id: action._id,

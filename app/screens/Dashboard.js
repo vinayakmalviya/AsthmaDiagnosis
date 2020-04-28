@@ -52,7 +52,8 @@ class Dashboard extends Component {
 			if (
 				track.new.symptoms ||
 				track.new.investigations ||
-				track.new.comorbidities
+				track.new.comorbidities ||
+				track.new.diagnosis
 			) {
 				if (track.new.midway) {
 					dispatch(updatePSubmit());
