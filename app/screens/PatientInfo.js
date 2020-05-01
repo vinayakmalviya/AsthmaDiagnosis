@@ -115,15 +115,17 @@ const PatientInfo = (props) => {
 								: "No data recorded"}
 						</Text>
 					</RowView>
-					{background.allergy_hist.other && (
-						<RowView>
-							<CustomOverline text="Other Allergies:" />
-							<Text style={{ marginTop: 6, flexShrink: 1 }}>
-								{" "}
-								{background.allergy_hist.other}
-							</Text>
-						</RowView>
-					)}
+					{background.allergy_hist ? (
+						background.allergy_hist.other ? (
+							<RowView>
+								<CustomOverline text="Other Allergies:" />
+								<Text style={{ marginTop: 6, flexShrink: 1 }}>
+									{" "}
+									{background.allergy_hist.other}
+								</Text>
+							</RowView>
+						) : null
+					) : null}
 					<View style={{ marginBottom: 6 }}>
 						<RowView>
 							<CustomOverline text="Observations:" />

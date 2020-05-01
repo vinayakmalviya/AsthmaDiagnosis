@@ -88,6 +88,8 @@ const SymptonInfo = (props) => {
 		"Persistent: Severe",
 	];
 
+	const treat = ["Continue Same", "Step Up", "Step Down"];
+
 	const renderInhaler = () => {
 		let inhaler = "";
 		if (props.vals.diagnosis.inhaler.ics) {
@@ -467,7 +469,9 @@ const SymptonInfo = (props) => {
 							</DataTable.Row>
 						</DataTable>
 					) : (
-						<Text style={{ marginTop: 6 }}>No data recorded</Text>
+						<Text style={{ marginTop: 6, marginLeft: 12 }}>
+							No data recorded
+						</Text>
 					)}
 					<RowView>
 						<CustomOverline text={"X-Ray: "} />
@@ -576,8 +580,14 @@ const SymptonInfo = (props) => {
 											<RowView>
 												<CustomOverline text="Treatment:" />
 												<Text style={{ marginTop: 6 }}>
-													{f.treatment
-														? f.treatment
+													{treat[
+														parseInt(f.treatment)
+													]
+														? treat[
+																parseInt(
+																	f.treatment
+																)
+														  ]
 														: "No data present"}
 												</Text>
 											</RowView>
