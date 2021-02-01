@@ -92,10 +92,12 @@ const CustomInput = ({
 			Animated.timing(_animatedFocused, {
 				toValue: isFocused || isError ? 1 : 0,
 				duration: 150,
+				useNativeDriver: false,
 			}),
 			Animated.timing(_animatedValued, {
 				toValue: isFocused || value ? 1 : 0,
 				duration: 150,
+				useNativeDriver: false,
 			}),
 		]).start();
 	}, [isFocused, value]);

@@ -87,14 +87,13 @@ class Comorbidities extends Component {
 								marginHorizontal: 12,
 								fontWeight: "bold",
 								fontSize: 16,
-								justifyContent: "center",
 								alignSelf: "center",
 								width: "28%",
 							}}
 						>
 							Blood Pressure:
 						</Text>
-						<View style={{ flexWrap: "wrap", flex: 1 }}>
+						<View style={{ flex: 1 }}>
 							<Field
 								name="blood_pressure_sys"
 								label="Systolic"
