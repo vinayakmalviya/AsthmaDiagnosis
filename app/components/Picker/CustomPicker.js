@@ -126,10 +126,12 @@ const CustomPicker = ({
 			Animated.timing(_animatedFocused, {
 				toValue: modalVisible ? 1 : 0,
 				duration: 150,
+				useNativeDriver: false,
 			}),
 			Animated.timing(_animatedValued, {
 				toValue: modalVisible || !(value === "") ? 1 : 0,
 				duration: 150,
+				useNativeDriver: false,
 			}),
 		]).start();
 	}, [modalVisible, value]);

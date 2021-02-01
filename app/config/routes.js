@@ -107,6 +107,7 @@ const HomeStack = createStackNavigator(
 			},
 			headerStyle: {
 				height: 56,
+				marginTop: -StatusBar.currentHeight,
 			},
 		},
 	}

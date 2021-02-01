@@ -69,6 +69,7 @@ const CustomChip = ({
 		Animated.timing(_animatedChecked, {
 			toValue: value ? 1 : 0,
 			duration: 150,
+			useNativeDriver: false,
 		}).start();
 	}, [value]);
 
