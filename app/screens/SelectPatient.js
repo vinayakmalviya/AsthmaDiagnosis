@@ -107,7 +107,7 @@ class SelectPatient extends Component {
 					<SafeAreaView style={{ flex: 1 }}>
 						<KeyboardAvoidingView
 							style={{ flex: 1 }}
-							behavior="height"
+							behavior="padding"
 						>
 							<ScrollView
 								style={{ flex: 1 }}
