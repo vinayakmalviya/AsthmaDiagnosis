@@ -18,6 +18,19 @@ import { controlSubmit } from "../actions/followupActions";
 import { CustomChipGroup, CustomChip } from "../components/Chip";
 import { CustomInput } from "../components/Input";
 
+const name = {
+	0: "No Occurence",
+	1: "2 Days A Week",
+	2: "Daily",
+	3: "Multiple Times In A Day",
+	present: "Present",
+	absent: "Absent",
+	normal: "Normal",
+	decreased: "Decreased",
+	dry: "Dry",
+	productive: "Productive",
+};
+
 const styles = EStyleSheet.create({
 	GridChildren: {
 		flex: 1,
@@ -187,12 +200,6 @@ class Diagnosis extends Component {
 	render() {
 		const { followup } = this.props.navigation.state.params;
 		const { handleSubmit, valid } = this.props;
-		const name = [
-			"No Occurence",
-			"2 Days A Week",
-			"Daily",
-			"Multiple Times In A Day",
-		];
 		const spiro = ["Normal", "Between 60%\nto 80%", "Less than\n60%"];
 
 		return (
@@ -212,11 +219,11 @@ class Diagnosis extends Component {
 									<DataTable.Cell>
 										{name[
 											this.props.vals.ini_symptoms
-												.wheezing
+												?.wheezing
 										]
 											? name[
 													this.props.vals.ini_symptoms
-														.wheezing
+														?.wheezing
 											  ]
 											: null}
 									</DataTable.Cell>
@@ -228,11 +235,11 @@ class Diagnosis extends Component {
 									<DataTable.Cell>
 										{name[
 											this.props.vals.ini_symptoms
-												.shortness_of_breath
+												?.shortness_of_breath
 										]
 											? name[
 													this.props.vals.ini_symptoms
-														.shortness_of_breath
+														?.shortness_of_breath
 											  ]
 											: null}
 									</DataTable.Cell>
@@ -241,11 +248,11 @@ class Diagnosis extends Component {
 									<DataTable.Cell>Cough</DataTable.Cell>
 									<DataTable.Cell>
 										{name[
-											this.props.vals.ini_symptoms.cough
+											this.props.vals.ini_symptoms?.cough
 										]
 											? name[
 													this.props.vals.ini_symptoms
-														.cough
+														?.cough
 											  ]
 											: null}
 									</DataTable.Cell>
@@ -257,11 +264,11 @@ class Diagnosis extends Component {
 									<DataTable.Cell>
 										{name[
 											this.props.vals.ini_symptoms
-												.chest_tightness
+												?.chest_tightness
 										]
 											? name[
 													this.props.vals.ini_symptoms
-														.chest_tightness
+														?.chest_tightness
 											  ]
 											: null}
 									</DataTable.Cell>
@@ -273,11 +280,11 @@ class Diagnosis extends Component {
 									<DataTable.Cell>
 										{name[
 											this.props.vals.ini_symptoms
-												.nighttime
+												?.nighttime
 										]
 											? name[
 													this.props.vals.ini_symptoms
-														.nighttime
+														?.nighttime
 											  ]
 											: null}
 									</DataTable.Cell>
@@ -289,18 +296,73 @@ class Diagnosis extends Component {
 									<DataTable.Cell>
 										{name[
 											this.props.vals.ini_symptoms
-												.restriction
+												?.restriction
 										]
 											? name[
 													this.props.vals.ini_symptoms
-														.restriction
+														?.restriction
+											  ]
+											: null}
+									</DataTable.Cell>
+								</DataTable.Row>
+								<DataTable.Row>
+									<DataTable.Cell>Ronchi</DataTable.Cell>
+									<DataTable.Cell>
+										{name[
+											this.props.vals.ini_symptoms?.ronchi
+										]
+											? name[
+													this.props.vals.ini_symptoms
+														?.ronchi
+											  ]
+											: null}
+									</DataTable.Cell>
+								</DataTable.Row>
+								<DataTable.Row>
+									<DataTable.Cell>Crepts</DataTable.Cell>
+									<DataTable.Cell>
+										{name[
+											this.props.vals.ini_symptoms?.crepts
+										]
+											? name[
+													this.props.vals.ini_symptoms
+														?.crepts
+											  ]
+											: null}
+									</DataTable.Cell>
+								</DataTable.Row>
+								<DataTable.Row>
+									<DataTable.Cell>
+										Breath sound
+									</DataTable.Cell>
+									<DataTable.Cell>
+										{name[
+											this.props.vals.ini_symptoms
+												?.breath_sound
+										]
+											? name[
+													this.props.vals.ini_symptoms
+														?.breath_sound
+											  ]
+											: null}
+									</DataTable.Cell>
+								</DataTable.Row>
+								<DataTable.Row>
+									<DataTable.Cell>
+										Post tussive ronchi
+									</DataTable.Cell>
+									<DataTable.Cell>
+										{name[this.props.vals.ini_symptoms?.ptr]
+											? name[
+													this.props.vals.ini_symptoms
+														?.ptr
 											  ]
 											: null}
 									</DataTable.Cell>
 								</DataTable.Row>
 							</DataTable>
 							<CustomOverline text="Spirometry:" />
-							{this.props.vals.tests.spirometry != {} ? (
+							{this.props.vals.tests?.spirometry != {} ? (
 								<DataTable>
 									<DataTable.Header>
 										<DataTable.Title>Label</DataTable.Title>
@@ -314,17 +376,17 @@ class Diagnosis extends Component {
 									<DataTable.Row>
 										<DataTable.Cell>FEV1</DataTable.Cell>
 										<DataTable.Cell>
-											{this.props.vals.tests.spirometry
-												.pre
+											{this.props.vals.tests?.spirometry
+												?.pre
 												? this.props.vals.tests
-														.spirometry.pre.fev1
+														?.spirometry?.pre?.fev1
 												: null}
 										</DataTable.Cell>
 										<DataTable.Cell>
-											{this.props.vals.tests.spirometry
-												.post
+											{this.props.vals.tests?.spirometry
+												?.post
 												? this.props.vals.tests
-														.spirometry.post.fev1
+														?.spirometry?.post?.fev1
 												: null}
 										</DataTable.Cell>
 									</DataTable.Row>
@@ -340,12 +402,13 @@ class Diagnosis extends Component {
 												}}
 											>
 												{this.props.vals.tests
-													.spirometry.pre
+													?.spirometry?.pre
 													? spiro[
 															this.props.vals
 																.tests
-																.spirometry.pre
-																.fev1_range
+																?.spirometry
+																?.pre
+																?.fev1_range
 													  ]
 													: null}
 											</Text>
@@ -362,8 +425,9 @@ class Diagnosis extends Component {
 													? spiro[
 															this.props.vals
 																.tests
-																.spirometry.post
-																.fev1_range
+																.spirometry
+																?.post
+																?.fev1_range
 													  ]
 													: null}
 											</Text>
@@ -377,14 +441,14 @@ class Diagnosis extends Component {
 											{this.props.vals.tests.spirometry
 												.pre
 												? this.props.vals.tests
-														.spirometry.pre.ratio
+														.spirometry?.pre?.ratio
 												: null}
 										</DataTable.Cell>
 										<DataTable.Cell>
-											{this.props.vals.tests.spirometry
-												.post
+											{this.props.vals.tests?.spirometry
+												?.post
 												? this.props.vals.tests
-														.spirometry.post.ratio
+														.spirometry?.post?.ratio
 												: null}
 										</DataTable.Cell>
 									</DataTable.Row>
@@ -393,12 +457,12 @@ class Diagnosis extends Component {
 											FEV1/FVC Range
 										</DataTable.Cell>
 										<DataTable.Cell>
-											{this.props.vals.tests.spirometry
+											{this.props.vals.tests?.spirometry
 												.pre
 												? spiro[
 														this.props.vals.tests
-															.spirometry.pre
-															.ratio_range
+															?.spirometry?.pre
+															?.ratio_range
 												  ]
 												: null}
 										</DataTable.Cell>
@@ -407,8 +471,8 @@ class Diagnosis extends Component {
 												.post
 												? spiro[
 														this.props.vals.tests
-															.spirometry.post
-															.ratio_range
+															.spirometry?.post
+															?.ratio_range
 												  ]
 												: null}
 										</DataTable.Cell>
@@ -419,14 +483,14 @@ class Diagnosis extends Component {
 											{this.props.vals.tests.spirometry
 												.pre
 												? this.props.vals.tests
-														.spirometry.pre.fvc
+														.spirometry?.pre?.fvc
 												: null}
 										</DataTable.Cell>
 										<DataTable.Cell>
 											{this.props.vals.tests.spirometry
 												.post
 												? this.props.vals.tests
-														.spirometry.post.fvc
+														.spirometry?.post?.fvc
 												: null}
 										</DataTable.Cell>
 									</DataTable.Row>
@@ -436,14 +500,14 @@ class Diagnosis extends Component {
 											{this.props.vals.tests.spirometry
 												.pre
 												? this.props.vals.tests
-														.spirometry.pre.mmef
+														.spirometry?.pre?.mmef
 												: null}
 										</DataTable.Cell>
 										<DataTable.Cell>
 											{this.props.vals.tests.spirometry
 												.post
 												? this.props.vals.tests
-														.spirometry.post.mmef
+														.spirometry?.post?.mmef
 												: null}
 										</DataTable.Cell>
 									</DataTable.Row>

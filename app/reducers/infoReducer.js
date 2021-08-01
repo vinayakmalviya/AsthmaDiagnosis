@@ -49,6 +49,10 @@ const initialState = {
 		chest_tightness: "",
 		nighttime: "",
 		restriction: "",
+		ronchi: "",
+		crepts: "",
+		breath_sound: "",
+		ptr: "",
 		observations: "",
 	},
 	comorbidities: {
@@ -132,6 +136,10 @@ const reducer = (state = initialState, action) => {
 					chest_tightness: action.values.chest_tightness,
 					nighttime: action.values.nighttime,
 					restriction: action.values.restriction,
+					ronchi: action.values.ronchi,
+					breath_sound: action.values.breath_sound,
+					crepts: action.values.crepts,
+					ptr: action.values.ptr,
 					observations: action.values.observations,
 				},
 			};

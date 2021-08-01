@@ -15,12 +15,18 @@ const severity = [
 	"Persistent: Severe",
 ];
 
-const name = [
-	"No Occurence",
-	"2 Days A Week",
-	"Daily",
-	"Multiple Times In A Day",
-];
+const name = {
+	0: "No Occurence",
+	1: "2 Days A Week",
+	2: "Daily",
+	3: "Multiple Times In A Day",
+	present: "Present",
+	absent: "Absent",
+	normal: "Normal",
+	decreased: "Decreased",
+	dry: "Dry",
+	productive: "Productive",
+};
 
 const spiro = ["Normal", "Between 60%\nto 80%", "Less than\n60%"];
 
@@ -33,7 +39,6 @@ const SymptonInfo = (props) => {
 
 	let dns = "";
 	let pharyn = "";
-	let rhonchi = "";
 	let pnd = "";
 	let hpt = "";
 	let nps = "";
@@ -50,9 +55,6 @@ const SymptonInfo = (props) => {
 			: "";
 		pharyn = props.vals.comorbidities?.urt_findings?.pharyn
 			? "Pharyngitis "
-			: "";
-		rhonchi = props.vals.comorbidities?.urt_findings?.rhonchi
-			? "Rhonchi "
 			: "";
 		pnd = props.vals.comorbidities?.urt_findings?.pnd
 			? "Post Nasal Drip "
@@ -269,6 +271,30 @@ const SymptonInfo = (props) => {
 							</DataTable.Cell>
 						</DataTable.Row>
 						<DataTable.Row>
+							<DataTable.Cell>Ronchi</DataTable.Cell>
+							<DataTable.Cell>
+								{name[props.vals.ini_symptoms?.ronchi]}
+							</DataTable.Cell>
+						</DataTable.Row>
+						<DataTable.Row>
+							<DataTable.Cell>Crepts</DataTable.Cell>
+							<DataTable.Cell>
+								{name[props.vals.ini_symptoms?.crepts]}
+							</DataTable.Cell>
+						</DataTable.Row>
+						<DataTable.Row>
+							<DataTable.Cell>Breath sound</DataTable.Cell>
+							<DataTable.Cell>
+								{name[props.vals.ini_symptoms?.breath_sound]}
+							</DataTable.Cell>
+						</DataTable.Row>
+						<DataTable.Row>
+							<DataTable.Cell>Post tussive ronchi</DataTable.Cell>
+							<DataTable.Cell>
+								{name[props.vals.ini_symptoms?.ptr]}
+							</DataTable.Cell>
+						</DataTable.Row>
+						<DataTable.Row>
 							<DataTable.Cell>Observations</DataTable.Cell>
 
 							{props.vals.ini_symptoms?.observations ? (
@@ -319,20 +345,13 @@ const SymptonInfo = (props) => {
 					</DataTable>
 					<RowView>
 						<CustomOverline text={"URT Findings: "} />
-						{dns + pharyn + rhonchi + pnd + hpt + nps + ear_dis ===
-						"" ? (
+						{dns + pharyn + pnd + hpt + nps + ear_dis === "" ? (
 							<Text style={{ marginTop: 6 }}>
 								No URT Findings
 							</Text>
 						) : (
 							<Text style={{ marginTop: 6, flexShrink: 1 }}>
-								{dns +
-									pharyn +
-									rhonchi +
-									pnd +
-									hpt +
-									nps +
-									ear_dis}
+								{dns + pharyn + pnd + hpt + nps + ear_dis}
 							</Text>
 						)}
 					</RowView>

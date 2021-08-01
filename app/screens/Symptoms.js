@@ -131,12 +131,8 @@ class Symptoms extends Component {
 							overrideStyles={[styles.GridChildren]}
 							items={[
 								{ label: "No Occurence", value: "0" },
-								{ label: "2 Days a week", value: "1" },
-								{ label: "Daily", value: "2" },
-								{
-									label: "Multiple times in a day",
-									value: "3",
-								},
+								{ label: "Dry", value: "dry" },
+								{ label: "Productive", value: "productive" },
 							]}
 							validate={this.required}
 						/>
@@ -259,6 +255,106 @@ class Symptoms extends Component {
 									label: "Multiple times in a day",
 									value: "3",
 								},
+							]}
+							validate={this.required}
+						/>
+					</View>
+					<View style={[styles.GridContainer]}>
+						<Text
+							style={{
+								marginHorizontal: 12,
+								marginTop: 20,
+								fontWeight: "bold",
+								fontSize: 16,
+								width: "24%",
+							}}
+						>
+							Ronchi:
+						</Text>
+						<Field
+							mode="dropdown"
+							name="ronchi"
+							component={CustomPicker}
+							label="Select"
+							overrideStyles={[styles.GridChildren]}
+							items={[
+								{ label: "Present", value: "present" },
+								{ label: "Absent", value: "absent" },
+							]}
+							validate={this.required}
+						/>
+					</View>
+					<View style={[styles.GridContainer]}>
+						<Text
+							style={{
+								marginHorizontal: 12,
+								marginTop: 20,
+								fontWeight: "bold",
+								fontSize: 16,
+								width: "24%",
+							}}
+						>
+							Crepts:
+						</Text>
+						<Field
+							mode="dropdown"
+							name="crepts"
+							component={CustomPicker}
+							label="Select"
+							overrideStyles={[styles.GridChildren]}
+							items={[
+								{ label: "Present", value: "present" },
+								{ label: "Absent", value: "absent" },
+							]}
+							validate={this.required}
+						/>
+					</View>
+					<View style={[styles.GridContainer]}>
+						<Text
+							style={{
+								marginHorizontal: 12,
+								marginTop: 20,
+								fontWeight: "bold",
+								fontSize: 16,
+								width: "24%",
+							}}
+						>
+							Breath sound:
+						</Text>
+						<Field
+							mode="dropdown"
+							name="breath_sound"
+							component={CustomPicker}
+							label="Select"
+							overrideStyles={[styles.GridChildren]}
+							items={[
+								{ label: "Normal", value: "normal" },
+								{ label: "Decreased", value: "decreased" },
+							]}
+							validate={this.required}
+						/>
+					</View>
+					<View style={[styles.GridContainer]}>
+						<Text
+							style={{
+								marginHorizontal: 12,
+								marginTop: 20,
+								fontWeight: "bold",
+								fontSize: 16,
+								width: "24%",
+							}}
+						>
+							Post tussive ronchi:
+						</Text>
+						<Field
+							mode="dropdown"
+							name="ptr"
+							component={CustomPicker}
+							label="Select"
+							overrideStyles={[styles.GridChildren]}
+							items={[
+								{ label: "Present", value: "present" },
+								{ label: "Absent", value: "absent" },
 							]}
 							validate={this.required}
 						/>

@@ -142,10 +142,9 @@ class Comorbidities extends Component {
 						data={[
 							{ name: "dns", label: "Deviated Nasal Septum" },
 							{ name: "pharyn", label: "Pharyngitis" },
-							{ name: "rhonchi", label: "Rhonchi" },
 							{ name: "pnd", label: "Post Nasal Drip" },
-							{ name: "hpt", label: "Hypertrophic Turbinates" },
 							{ name: "nps", label: "Nasal Polyps" },
+							{ name: "hpt", label: "Hypertrophic Turbinates" },
 							{ name: "ear_dis", label: "Ear Discharge" },
 						]}
 						component={CustomChipGroup}
