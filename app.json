@@ -1,38 +1,37 @@
 {
-  "expo": {
-    "name": "Asthma Diagnosis",
-    "slug": "AsthmaDiagnosis",
-    "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon_final.png",
-    "android": {
-      "splash": {
-        "mdpi": "./assets/splash/android/mdpi/splash.png",
-        "hdpi": "./assets/splash/android/hdpi/splash.png",
-        "xhdpi": "./assets/splash/android/xhdpi/splash.png",
-        "xxhdpi": "./assets/splash/android/xxhdpi/splash.png",
-        "xxxhdpi": "./assets/splash/android/xxxhdpi/splash.png",
-        "resizeMode": "cover"
-      }
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "splash": {
-        "image": "./assets/splash_alt.png",
-        "resizeMode": "cover"
-      }
-    }
-  }
+	"expo": {
+		"name": "Asthma Diagnosis",
+		"slug": "AsthmaDiagnosis",
+		"description": "A handy reference manual for chest physicians to support them in ensuring the proper usage of GINA guidelines",
+		"privacy": "public",
+		"platforms": ["ios", "android", "web"],
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon_final.png",
+		"android": {
+			"package": "com.kjsieit.asthmadiagnosis",
+			"versionCode": 1,
+			"splash": {
+				"mdpi": "./assets/splash/android/mdpi/splash.png",
+				"hdpi": "./assets/splash/android/hdpi/splash.png",
+				"xhdpi": "./assets/splash/android/xhdpi/splash.png",
+				"xxhdpi": "./assets/splash/android/xxhdpi/splash.png",
+				"xxxhdpi": "./assets/splash/android/xxxhdpi/splash.png",
+				"resizeMode": "cover"
+			}
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"bundleIdentifier": "com.kjsieit.asthmadiagnosis",
+			"buildNumber": "1.0.0",
+			"supportsTablet": true,
+			"splash": {
+				"image": "./assets/splash_alt.png",
+				"resizeMode": "cover"
+			}
+		}
+	}
 }
